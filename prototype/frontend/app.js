@@ -2,8 +2,15 @@ const API_URL = "http://127.0.0.1:8000/api/ask";
 
 async function submitQuestion() {
   const questionInput = document.getElementById("question-input");
-  // Use entered text or fall back to placeholder example text
-  const questionText = questionInput.value.trim() || questionInput.placeholder;
+  const questionText = questionInput.value.trim();
+  
+  if (!questionText) {
+    alert("Please enter a question before submitting.");
+    return;
+  }
+
+  // Clear window.name draft upon submission
+  window.name = "";
 
   const submitBtn = document.getElementById("submit-btn");
   const resultsSection = document.getElementById("results-section");
@@ -11,17 +18,14 @@ async function submitQuestion() {
   const answerContent = document.getElementById("answer-content");
   const sourcesContent = document.getElementById("sources-content");
 
-  // Trigger loading state
   submitBtn.disabled = true;
   resultsSection.classList.add("hidden");
-  loadingSpinner.classList.remove("hidden");
+  loadingSpinner.classList.remove("hidden"); // Correctly reveals the loading spinner
 
   try {
     const response = await fetch(API_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question: questionText }),
     });
 
@@ -30,11 +34,8 @@ async function submitQuestion() {
     }
 
     const data = await response.json();
-
-    // Render synthesized answer
     answerContent.textContent = data.answer || "No response received.";
 
-    // Render source cards
     sourcesContent.innerHTML = "";
     if (data.sources && data.sources.length > 0) {
       data.sources.forEach((source) => {
@@ -61,10 +62,22 @@ async function submitQuestion() {
   }
 }
 
-// Enable keyboard shortcut (Cmd + Enter or Ctrl + Enter to submit)
+// Window Name State Persistence across page navigation
 document.addEventListener("DOMContentLoaded", () => {
   const textarea = document.getElementById("question-input");
+
   if (textarea) {
+    // 1. Restore text from window.name when returning to the page
+    if (window.name && window.name.trim() !== "") {
+      textarea.value = window.name;
+    }
+
+    // 2. Continuously save text to window.name on every keystroke
+    textarea.addEventListener("input", (e) => {
+      window.name = e.target.value;
+    });
+
+    // 3. Keyboard shortcut (Cmd+Enter or Ctrl+Enter to submit)
     textarea.addEventListener("keydown", (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
         e.preventDefault();

@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 # 1. Define explicit response models with descriptive fields
@@ -10,6 +11,13 @@ class MessageResponse(BaseModel):
 class HealthResponse(BaseModel):
     status: str = Field(..., example="healthy")
 
+class QueryRequest(BaseModel):
+    question: str = Field(..., example="Why was Neo4j chosen over PostgreSQL for indexing repository entities?")
+
+class QueryResponse(BaseModel):
+    answer: str
+    sources: list = []
+
 # 2. Instantiate the app with rich metadata
 app = FastAPI(
     title="CodeInsight API",
@@ -18,7 +26,16 @@ app = FastAPI(
     docs_url=None
 )
 
-# 3. Define endpoints with detailed descriptions
+# 3. Enable CORS middleware to allow communication from frontend (port 5500)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# 4. Define standard endpoints
 @app.get(
     "/", 
     tags=["Root"], 
@@ -39,7 +56,46 @@ async def read_root():
 async def health_check():
     return {"status": "healthy"}
 
-# 4. Documentation page utilizing the exact frontend stylesheet and structure
+# 5. Main GraphRAG Query Endpoint
+@app.post(
+    "/api/ask",
+    tags=["GraphRAG"],
+    summary="Execute Architectural Query",
+    description="Accepts an architectural question, queries the Neo4j GraphRAG pipeline, and returns a synthesized response with evidence.",
+    response_model=QueryResponse
+)
+async def ask_question(body: QueryRequest):
+    # TODO: Connect this to your actual graph retrieval and LLM logic
+    return {
+        "answer": f"Processed query regarding: '{body.question}'. Neo4j graph traversal successfully extracted connected commit nodes and file references.",
+        "sources": ["main.py", "rag_pipeline.py", "Graph DB Schema"]
+    }
+
+# 6. Graph Explorer Topology Endpoint
+@app.get(
+    "/api/graph",
+    tags=["GraphRAG"],
+    summary="Get Knowledge Graph Topology",
+    description="Retrieves nodes and edges for the Graph Explorer visualizer."
+)
+async def get_graph_topology():
+    return {
+        "nodes": [
+            {"id": "decision_1", "label": "Decision Node", "type": "Decision", "detail": "Neo4j Choice"},
+            {"id": "commit_1", "label": "Commit #a1b2c3d", "type": "Commit"},
+            {"id": "pr_1", "label": "PR #14 GraphRAG", "type": "PullRequest"},
+            {"id": "file_1", "label": "rag_pipeline.py", "type": "File"},
+            {"id": "index_1", "label": "Neo4j Vector Index", "type": "Index"}
+        ],
+        "edges": [
+            {"source": "decision_1", "target": "commit_1", "relation": "JUSTIFIED_BY"},
+            {"source": "decision_1", "target": "pr_1", "relation": "IMPLEMENTED_IN"},
+            {"source": "decision_1", "target": "index_1", "relation": "STORED_IN"},
+            {"source": "decision_1", "target": "file_1", "relation": "DEPENDS_ON"}
+        ]
+    }
+
+# 7. Custom Documentation page utilizing the exact frontend stylesheet and structure
 @app.get("/docs", include_in_schema=False)
 async def custom_swagger_ui_html():
     html_content = """<!DOCTYPE html>
@@ -190,6 +246,20 @@ async def custom_swagger_ui_html():
           <div class="response-section-title">Response Example (200 OK)</div>
           <pre>{
   <span class="key">"status"</span>: <span class="str">"healthy"</span>
+}</pre>
+        </div>
+
+        <!-- Endpoint Card 3: Ask -->
+        <div class="glass-card">
+          <div class="endpoint-header">
+            <span class="method-badge">POST</span>
+            <span class="endpoint-path">/api/ask</span>
+          </div>
+          <div class="endpoint-desc">Accepts an architectural question, queries the Neo4j GraphRAG pipeline, and returns a synthesized response with evidence.</div>
+          <div class="response-section-title">Response Example (200 OK)</div>
+          <pre>{
+  <span class="key">"answer"</span>: <span class="str">"Processed query regarding architectural decisions..."</span>,
+  <span class="key">"sources"</span>: [<span class="str">"main.py"</span>, <span class="str">"rag_pipeline.py"</span>]
 }</pre>
         </div>
       </div>

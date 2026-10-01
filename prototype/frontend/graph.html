@@ -31,7 +31,6 @@
       filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.5));
     }
 
-    /* Node Title Typography */
     .node-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 13px;
@@ -49,7 +48,6 @@
       pointer-events: none;
     }
 
-    /* Code / Commit Monospace Font */
     .mono-text {
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
@@ -57,14 +55,12 @@
       letter-spacing: -0.02em;
     }
 
-    /* Connection Line Styling */
     .edge-line {
       stroke: rgba(255, 255, 255, 0.2);
       stroke-width: 1.5;
       stroke-dasharray: 4 4;
     }
 
-    /* Relationship Edge Badges */
     .edge-badge {
       fill: #0d0c1d;
       stroke: rgba(255, 255, 255, 0.12);
@@ -84,12 +80,10 @@
   </style>
 </head>
 <body>
-  <!-- Ambient Gradient Background Glows -->
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
 
   <div class="app-container">
-    <!-- Navbar -->
     <nav class="navbar">
       <div class="logo">
         <span class="logo-icon">⚡</span>
@@ -102,7 +96,6 @@
       </div>
     </nav>
 
-    <!-- Main Section -->
     <main class="hero-section">
       <div class="hero-header">
         <span class="tag-badge">GRAPH VISUALIZER</span>
@@ -110,68 +103,8 @@
         <p class="hero-subtitle">Interactively explore historical commits, architectural decisions, and pull request dependencies.</p>
       </div>
 
-      <!-- Graph Display Card -->
       <div class="glass-card graph-card">
-        <svg class="graph-svg" viewBox="0 0 800 450">
-          <!-- Edges (Connections) -->
-          <line class="edge-line" x1="400" y1="225" x2="220" y2="120" />
-          <line class="edge-line" x1="400" y1="225" x2="580" y2="120" />
-          <line class="edge-line" x1="400" y1="225" x2="250" y2="330" />
-          <line class="edge-line" x1="400" y1="225" x2="550" y2="330" />
-
-          <!-- Relationship Badges & Labels -->
-          <g transform="translate(310, 172)">
-            <rect x="-42" y="-9" width="84" height="18" class="edge-badge" />
-            <text x="0" y="3" text-anchor="middle" class="edge-text">JUSTIFIED_BY</text>
-          </g>
-
-          <g transform="translate(490, 172)">
-            <rect x="-48" y="-9" width="96" height="18" class="edge-badge" />
-            <text x="0" y="3" text-anchor="middle" class="edge-text">IMPLEMENTED_IN</text>
-          </g>
-
-          <g transform="translate(325, 278)">
-            <rect x="-38" y="-9" width="76" height="18" class="edge-badge" />
-            <text x="0" y="3" text-anchor="middle" class="edge-text">STORED_IN</text>
-          </g>
-
-          <g transform="translate(475, 278)">
-            <rect x="-38" y="-9" width="76" height="18" class="edge-badge" />
-            <text x="0" y="3" text-anchor="middle" class="edge-text">DEPENDS_ON</text>
-          </g>
-
-          <!-- Central Decision Node -->
-          <g class="node-group" transform="translate(400, 225)">
-            <circle r="52" fill="url(#purpleGradient)" stroke="#c084fc" stroke-width="2"/>
-            <text x="0" y="-6" text-anchor="middle" class="node-title" font-size="14">Decision Node</text>
-            <text x="0" y="12" text-anchor="middle" class="node-subtitle">Neo4j Choice</text>
-          </g>
-
-          <!-- Node 1: Commit -->
-          <g class="node-group" transform="translate(220, 120)">
-            <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#13102d" stroke="#6366f1" stroke-width="1.5"/>
-            <text x="0" y="4" text-anchor="middle" class="node-title mono-text" fill="#a5b4fc">Commit #a1b2c3d</text>
-          </g>
-
-          <!-- Node 2: PR -->
-          <g class="node-group" transform="translate(580, 120)">
-            <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#082f25" stroke="#10b981" stroke-width="1.5"/>
-            <text x="0" y="4" text-anchor="middle" class="node-title" fill="#6ee7b7">PR #14 GraphRAG</text>
-          </g>
-
-          <!-- Node 3: Database Entity -->
-          <g class="node-group" transform="translate(250, 330)">
-            <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#2e1505" stroke="#f59e0b" stroke-width="1.5"/>
-            <text x="0" y="4" text-anchor="middle" class="node-title" fill="#fde047">Neo4j Vector Index</text>
-          </g>
-
-          <!-- Node 4: Backend Code -->
-          <g class="node-group" transform="translate(550, 330)">
-            <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#240c38" stroke="#a855f7" stroke-width="1.5"/>
-            <text x="0" y="4" text-anchor="middle" class="node-title mono-text" fill="#e9d5ff">rag_pipeline.py</text>
-          </g>
-
-          <!-- Gradients -->
+        <svg id="graphSvg" class="graph-svg" viewBox="0 0 800 450">
           <defs>
             <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#8b5cf6" />
@@ -182,5 +115,111 @@
       </div>
     </main>
   </div>
+
+  <script>
+    async function loadGraphTopology() {
+      try {
+        // Read dynamic query context from window.name
+        const activeQuery = window.name ? window.name.trim() : "";
+        let apiUrl = 'http://127.0.0.1:8000/api/graph';
+        if (activeQuery) {
+          apiUrl += `?q=${encodeURIComponent(activeQuery)}`;
+        }
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        
+        const svg = document.getElementById('graphSvg');
+        
+        const coords = {
+          "decision_1": { x: 400, y: 225 },
+          "commit_1": { x: 220, y: 120 },
+          "pr_1": { x: 580, y: 120 },
+          "index_1": { x: 250, y: 330 },
+          "file_1": { x: 550, y: 330 }
+        };
+
+        const edgeBadges = [
+          { source: "decision_1", target: "commit_1", label: "JUSTIFIED_BY", tx: 310, ty: 172, w: 84 },
+          { source: "decision_1", target: "pr_1", label: "IMPLEMENTED_IN", tx: 490, ty: 172, w: 96 },
+          { source: "decision_1", target: "index_1", label: "STORED_IN", tx: 325, ty: 278, w: 76 },
+          { source: "decision_1", target: "file_1", label: "DEPENDS_ON", tx: 475, ty: 278, w: 76 }
+        ];
+
+        let svgContent = `<defs>
+          <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8b5cf6" />
+            <stop offset="100%" stop-color="#3b82f6" />
+          </linearGradient>
+        </defs>`;
+
+        edgeBadges.forEach(edge => {
+          const p1 = coords[edge.source];
+          const p2 = coords[edge.target];
+          if (p1 && p2) {
+            svgContent += `<line class="edge-line" x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" />`;
+          }
+        });
+
+        edgeBadges.forEach(edge => {
+          svgContent += `
+            <g transform="translate(${edge.tx}, ${edge.ty})">
+              <rect x="${-edge.w/2}" y="-9" width="${edge.w}" height="18" class="edge-badge" />
+              <text x="0" y="3" text-anchor="middle" class="edge-text">${edge.label}</text>
+            </g>`;
+        });
+
+        // Use backend data nodes dynamically
+        const nodesToRender = (data.nodes && data.nodes.length > 0) ? data.nodes : [];
+
+        nodesToRender.forEach((node, index) => {
+          const pos = coords[node.id] || { x: 200 + (index * 100), y: 225 };
+          const labelText = node.label || node.id;
+          const detailText = node.detail || '';
+          
+          if (node.type === "Decision") {
+            svgContent += `
+              <g class="node-group" transform="translate(${pos.x}, ${pos.y})">
+                <circle r="52" fill="url(#purpleGradient)" stroke="#c084fc" stroke-width="2"/>
+                <text x="0" y="-6" text-anchor="middle" class="node-title" font-size="14">${labelText}</text>
+                <text x="0" y="12" text-anchor="middle" class="node-subtitle">${detailText}</text>
+              </g>`;
+          } else if (node.type === "Commit") {
+            svgContent += `
+              <g class="node-group" transform="translate(${pos.x}, ${pos.y})">
+                <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#13102d" stroke="#6366f1" stroke-width="1.5"/>
+                <text x="0" y="4" text-anchor="middle" class="node-title mono-text" fill="#a5b4fc">${labelText}</text>
+              </g>`;
+          } else if (node.type === "PullRequest") {
+            svgContent += `
+              <g class="node-group" transform="translate(${pos.x}, ${pos.y})">
+                <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#082f25" stroke="#10b981" stroke-width="1.5"/>
+                <text x="0" y="4" text-anchor="middle" class="node-title" fill="#6ee7b7">${labelText}</text>
+              </g>`;
+          } else if (node.type === "Index") {
+            svgContent += `
+              <g class="node-group" transform="translate(${pos.x}, ${pos.y})">
+                <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#2e1505" stroke="#f59e0b" stroke-width="1.5"/>
+                <text x="0" y="4" text-anchor="middle" class="node-title" fill="#fde047">${labelText}</text>
+              </g>`;
+          } else {
+            svgContent += `
+              <g class="node-group" transform="translate(${pos.x}, ${pos.y})">
+                <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#240c38" stroke="#a855f7" stroke-width="1.5"/>
+                <text x="0" y="4" text-anchor="middle" class="node-title mono-text" fill="#e9d5ff">${labelText}</text>
+              </g>`;
+          }
+        });
+
+        svg.innerHTML = svgContent;
+      } catch (err) {
+        console.error("Failed to load graph topology from backend:", err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadGraphTopology();
+    });
+  </script>
 </body>
 </html>
