@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why The Code Is Like This - Evidence Engine</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Ambient Gradient Orbs for Background Glow -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <div class="app-container">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">CODE<b>INSIGHT</b></span>
+      </div>
+      <div class="nav-links">
+        <span class="nav-item active">Evidence Engine</span>
+        <span class="nav-item">Graph Explorer</span>
+        <span class="nav-item">Documentation</span>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="hero-section">
+      <div class="hero-header">
+        <span class="tag-badge">AI & DEV TOOLS</span>
+        <h1 class="hero-title">Why The Code Is Like This</h1>
+        <p class="hero-subtitle">Trace software architecture decisions back to historical commits, PRs, and team discussions with verifiable evidence.</p>
+      </div>
+
+      <!-- Input Card (Glassmorphism) -->
+      <div class="glass-card input-card">
+        <div class="input-header">
+          <label for="question-input">Ask an architectural query:</label>
+        </div>
+        <div class="input-wrapper">
+          <textarea 
+            id="question-input" 
+            placeholder="e.g., Why was Neo4j chosen over PostgreSQL for indexing repository entities?"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="input-footer">
+          <span class="hint-text">Powered by Neo4j GraphRAG + LLM</span>
+          <button id="submit-btn" class="glow-button" onclick="submitQuestion()">
+            <span>Query System</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loading-spinner" class="loading-container hidden">
+        <div class="pulse-ring"></div>
+        <p>Traversing Neo4j knowledge graph & synthesizing evidence...</p>
+      </div>
+
+      <!-- Results Display Section -->
+      <div id="results-section" class="results-container hidden">
+        <!-- Answer Output Card -->
+        <div class="glass-card answer-card">
+          <div class="card-badge">SYNTHESIZED ANSWER</div>
+          <div id="answer-content" class="answer-text"></div>
+        </div>
+
+        <!-- Evidence Chain Section -->
+        <div class="evidence-section">
+          <h2 class="section-title">Retrieved Evidence Chain</h2>
+          <div id="sources-content" class="sources-grid"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
