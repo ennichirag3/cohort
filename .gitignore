@@ -1,4 +1,2 @@
 prototype/backend/.env
 .env
-venv/
-.DS_Store
