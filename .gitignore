@@ -2,3 +2,5 @@ prototype/backend/.env
 .env
 venv/
 .venv/
+.DS_Store
+**/.DS_Store
