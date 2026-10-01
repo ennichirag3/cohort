@@ -1,19 +1,31 @@
-# Entry 6: System Testing, Failure Analysis & Demo Verification
+# Entry 6: Stranger Testing, User Feedback & Final Refinement
 
-## 1. Test Results Matrix
-
-| Test Case | Query Input | Expected Outcome | Actual System Response | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **Valid Query** | "Why was Neo4j chosen over PostgreSQL for indexing repository entities?" | Returns evidence-backed explanation with sources. | Returned synthesized answer with graph sources. | PASS |
-| **Missing Evidence** | "Why did we switch our frontend framework from Vue to Svelte in 2022?" | Triggers strict fallback statement: "Insufficient evidence in repository history..." | Returned exact fallback string without hallucinating. | PASS |
-| **Edge Case** | [Empty String Query] | Prevents dispatch and handles gracefully via API validation. | Handled gracefully without server crash. | PASS |
+## 1. Module Overview & Primary Lead
+- **Module Lead**: Chirag (Frontend & QA Lead)
+- **Co-Lead / Contributor**: Shreya (Evaluation & Security Lead)
+- **Collaborators**: Anshika (Prompt & Guardrail Refinement), Anirudh (Query Log Analysis), Manas (Graph Query Tuning)
 
 ---
 
-## 2. Guardrail & Fallback Verification
-- Verified that when no relevant records are returned from Neo4j, the system strictly outputs: `"Insufficient evidence in repository history to answer this question."`
+## 2. Stranger Testing Methodology
+To evaluate system usability and response clarity without bias, the project was tested by external developers ("strangers") who had no prior exposure to the codebase or graph schema.
+
+- **Participant Group**: External peer developers and engineers outside the core team.
+- **Test Protocol**: Testers were given open-ended architectural queries regarding repo history without guidance on how to phrase their questions.
+- **Observation Focus**: System latency, response comprehensibility, clarity of commit/PR citations, and UI navigation intuitiveness.
 
 ---
 
-## 3. Stranger Testing Feedback
-- Peers praised the clean dark glassmorphism interface and the structured separation between the LLM's answer and the individual evidence cards.
+## 3. Key Findings & User Feedback
+1. **Citation Clarity**: Testers appreciated source-backed answers but requested direct external links on PR and Commit cards for faster verification.
+2. **Handling Unclear Queries**: Broad queries (e.g., *"Why is the backend like this?"*) produced generic context; users preferred suggested query templates.
+3. **Response Speed**: High graph traversal depth occasionally caused slight UI delays during context fetching.
+
+---
+
+## 4. System Refinements & Final Implementation
+Based on feedback, the team executed the following final updates:
+
+- **Frontend (`app.js`)**: Added interactive query suggestions and direct hyperlink formatting on retrieved node cards.
+- **RAG & Cypher Optimization (`rag_pipeline.py`)**: Restructured Cypher traversal depth limits to reduce latency by keeping query execution lightweight.
+- **Guardrail Fine-Tuning**: Enhanced refusal triggers so that ambiguous inputs prompt the user for clarification instead of attempting broad inference.

@@ -1,14 +1,30 @@
-# Entry 5: Glassmorphic Frontend & UI Integration
+# Entry 5: Glassmorphic User Interface & Failure Case Validation
 
-## 1. User Interface Design
-- **Visual Style**: Built a modern, dark glassmorphism dashboard (`styles.css`) featuring dynamic background glow accents, frosted glass panels, and interactive hover states.
-- **Components**:
-  - Hero header positioned for codebase querying.
-  - Interactive textarea for user "Why?" queries with quick submit actions.
-  - Async loading indicator with dynamic pulse animations.
-  - Synthesized Answer display panel and dynamic Evidence Chain grid.
+## 1. Module Overview & Primary Lead
+- **Module Lead**: Chirag (Frontend & QA Lead)
+- **Co-Lead / Contributor**: Shreya (Evaluation & Security Lead)
+- **Collaborators**: Anshika (API Contract Alignment), Anirudh (Edge Case Test Suites), Manas (Schema-to-UI Mapping)
 
-## 2. API Consumption & Async Data Flow
-- **Integration (`app.js`)**: Configured JavaScript `fetch()` requests targeting `http://127.0.0.1:8000/api/ask`.
-- **Payload Structure**: Sends `POST` requests with JSON payload `{"question": "<user_input>"}`.
-- **Dynamic Rendering**: Parses the API response to dynamically populate answer text and render evidence source cards (Entity Type badges, Authors, Dates, Details, and URLs).
+---
+
+## 2. Glassmorphic UI & User Experience
+The user interface (`index.html`, `styles.css`, `app.js`) provides an interactive dashboard for developers to query architectural decisions.
+
+- **Design System**: Modern glassmorphic styling utilizing backdrop filters, dynamic glow effects, and responsive layouts.
+- **Async API Integration**: Non-blocking `fetch()` requests connect the frontend to the FastAPI server (`main.py`) to stream and render graph query results seamlessly.
+- **Interactive Metadata Cards**: Retracted graph context (commits, PRs, issues) is rendered in structured, clickable cards with direct links to source commits.
+
+---
+
+## 3. Failure Case & Edge Case Validation
+To ensure UI stability under real-world developer workflows, the team validated the interface across key failure scenarios:
+
+1. **Empty / Insufficient Context**: Validated UI state when the backend returns refusal responses (*"Insufficient context in knowledge graph"*), displaying helpful prompt suggestions rather than error states.
+2. **Network Delays & Timeouts**: Implemented loading skeletons and user-friendly error banners during database reconnects or latency spikes.
+3. **Malformed Inputs**: Added client-side sanitization to handle special characters, SQL/Cypher-like syntax inputs, and oversized queries gracefully.
+
+---
+
+## 4. Integration & Usability Testing
+- Verified cross-browser compatibility and responsive UI layouts across various screen resolutions.
+- Conducted initial integration tests matching frontend input forms with backend RAG payload contracts.
