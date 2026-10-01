@@ -30,3 +30,10 @@ null or an empty list, not invented.
 ### Issue
 `id`, `number`, `title`, `body`, `author_login`, `created_at`,
 `updated_at`, `url`
+
+## Map normalized fields to Neo4j properties
+
+- `author_login` → `author`
+- `committed_at` or `created_at` → `date`
+- GitHub source URL → `url`
+- Keep `message`, `title`, and `body` under those same names
