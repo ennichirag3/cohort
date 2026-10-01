@@ -1,31 +1,17 @@
-# Entry 6: Stranger Testing, User Feedback & Final Refinement
+# Build Log Entry 6: Testing, Failure Modes & Stranger Test Findings
 
-## 1. Module Overview & Primary Lead
-- **Module Lead**: Chirag (Frontend & QA Lead)
-- **Co-Lead / Contributor**: Shreya (Evaluation & Security Lead)
-- **Collaborators**: Anshika (Prompt & Guardrail Refinement), Anirudh (Query Log Analysis), Manas (Graph Query Tuning)
+## 1. Module Lead & Focus
+- **Lead**: Chirag (Frontend/QA Lead) & Shreya (Ingestion/Testing)[span_61](start_span)[span_61](end_span)
+- **Focus**: System testing, stranger testing, failure mode handling[span_62](start_span)[span_62](end_span).
 
----
+## 2. Failure Mode & Edge Case Testing Results
+- **Unsupported Question (No Graph Context)**: Successfully returned *"Insufficient context in knowledge graph to answer this query"*[span_63](start_span)[span_63](end_span).
+- **Empty / Very Long Inputs**: Sanitized gracefully by client-side JS (`app.js`) without backend crash[span_64](start_span)[span_64](end_span).
+- **API / Database Timeout**: Rendered glassmorphic error banner with retry options[span_65](start_span)[span_65](end_span).
 
-## 2. Stranger Testing Methodology
-To evaluate system usability and response clarity without bias, the project was tested by external developers ("strangers") who had no prior exposure to the codebase or graph schema.
-
-- **Participant Group**: External peer developers and engineers outside the core team.
-- **Test Protocol**: Testers were given open-ended architectural queries regarding repo history without guidance on how to phrase their questions.
-- **Observation Focus**: System latency, response comprehensibility, clarity of commit/PR citations, and UI navigation intuitiveness.
-
----
-
-## 3. Key Findings & User Feedback
-1. **Citation Clarity**: Testers appreciated source-backed answers but requested direct external links on PR and Commit cards for faster verification.
-2. **Handling Unclear Queries**: Broad queries (e.g., *"Why is the backend like this?"*) produced generic context; users preferred suggested query templates.
-3. **Response Speed**: High graph traversal depth occasionally caused slight UI delays during context fetching.
-
----
-
-## 4. System Refinements & Final Implementation
-Based on feedback, the team executed the following final updates:
-
-- **Frontend (`app.js`)**: Added interactive query suggestions and direct hyperlink formatting on retrieved node cards.
-- **RAG & Cypher Optimization (`rag_pipeline.py`)**: Restructured Cypher traversal depth limits to reduce latency by keeping query execution lightweight.
-- **Guardrail Fine-Tuning**: Enhanced refusal triggers so that ambiguous inputs prompt the user for clarification instead of attempting broad inference.
+## 3. Stranger Test Execution
+- **Participants**: Two peer developers unfamiliar with the project[span_66](start_span)[span_66](end_span).
+- **Feedback Received**:
+  1. Requested direct links on citation cards to open GitHub commits directly in a new tab[span_67](start_span)[span_67](end_span).
+  2. Suggested adding prompt templates for new users[span_68](start_span)[span_68](end_span).
+- **Fixes Applied**: Added target `_blank` hyperlinked cards in `app.js` and quick-select question pills on the dashboard[span_69](start_span)[span_69](end_span).

@@ -1,38 +1,19 @@
-# Entry 2: Knowledge Graph Schema & Data Ingestion Pipeline
+# Build Log Entry 2: 4D Check & Delegation Mapping
 
-## 1. Module Overview & Primary Lead
-- **Module Lead**: Manas (Tech & Neo4j Lead)
-- **Co-Lead / Contributor**: Anirudh (Data & Ingestion Lead)
-- **Collaborators**: Anshika (RAG Integration), Chirag (UI Query Mapping), Shreya (Data Quality & Validation)
+## 1. Module Lead & Focus
+- **Lead**: Manas (Technical Lead) & Shreya (Ingestion Lead)[span_17](start_span)[span_17](end_span)
+- **Focus**: Repository representation, Neo4j schema design, 4D Framework[span_18](start_span)[span_18](end_span).
 
----
+## 2. 4D Framework Breakdown
+- **Delegation**: AI is delegated Cypher query generation and data transformation; humans retain schema validation and entity linking logic[span_19](start_span)[span_19](end_span).
+- **Description**:
+  - **Context**: Large Git history with scattered architectural decisions[span_20](start_span)[span_20](end_span).
+  - **Objective**: Map entities (`:Commit`, `:PullRequest`, `:Issue`, `:Developer`, `:File`) in Neo4j with directional relationships[span_21](start_span)[span_21](end_span).
+  - **Constraints**: Preserved source IDs, URLs, and timestamps without credential exposure[span_22](start_span)[span_22](end_span).
+- **Discernment**: AI Cypher outputs are evaluated against Neo4j schema constraints and execution speed.
+- **Diligence**: Every ingested entity is verified against raw GitHub REST/GraphQL API outputs[span_23](start_span)[span_23](end_span).
 
-## 2. Graph Database Architecture & Schema Design
-To provide factual, source-backed explanations for code decisions, the system models Git metadata and developer discussions in **Neo4j AuraDB**.
-
-### Node Labels
-- `:Commit`: Represents Git commits containing commit hash, author, timestamp, and message.
-- `:PullRequest`: Represents GitHub PRs with PR ID, title, body, and status.
-- `:Issue`: Represents issues with issue ID, title, description, and state.
-- `:Developer`: Represents contributors/authors involved in discussions and changes.
-- `:File`: Represents code files or modules modified in commits.
-
-### Relationship Types
-- `(:Developer)-[:AUTHORED]->(:Commit)`
-- `(:Commit)-[:MERGED_INTO]->(:PullRequest)`
-- `(:PullRequest)-[:CLOSES]->(:Issue)`
-- `(:Commit)-[:MODIFIED]->(:File)`
-- `(:Developer)-[:COMMENTED_ON]->(:PullRequest)`
-
----
-
-## 3. Data Ingestion Pipeline & Parsing
-- **Extraction**: GitHub REST/GraphQL APIs extract commits, issues, pull requests, and file diffs.
-- **Parsing & Cleaning**: Unstructured PR descriptions and commit messages are parsed and normalized into structured JSON formats.
-- **Neo4j Ingestion**: Cypher `MERGE` queries import nodes and relationships deterministically to avoid duplicate records.
-
----
-
-## 4. Query Optimization & Retrieval
-- Created constraints on unique properties (`Commit.hash`, `PullRequest.id`, `Issue.id`).
-- Formulated optimized Cypher lookup templates for common developer queries (e.g., *"Why was this file modified?"* or *"Which PR closed Issue #42?"*).
+## 3. Review Checkpoints
+1. **Raw Ingestion Review (Shreya)**: Validating JSON outputs from GitHub API before database loading[span_24](start_span)[span_24](end_span).
+2. **Graph Consistency Check (Manas)**: Verifying `MERGE` constraints in Neo4j to prevent duplicate node creation[span_25](start_span)[span_25](end_span).
+3. **Retrieval Lineage Review (Anshika & Anirudh)**: Testing Cypher traversals against known PR-to-issue links[span_26](start_span)[span_26](end_span).

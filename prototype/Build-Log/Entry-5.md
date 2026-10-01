@@ -1,30 +1,19 @@
-# Entry 5: Glassmorphic User Interface & Failure Case Validation
+# Build Log Entry 5: Product-Market Fit & Single Flow Definition
 
-## 1. Module Overview & Primary Lead
-- **Module Lead**: Chirag (Frontend & QA Lead)
-- **Co-Lead / Contributor**: Shreya (Evaluation & Security Lead)
-- **Collaborators**: Anshika (API Contract Alignment), Anirudh (Edge Case Test Suites), Manas (Schema-to-UI Mapping)
+## 1. Module Lead & Focus
+- **Lead**: Chirag (Frontend Lead) & Anirudh (Product Lead)[span_52](start_span)[span_52](end_span)
+- **Focus**: Falsifiable hypothesis, ICP, mechanism, and target product flow[span_53](start_span)[span_53](end_span).
 
----
+## 2. Falsifiable Hypothesis
+If a developer is given a why-question assistant backed by a Neo4j Git graph, they will identify architectural reasons in under 2 minutes with 100% citation accuracy, compared to spending 15+ minutes searching GitHub PRs manually[span_54](start_span)[span_54](end_span).
 
-## 2. Glassmorphic UI & User Experience
-The user interface (`index.html`, `styles.css`, `app.js`) provides an interactive dashboard for developers to query architectural decisions.
+## 3. Ideal Customer Profile (ICP) & Substitutes
+- **ICP**: Software Engineers, Open-Source Contributors, Technical Leads[span_55](start_span)[span_55](end_span).
+- **Current Substitutes**: Manual `git blame`, GitHub PR search, asking senior engineers on Slack.
+- **Cost of Substitute**: Hours of lost engineering velocity and redundant code refactors[span_56](start_span)[span_56](end_span).
 
-- **Design System**: Modern glassmorphic styling utilizing backdrop filters, dynamic glow effects, and responsive layouts.
-- **Async API Integration**: Non-blocking `fetch()` requests connect the frontend to the FastAPI server (`main.py`) to stream and render graph query results seamlessly.
-- **Interactive Metadata Cards**: Retracted graph context (commits, PRs, issues) is rendered in structured, clickable cards with direct links to source commits.
-
----
-
-## 3. Failure Case & Edge Case Validation
-To ensure UI stability under real-world developer workflows, the team validated the interface across key failure scenarios:
-
-1. **Empty / Insufficient Context**: Validated UI state when the backend returns refusal responses (*"Insufficient context in knowledge graph"*), displaying helpful prompt suggestions rather than error states.
-2. **Network Delays & Timeouts**: Implemented loading skeletons and user-friendly error banners during database reconnects or latency spikes.
-3. **Malformed Inputs**: Added client-side sanitization to handle special characters, SQL/Cypher-like syntax inputs, and oversized queries gracefully.
-
----
-
-## 4. Integration & Usability Testing
-- Verified cross-browser compatibility and responsive UI layouts across various screen resolutions.
-- Conducted initial integration tests matching frontend input forms with backend RAG payload contracts.
+## 4. Single Target Product Flow
+1. Developer enters a public GitHub repo URL and a why-question into the UI[span_57](start_span)[span_57](end_span).
+2. System queries Neo4j AuraDB for matching commits, PRs, and issues[span_58](start_span)[span_58](end_span).
+3. RAG pipeline generates a source-grounded response with citation cards[span_59](start_span)[span_59](end_span).
+4. Developer clicks a citation card to inspect the exact GitHub source commit/PR[span_60](start_span)[span_60](end_span).

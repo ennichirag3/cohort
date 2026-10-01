@@ -1,65 +1,26 @@
-# Project Specification: "Why The Code Is Like This" RAG Assistant
+# PROJECT_SPEC.md
 
-## 1. Project Overview & System Scope
-Developers frequently struggle to understand historical context behind architectural decisions, legacy trade-offs, and design patterns within a codebase. The **"Why The Code Is Like This"** assistant is a Retrieval-Augmented Generation (RAG) system that connects developer natural language queries to a structured **Neo4j Knowledge Graph** containing Git commits, pull requests, issues, and developer discussion logs.
+## 1. What is this?
+An evidence-backed developer assistant that queries a Neo4j knowledge graph of Git commits, PRs, and issues to explain architectural decisions with traceable citations[span_70](start_span)[span_70](end_span).
 
-The primary objective is to deliver **factual, zero-hallucination, source-backed explanations** for architectural decisions, complete with direct citations to specific commits and PRs.
+## 2. Who uses it?
+Software engineers, maintainers, and onboarding developers seeking historical context behind codebase choices[span_71](start_span)[span_71](end_span).
 
----
+## 3. What must it do?
+- Accept public GitHub repo metadata and user why-questions[span_72](start_span)[span_72](end_span).
+- Graph-traverse `:Commit`, `:PullRequest`, `:Issue`, `:Developer`, and `:File` nodes[span_73](start_span)[span_73](end_span).
+- Return zero-hallucination answers citing exact commit hashes and PR IDs[span_74](start_span)[span_74](end_span).
+- Explicitly refuse to answer when evidence in the graph is insufficient[span_75](start_span)[span_75](end_span).
 
-## 2. Team Composition & Role Distribution
+## 4. What does it NOT do?
+- Does not edit, write, or refactor source code files[span_76](start_span)[span_76](end_span).
+- Does not index private repositories without access tokens[span_77](start_span)[span_77](end_span).
 
-| Team Member | Role | Core Responsibilities | Key Build-Log Deliverables |
-| :--- | :--- | :--- | :--- |
-| **Manas** | Tech & Neo4j Lead | Graph database modeling in Neo4j AuraDB, Cypher query optimization, schema constraints. | `Entry-2.md` |
-| **Anirudh** | Data & Ingestion Lead | Repository parsing (commits/PRs/issues), data normalization, and Neo4j batch ingestion. | `Entry-2.md` |
-| **Anshika** | AI & RAG Lead | RAG pipeline (`rag_pipeline.py`), FastAPI server (`main.py`), prompt engineering, temperature guardrails. | `Entry-3.md`, `Entry-4.md` |
-| **Shreya** | Evaluation & Security Lead | Faithfulness metrics, claim classification, refusal precision, and input/output guardrails. | `Entry-4.md`, `Entry-5.md` |
-| **Chirag** | Frontend & QA Lead | Glassmorphic UI (`index.html`, `styles.css`, `app.js`), async API integration, failure testing, stranger testing. | `Entry-5.md`, `Entry-6.md` |
+## 5. Technology Stack
+- **Frontend**: HTML5, Glassmorphic CSS3, Vanilla JS ES6+[span_78](start_span)[span_78](end_span)
+- **Backend**: Python FastAPI, Uvicorn[span_79](start_span)[span_79](end_span)
+- **Database**: Neo4j AuraDB (Cypher Query Language)[span_80](start_span)[span_80](end_span)
+- **AI / RAG**: OpenAI API (`gpt-4o`), LangChain, Zero-temperature (`0.0`) settings[span_81](start_span)[span_81](end_span)
 
----
-
-## 3. Technology Stack
-
-- **Backend**: Python 3.10+, FastAPI, Uvicorn
-- **Graph Database**: Neo4j AuraDB (Cypher Query Language)
-- **AI / LLM Framework**: OpenAI API (`gpt-4o` / custom embeddings), LangChain / LlamaIndex context utilities
-- **Frontend**: Glassmorphic UI (HTML5, Custom CSS3, Vanilla JS ES6+)
-- **Environment & Configuration**: `python-dotenv`, Git / GitHub
-
----
-
-## 4. System Architecture & Data Flow
-
-1. **User Query Input**: The developer submits a question via the glassmorphic web dashboard (e.g., *"Why did we move from Redis to Memcached?"*).
-2. **Cypher Generation & Context Retrieval**: The backend RAG engine converts or maps the query into an optimized Cypher statement to query Neo4j.
-3. **Subgraph Extraction**: Relevant nodes (`:Commit`, `:PullRequest`, `:Issue`, `:Developer`, `:File`) and their relationships are retrieved.
-4. **Bounded LLM Generation**: The extracted graph context is passed to the LLM with a `0.0` temperature setting and strict system prompts requiring source attribution.
-5. **Claims Classification & Response**: Post-generation guardrails verify that all claims are backed by retrieved graph nodes before streaming the citations and answer back to the frontend UI.
-
----
-
-## 5. Knowledge Graph Schema
-
-### Nodes
-- `:Commit` (`hash`, `author`, `timestamp`, `message`)
-- `:PullRequest` (`id`, `title`, `body`, `status`)
-- `:Issue` (`id`, `title`, `description`, `state`)
-- `:Developer` (`username`, `email`)
-- `:File` (`path`, `module`)
-
-### Relationships
-- `(:Developer)-[:AUTHORED]->(:Commit)`
-- `(:Commit)-[:MERGED_INTO]->(:PullRequest)`
-- `(:PullRequest)-[:CLOSES]->(:Issue)`
-- `(:Commit)-[:MODIFIED]->(:File)`
-- `(:Developer)-[:COMMENTED_ON]->(:PullRequest)`
-
----
-
-## 6. Guardrail & Evaluation Specifications
-
-- **Hallucination Prevention**: Prompts explicitly instruct the model to state *"Insufficient context in knowledge graph to answer this query"* if relevant graph nodes are missing.
-- **Citation Enforcement**: Every response must cite at least one explicit commit hash or pull request ID.
-- **Input Sanitization**: Client-side and server-side checks reject malicious injection attempts or malformed Cypher/SQL syntax.
-- **Evaluation Metrics**: Measured on Faithfulness Score, Citation Accuracy, and Refusal Precision across a standardized benchmark test set.
+## 6. Definition of Done
+A user enters a why-question, receives a factual answer grounded in graph nodes, and can click a citation card to open the corresponding GitHub PR/commit[span_82](start_span)[span_82](end_span).

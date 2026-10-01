@@ -1,51 +1,27 @@
-# BUILD_SUMMARY.md: "Why The Code Is Like This" RAG Assistant
+# Build Summary
 
-## 1. Executive Summary
-The **"Why The Code Is Like This"** RAG Assistant is an enterprise-grade retrieval-augmented generation system designed to eliminate architectural context loss in software development teams. By connecting a **FastAPI** backend with a **Neo4j Knowledge Graph** and presenting results through an interactive **Glassmorphic UI**, the platform allows engineers to query legacy code choices, trade-offs, and refactors, receiving factual, source-backed explanations grounded in raw Git commits, PR discussions, and issue logs.
+## Theme
+AI and Developer Tools — *Why The Code Is Like This*[span_83](start_span)[span_83](end_span)
 
----
+## Final Problem Statement
+Software developers onboarding to a codebase waste significant time recovering historical rationale for architectural decisions[span_84](start_span)[span_84](end_span). Existing tools search code diffs but fail to link issues, PRs, and commits into a traceable decision chain[span_85](start_span)[span_85](end_span). We built an evidence-backed RAG assistant that indexes Git history into a Neo4j knowledge graph, enabling developers to ask why-questions and receive answers grounded strictly in verifiable commit and PR evidence[span_86](start_span)[span_86](end_span).
 
-## 2. Technical Stack & System Architecture
-- **Backend API**: Python 3.10+, FastAPI, Uvicorn
-- **Knowledge Graph Database**: Neo4j AuraDB (Cypher Query Language)
-- **RAG & Guardrail Engine**: OpenAI API (`gpt-4o`), LangChain utilities, zero-temperature execution (`0.0`)
-- **Frontend Interface**: HTML5, CSS3 Glassmorphism design system, Vanilla JS ES6+ (`fetch` API)
-- **Security & Evaluation Layer**: Claims classification, refusal precision, and input/output guardrails
+## What Changed from Version 1
+Initial assumptions targeted broad code comments[span_87](start_span)[span_87](end_span). Analysis revealed that real architectural rationale lives inside Pull Request discussion threads and issue links[span_88](start_span)[span_88](end_span). We refocused the ingestion pipeline and graph schema specifically around PR-to-Commit-to-Issue relationships[span_89](start_span)[span_89](end_span).
 
----
+## What We Built
+A single-screen Glassmorphic web application backed by FastAPI and Neo4j AuraDB[span_90](start_span)[span_90](end_span). Users enter a query regarding code decisions, and the system retrieves the relevant subgraph, generating an answer with verifiable citation cards[span_91](start_span)[span_91](end_span). If context is missing, it explicitly refuses to answer[span_92](start_span)[span_92](end_span).
 
-## 3. Team Roster & Module Breakdown
+## Tech Stack
+- **Frontend**: Glassmorphic HTML/CSS/JS[span_93](start_span)[span_93](end_span)
+- **Backend**: FastAPI (Python)[span_94](start_span)[span_94](end_span)
+- **Graph Database**: Neo4j AuraDB[span_95](start_span)[span_95](end_span)
+- **AI Engine**: OpenAI API (`gpt-4o`) with zero-temperature guardrails[span_96](start_span)[span_96](end_span)
 
-| Team Member | Domain / Role | Primary Responsibilities | Key Deliverables |
-| :--- | :--- | :--- | :--- |
-| **Manas** | Tech & Neo4j Lead | Schema definition, Neo4j AuraDB setup, index optimization, and Cypher query templates. | `Entry-2.md` |
-| **Anirudh** | Data & Ingestion Lead | GitHub API integration, commit/PR log parsing, data normalization, and batch graph loading. | `Entry-2.md` |
-| **Anshika** | AI & RAG Lead | RAG pipeline architecture (`rag_pipeline.py`), FastAPI backend (`main.py`), and zero-temp system prompts. | `Entry-3.md`, `Entry-4.md` |
-| **Shreya** | Evaluation & Security Lead | Faithfulness evaluation, claim classification framework, refusal triggers, and security guardrails. | `Entry-4.md`, `Entry-5.md` |
-| **Chirag** | Frontend & QA Lead | Glassmorphic interface (`index.html`, `app.js`), async API integration, failure testing, and stranger testing execution. | `Entry-5.md`, `Entry-6.md` |
+## Evidence Position
+- **Proven**: Zero-temperature RAG eliminates hallucinations when backed by structured Neo4j subgraphs[span_97](start_span)[span_97](end_span).
+- **Assumption**: Developers will consistently write detailed PR descriptions in future projects[span_98](start_span)[span_98](end_span).
 
----
-
-## 4. Completed Build Milestones
-
-### 1. Knowledge Graph Schema & Ingestion (`Entry-1.md`, `Entry-2.md`)
-- Established graph entities: `:Commit`, `:PullRequest`, `:Issue`, `:Developer`, and `:File`.
-- Wired directional relationships (`:AUTHORED`, `:MERGED_INTO`, `:CLOSES`, `:MODIFIED`) for clear lineage tracking.
-- Implemented batch ingestion pipelines parsing raw GitHub metadata into Neo4j nodes.
-
-### 2. RAG Pipeline & Zero-Hallucination Guardrails (`Entry-3.md`, `Entry-4.md`)
-- Constructed `rag_pipeline.py` to map natural language queries into target Cypher lookups.
-- Enforced a strict `0.0` LLM temperature setting to guarantee deterministic outputs.
-- Built claims classification rules ensuring every generated statement cites a valid commit hash or PR ID, returning *"Insufficient context in knowledge graph to answer this query"* when graph evidence is absent.
-
-### 3. Frontend Development & Stranger Testing (`Entry-5.md`, `Entry-6.md`)
-- Designed and connected a responsive glassmorphic web dashboard with real-time feedback states.
-- Validated failure recovery under empty context states, network timeouts, and bad inputs.
-- Conducted stranger testing with external engineers to optimize query suggestions and citation card clarity.
-
----
-
-## 5. Repository Deployment Status
-- **GitHub Repository**: Synchronized with `ennichirag3/cohort`.
-- **Environment Protection**: `.env` and `venv/` files untracked via project root `.gitignore`.
-- **Documentation**: All core documentation files (`PROJECT_SPEC.md`, `Entry-1.md` to `Entry-6.md`, `BUILD_SUMMARY.md`) verified and complete.
+## What We Build Next
+1. Automated GitHub Webhooks for real-time graph updates upon PR merge[span_99](start_span)[span_99](end_span).
+2. Multi-repository graph querying across microservice architectures[span_100](start_span)[span_100](end_span).
