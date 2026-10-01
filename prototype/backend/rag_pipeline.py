@@ -9,23 +9,28 @@ from langchain.prompts import PromptTemplate
 load_dotenv()
 
 NEO4J_URI = os.getenv("NEO4J_URI")
-NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
+NEO4J_USER = os.getenv("NEO4J_USER") or os.getenv("NEO4J_USERNAME", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 class EvidenceRAGPipeline:
     def __init__(self):
-        # Initialize Neo4j Driver safely
-        if NEO4J_URI and NEO4J_PASSWORD:
-            self.driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
+        # Initialize Neo4j Driver safely with URI validation
+        if NEO4J_URI and NEO4J_PASSWORD and NEO4J_URI.strip():
+            try:
+                self.driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
+            except Exception as e:
+                print(f"Warning: Neo4j Driver failed to initialize: {e}")
+                self.driver = None
         else:
             self.driver = None
 
         # Initialize LLM with zero temperature for factual adherence
+        # Uses explicit key or falls back gracefully
         self.llm = ChatOpenAI(
             model="gpt-4o-mini",
             temperature=0.0,
-            api_key=OPENAI_API_KEY
+            api_key=OPENAI_API_KEY if OPENAI_API_KEY else "dummy-key-for-init"
         )
 
         # Define system prompt enforcing strict evidence vs inference separation
@@ -57,25 +62,27 @@ Structured Answer:
     def fetch_graph_evidence(self, question: str) -> List[Dict[str, Any]]:
         """
         Retrieves relevant commits, pull requests, and issues from Neo4j.
-        Coordinates with schema created by Manas/Shreya.
+        Supports multiple schema property naming variations.
         """
         if not self.driver:
             return []
 
-        # Example Cypher query searching nodes matching text keywords
+        # Cypher query with multi-property fallbacks
         cypher_query = """
         MATCH (e)
         WHERE (e:Commit OR e:PullRequest OR e:Issue OR e:Decision)
-          AND (toLower(e.message) CONTAINS toLower($query) 
-            OR toLower(e.description) CONTAINS toLower($query)
-            OR toLower(e.summary) CONTAINS toLower($query))
+          AND (toLower(coalesce(e.message, "")) CONTAINS toLower($query) 
+            OR toLower(coalesce(e.description, "")) CONTAINS toLower($query)
+            OR toLower(coalesce(e.summary, "")) CONTAINS toLower($query)
+            OR toLower(coalesce(e.body, "")) CONTAINS toLower($query)
+            OR toLower(coalesce(e.title, "")) CONTAINS toLower($query))
         RETURN 
             labels(e)[0] AS entity_type,
-            coalesce(e.hash, e.id, "N/A") AS identifier,
-            coalesce(e.message, e.summary, e.title, "") AS detail,
-            coalesce(e.author, "Unknown") AS author,
-            coalesce(e.date, "Unknown Date") AS date,
-            coalesce(e.url, "") AS url
+            coalesce(e.hash, e.id, e.number, "N/A") AS identifier,
+            coalesce(e.message, e.summary, e.title, e.description, e.body, "") AS detail,
+            coalesce(e.author, e.user, "Unknown") AS author,
+            coalesce(e.date, e.created_at, "Unknown Date") AS date,
+            coalesce(e.url, e.html_url, "") AS url
         LIMIT 5
         """
         try:

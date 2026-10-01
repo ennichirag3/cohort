@@ -1,3 +1,8 @@
+from dotenv import load_dotenv
+
+# MUST be executed before importing rag_pipeline to load .env variables into os.environ
+load_dotenv()
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
