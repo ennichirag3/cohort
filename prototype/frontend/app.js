@@ -2,12 +2,8 @@ const API_URL = "http://127.0.0.1:8000/api/ask";
 
 async function submitQuestion() {
   const questionInput = document.getElementById("question-input");
-  const questionText = questionInput.value.trim();
-
-  if (!questionText) {
-    alert("Please enter an architectural question.");
-    return;
-  }
+  // Use entered text or fall back to placeholder example text
+  const questionText = questionInput.value.trim() || questionInput.placeholder;
 
   const submitBtn = document.getElementById("submit-btn");
   const resultsSection = document.getElementById("results-section");
@@ -35,20 +31,20 @@ async function submitQuestion() {
 
     const data = await response.json();
 
-    // Render answer
-    answerContent.textContent = data.answer;
+    // Render synthesized answer
+    answerContent.textContent = data.answer || "No response received.";
 
     // Render source cards
     sourcesContent.innerHTML = "";
     if (data.sources && data.sources.length > 0) {
       data.sources.forEach((source) => {
         const card = document.createElement("div");
-        card.className = "source-card";
+        card.className = "source-card glass-card";
         card.innerHTML = `
           <span class="source-tag">${source.entity_type || 'Evidence Node'}</span>
           <div class="source-meta">${source.author || 'Unknown'} • ${source.date || 'N/A'}</div>
           <p class="source-detail">${source.detail || ''}</p>
-          ${source.url ? `<a class="source-link" href="${source.url}" target="_blank">Open Source Commit →</a>` : ''}
+          ${source.url ? `<a class="source-link" href="${source.url}" target="_blank" rel="noopener noreferrer">Open Source Commit →</a>` : ''}
         `;
         sourcesContent.appendChild(card);
       });
@@ -64,3 +60,16 @@ async function submitQuestion() {
     loadingSpinner.classList.add("hidden");
   }
 }
+
+// Enable keyboard shortcut (Cmd + Enter or Ctrl + Enter to submit)
+document.addEventListener("DOMContentLoaded", () => {
+  const textarea = document.getElementById("question-input");
+  if (textarea) {
+    textarea.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+        e.preventDefault();
+        submitQuestion();
+      }
+    });
+  }
+});

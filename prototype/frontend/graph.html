@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why The Code Is Like This - Graph Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    .graph-card {
+      width: 100%;
+      height: 520px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    svg.graph-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .node-group {
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .node-group:hover {
+      filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.5));
+    }
+
+    /* Node Title Typography */
+    .node-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      fill: #ffffff;
+      pointer-events: none;
+    }
+
+    .node-subtitle {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      fill: #cbd5e1;
+      pointer-events: none;
+    }
+
+    /* Code / Commit Monospace Font */
+    .mono-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    /* Connection Line Styling */
+    .edge-line {
+      stroke: rgba(255, 255, 255, 0.2);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 4;
+    }
+
+    /* Relationship Edge Badges */
+    .edge-badge {
+      fill: #0d0c1d;
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 1;
+      rx: 4px;
+    }
+
+    .edge-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 600;
+      fill: #a1a1aa;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Ambient Gradient Background Glows -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <div class="app-container">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">CODE<b>INSIGHT</b></span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-item">Evidence Engine</a>
+        <a href="graph.html" class="nav-item active">Graph Explorer</a>
+        <a href="http://127.0.0.1:8000/docs" target="_blank" rel="noopener noreferrer" class="nav-item">Documentation</a>
+      </div>
+    </nav>
+
+    <!-- Main Section -->
+    <main class="hero-section">
+      <div class="hero-header">
+        <span class="tag-badge">GRAPH VISUALIZER</span>
+        <h1 class="hero-title">Knowledge Graph Topology</h1>
+        <p class="hero-subtitle">Interactively explore historical commits, architectural decisions, and pull request dependencies.</p>
+      </div>
+
+      <!-- Graph Display Card -->
+      <div class="glass-card graph-card">
+        <svg class="graph-svg" viewBox="0 0 800 450">
+          <!-- Edges (Connections) -->
+          <line class="edge-line" x1="400" y1="225" x2="220" y2="120" />
+          <line class="edge-line" x1="400" y1="225" x2="580" y2="120" />
+          <line class="edge-line" x1="400" y1="225" x2="250" y2="330" />
+          <line class="edge-line" x1="400" y1="225" x2="550" y2="330" />
+
+          <!-- Relationship Badges & Labels -->
+          <g transform="translate(310, 172)">
+            <rect x="-42" y="-9" width="84" height="18" class="edge-badge" />
+            <text x="0" y="3" text-anchor="middle" class="edge-text">JUSTIFIED_BY</text>
+          </g>
+
+          <g transform="translate(490, 172)">
+            <rect x="-48" y="-9" width="96" height="18" class="edge-badge" />
+            <text x="0" y="3" text-anchor="middle" class="edge-text">IMPLEMENTED_IN</text>
+          </g>
+
+          <g transform="translate(325, 278)">
+            <rect x="-38" y="-9" width="76" height="18" class="edge-badge" />
+            <text x="0" y="3" text-anchor="middle" class="edge-text">STORED_IN</text>
+          </g>
+
+          <g transform="translate(475, 278)">
+            <rect x="-38" y="-9" width="76" height="18" class="edge-badge" />
+            <text x="0" y="3" text-anchor="middle" class="edge-text">DEPENDS_ON</text>
+          </g>
+
+          <!-- Central Decision Node -->
+          <g class="node-group" transform="translate(400, 225)">
+            <circle r="52" fill="url(#purpleGradient)" stroke="#c084fc" stroke-width="2"/>
+            <text x="0" y="-6" text-anchor="middle" class="node-title" font-size="14">Decision Node</text>
+            <text x="0" y="12" text-anchor="middle" class="node-subtitle">Neo4j Choice</text>
+          </g>
+
+          <!-- Node 1: Commit -->
+          <g class="node-group" transform="translate(220, 120)">
+            <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#13102d" stroke="#6366f1" stroke-width="1.5"/>
+            <text x="0" y="4" text-anchor="middle" class="node-title mono-text" fill="#a5b4fc">Commit #a1b2c3d</text>
+          </g>
+
+          <!-- Node 2: PR -->
+          <g class="node-group" transform="translate(580, 120)">
+            <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#082f25" stroke="#10b981" stroke-width="1.5"/>
+            <text x="0" y="4" text-anchor="middle" class="node-title" fill="#6ee7b7">PR #14 GraphRAG</text>
+          </g>
+
+          <!-- Node 3: Database Entity -->
+          <g class="node-group" transform="translate(250, 330)">
+            <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#2e1505" stroke="#f59e0b" stroke-width="1.5"/>
+            <text x="0" y="4" text-anchor="middle" class="node-title" fill="#fde047">Neo4j Vector Index</text>
+          </g>
+
+          <!-- Node 4: Backend Code -->
+          <g class="node-group" transform="translate(550, 330)">
+            <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#240c38" stroke="#a855f7" stroke-width="1.5"/>
+            <text x="0" y="4" text-anchor="middle" class="node-title mono-text" fill="#e9d5ff">rag_pipeline.py</text>
+          </g>
+
+          <!-- Gradients -->
+          <defs>
+            <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#8b5cf6" />
+              <stop offset="100%" stop-color="#3b82f6" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -8,26 +8,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Ambient Gradient Orbs for Background Glow -->
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
   <div class="ambient-glow glow-3"></div>
 
   <div class="app-container">
-    <!-- Navbar -->
     <nav class="navbar">
       <div class="logo">
         <span class="logo-icon">⚡</span>
         <span class="logo-text">CODE<b>INSIGHT</b></span>
       </div>
       <div class="nav-links">
-        <span class="nav-item active">Evidence Engine</span>
-        <span class="nav-item">Graph Explorer</span>
-        <span class="nav-item">Documentation</span>
+        <a href="index.html" class="nav-item active">Evidence Engine</a>
+        <a href="graph.html" class="nav-item">Graph Explorer</a>
+        <a href="http://127.0.0.1:8000/docs" target="_blank" rel="noopener noreferrer" class="nav-item">Documentation</a>
       </div>
     </nav>
 
-    <!-- Main Content Area -->
     <main class="hero-section">
       <div class="hero-header">
         <span class="tag-badge">AI & DEV TOOLS</span>
@@ -35,7 +32,6 @@
         <p class="hero-subtitle">Trace software architecture decisions back to historical commits, PRs, and team discussions with verifiable evidence.</p>
       </div>
 
-      <!-- Input Card (Glassmorphism) -->
       <div class="glass-card input-card">
         <div class="input-header">
           <label for="question-input">Ask an architectural query:</label>
@@ -43,7 +39,7 @@
         <div class="input-wrapper">
           <textarea 
             id="question-input" 
-            placeholder="e.g., Why was Neo4j chosen over PostgreSQL for indexing repository entities?"
+            placeholder="Why was Neo4j chosen over PostgreSQL for indexing repository entities?"
             rows="3"
           ></textarea>
         </div>
@@ -56,21 +52,17 @@
         </div>
       </div>
 
-      <!-- Loading State -->
       <div id="loading-spinner" class="loading-container hidden">
         <div class="pulse-ring"></div>
         <p>Traversing Neo4j knowledge graph & synthesizing evidence...</p>
       </div>
 
-      <!-- Results Display Section -->
       <div id="results-section" class="results-container hidden">
-        <!-- Answer Output Card -->
         <div class="glass-card answer-card">
           <div class="card-badge">SYNTHESIZED ANSWER</div>
           <div id="answer-content" class="answer-text"></div>
         </div>
 
-        <!-- Evidence Chain Section -->
         <div class="evidence-section">
           <h2 class="section-title">Retrieved Evidence Chain</h2>
           <div id="sources-content" class="sources-grid"></div>
