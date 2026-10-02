@@ -3,7 +3,7 @@ from typing import Dict, Any, List
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
 from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 
 # Load environment variables from .env
 load_dotenv()
@@ -71,11 +71,11 @@ Structured Answer:
         cypher_query = """
         MATCH (e)
         WHERE (e:Commit OR e:PullRequest OR e:Issue OR e:Decision)
-          AND (toLower(coalesce(e.message, "")) CONTAINS toLower($query) 
-            OR toLower(coalesce(e.description, "")) CONTAINS toLower($query)
-            OR toLower(coalesce(e.summary, "")) CONTAINS toLower($query)
-            OR toLower(coalesce(e.body, "")) CONTAINS toLower($query)
-            OR toLower(coalesce(e.title, "")) CONTAINS toLower($query))
+          AND (toLower(coalesce(e.message, "")) CONTAINS toLower($search_term) 
+            OR toLower(coalesce(e.description, "")) CONTAINS toLower($search_term)
+            OR toLower(coalesce(e.summary, "")) CONTAINS toLower($search_term)
+            OR toLower(coalesce(e.body, "")) CONTAINS toLower($search_term)
+            OR toLower(coalesce(e.title, "")) CONTAINS toLower($search_term))
         RETURN 
             labels(e)[0] AS entity_type,
             coalesce(e.hash, e.id, e.number, "N/A") AS identifier,
@@ -87,7 +87,7 @@ Structured Answer:
         """
         try:
             with self.driver.session() as session:
-                result = session.run(cypher_query, query=question)
+                result = session.run(cypher_query, search_term=question)
                 records = [record.data() for record in result]
                 return records
         except Exception as e:
