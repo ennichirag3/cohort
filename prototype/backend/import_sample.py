@@ -5,26 +5,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
 
-# Load connection details from prototype/backend/.env
-load_dotenv(Path(__file__).with_name(".env"))
-
-uri = os.getenv("NEO4J_URI")
-username = os.getenv("NEO4J_USERNAME")
-password = os.getenv("NEO4J_PASSWORD")
-
-if not all([uri, username, password]):
-    raise RuntimeError(
-        "Set NEO4J_URI, NEO4J_USERNAME, and NEO4J_PASSWORD "
-        "in prototype/backend/.env"
-    )
-
-data_path = Path(__file__).parent / "data" / "pallets_click_sample.json"
-with data_path.open(encoding="utf-8") as file:
-    data = json.load(file)
-
-driver = GraphDatabase.driver(uri, auth=(username, password))
-
-
 def import_data(tx, data):
     repo = data["repository"]
 
@@ -100,7 +80,7 @@ def import_data(tx, data):
             """,
             id=issue["id"],
             title=issue.get("title", ""),
-            body=issue.get("body_excerpt", ""),
+            body=issue.get("body") or issue.get("body_excerpt", ""),
             author=issue.get("author_login"),
             created_at=issue.get("created_at"),
             source_url=issue.get("source_url"),
@@ -152,9 +132,35 @@ def import_data(tx, data):
             )
 
 
-try:
-    with driver.session() as session:
-        session.execute_write(import_data, data)
-    print("Sample data imported into Neo4j.")
-finally:
-    driver.close()
+def import_repository_data(data):
+    """Import one normalized repository dataset into the configured Neo4j DB."""
+    load_dotenv(Path(__file__).with_name(".env"))
+
+    uri = os.getenv("NEO4J_URI")
+    username = os.getenv("NEO4J_USERNAME")
+    password = os.getenv("NEO4J_PASSWORD")
+    if not all([uri, username, password]):
+        raise RuntimeError(
+            "Set NEO4J_URI, NEO4J_USERNAME, and NEO4J_PASSWORD "
+            "in prototype/backend/.env"
+        )
+
+    driver = GraphDatabase.driver(uri, auth=(username, password))
+    try:
+        with driver.session() as session:
+            session.execute_write(import_data, data)
+    finally:
+        driver.close()
+
+
+def main():
+    data_path = Path(__file__).parent / "data" / "pallets_click_final.json"
+    with data_path.open(encoding="utf-8") as file:
+        data = json.load(file)
+
+    import_repository_data(data)
+    print("Final GitHub dataset imported into Neo4j.")
+
+
+if __name__ == "__main__":
+    main()

@@ -9,17 +9,73 @@
   <style>
     .graph-card {
       width: 100%;
-      height: 520px;
+      max-height: 680px;
+      min-height: 520px;
       position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: auto;
+      display: block;
+    }
+
+    .graph-summary {
+      margin: 12px 4px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .node-details {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px 16px;
+      align-items: start;
+    }
+
+    .node-details.hidden {
+      display: none;
+    }
+
+    .node-details h2,
+    .node-details .detail-body,
+    .node-details .detail-meta,
+    .node-details .detail-link {
+      grid-column: 1 / -1;
+    }
+
+    .node-details h2 {
+      font-size: 1.1rem;
+      overflow-wrap: anywhere;
+    }
+
+    .node-details .detail-body {
+      max-height: 220px;
+      overflow: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .node-details .detail-meta {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-close {
+      grid-column: 2;
+      grid-row: 1;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      padding: 4px 10px;
+      cursor: pointer;
     }
     
     svg.graph-svg {
       width: 100%;
-      height: 100%;
+      min-width: 960px;
+      height: auto;
+      display: block;
     }
 
     .node-group {
@@ -28,12 +84,12 @@
     }
 
     .node-group:hover {
-      filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.5));
+      filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.6));
     }
 
     .node-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: -0.01em;
       fill: #ffffff;
@@ -42,7 +98,7 @@
 
     .node-subtitle {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
       fill: #cbd5e1;
       pointer-events: none;
@@ -50,20 +106,19 @@
 
     .mono-text {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       letter-spacing: -0.02em;
     }
 
     .edge-line {
-      stroke: rgba(255, 255, 255, 0.2);
-      stroke-width: 1.5;
-      stroke-dasharray: 4 4;
+      stroke: rgba(148, 163, 184, 0.28);
+      stroke-width: 1.25;
     }
 
     .edge-badge {
       fill: #0d0c1d;
-      stroke: rgba(255, 255, 255, 0.12);
+      stroke: rgba(255, 255, 255, 0.18);
       stroke-width: 1;
       rx: 4px;
     }
@@ -113,47 +168,254 @@
           </defs>
         </svg>
       </div>
+      <p id="graphSummary" class="graph-summary" aria-live="polite"></p>
+
+      <section id="nodeDetails" class="glass-card node-details hidden" aria-live="polite">
+        <span id="detailType" class="source-tag">Select a node</span>
+        <button id="detailClose" class="detail-close" type="button" aria-label="Close details">Close</button>
+        <h2 id="detailTitle"></h2>
+        <p id="detailId" class="detail-meta"></p>
+        <p id="detailAuthorDate" class="detail-meta"></p>
+        <p id="detailBody" class="detail-body"></p>
+        <a id="detailLink" class="source-link hidden" target="_blank" rel="noopener noreferrer">Open GitHub source →</a>
+      </section>
     </main>
   </div>
 
   <script>
+    function truncateText(value, maxLength = 18) {
+      const text = String(value || '');
+      return text.length > maxLength ? text.substring(0, maxLength - 3) + '...' : text;
+    }
+
+    function escapeSvgText(value) {
+      return String(value ?? '').replace(/[&<>"']/g, character => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&apos;'
+      })[character]);
+    }
+
+    function shortNodeLabel(node) {
+      const details = node.details || {};
+      const stableId = String(details.id || node.label || '');
+
+      if (node.type === 'Commit') {
+        const sha = stableId.includes('@') ? stableId.split('@').pop() : stableId;
+        return `Commit ${sha.slice(0, 7)}`;
+      }
+
+      if (node.type === 'File') {
+        const path = String(details.path || stableId.split(':').slice(1).join(':') || node.label || 'File');
+        const parts = path.split(/[\\/]/).filter(Boolean);
+        const shortPath = parts.length > 2 ? `…/${parts.slice(-2).join('/')}` : path;
+        return truncateText(shortPath, 25);
+      }
+
+      if (node.type === 'PullRequest' || node.type === 'PR') {
+        const number = stableId.includes('#') ? stableId.split('#').pop() : stableId;
+        return `PR #${number}`;
+      }
+
+      if (node.type === 'Issue') {
+        const number = stableId.includes('#') ? stableId.split('#').pop() : stableId;
+        return `Issue #${number}`;
+      }
+
+      return truncateText(node.label || node.name || stableId, 22);
+    }
+
+    function safeGitHubUrl(value) {
+      try {
+        const url = new URL(value);
+        if (url.protocol === 'https:' && url.hostname === 'github.com') {
+          return url.href;
+        }
+      } catch {
+        // Leave the link hidden when the URL is invalid.
+      }
+      return '';
+    }
+
+    function showNodeDetails(node) {
+      const panel = document.getElementById('nodeDetails');
+      const details = node.details || {};
+      const sourceLink = document.getElementById('detailLink');
+      const url = safeGitHubUrl(details.url);
+
+      document.getElementById('detailType').textContent = node.type || 'Graph node';
+      document.getElementById('detailTitle').textContent = details.path || node.label || node.type || 'Graph node';
+      document.getElementById('detailId').textContent = `ID: ${details.id || node.id}`;
+      document.getElementById('detailAuthorDate').textContent =
+        `Author: ${details.author || 'Unknown'}${details.date ? ` • ${details.date}` : ''}`;
+      document.getElementById('detailBody').textContent = details.text || 'No additional text is stored for this node.';
+
+      if (url) {
+        sourceLink.href = url;
+        sourceLink.classList.remove('hidden');
+      } else {
+        sourceLink.removeAttribute('href');
+        sourceLink.classList.add('hidden');
+      }
+
+      panel.classList.remove('hidden');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     async function loadGraphTopology() {
       try {
-        // Read dynamic query context from window.name
-        const activeQuery = window.name ? window.name.trim() : "";
-        let apiUrl = 'http://127.0.0.1:8000/api/graph';
-        if (activeQuery) {
-          apiUrl += `?q=${encodeURIComponent(activeQuery)}`;
+        // Focus Graph Explorer on the repository from the last successful import.
+        // Without a selection, load the default graph for existing data.
+        const selectedRepository = localStorage.getItem('lastImportedRepository') || '';
+        const graphUrl = new URL('http://127.0.0.1:8000/api/graph');
+        if (selectedRepository) graphUrl.searchParams.set('q', selectedRepository);
+        const response = await fetch(graphUrl);
+        if (!response.ok) {
+          throw new Error(`Backend returned HTTP ${response.status}`);
+        }
+        const data = await response.json();
+        const svg = document.getElementById('graphSvg');
+
+        const nodes = data.nodes || [];
+        const edges = data.edges || [];
+
+        if (nodes.length === 0 || edges.length === 0) {
+          svg.innerHTML = `
+            <text x="480" y="210" text-anchor="middle" fill="#a1a1aa" font-family="Plus Jakarta Sans" font-size="14">
+              The backend is connected, but this graph has no relationships to draw.
+            </text>
+            <text x="480" y="240" text-anchor="middle" fill="#a1a1aa" font-family="Plus Jakarta Sans" font-size="12">
+              Import a repository from the Evidence Engine, then refresh this page.
+            </text>`;
+          document.getElementById('graphSummary').textContent =
+            `Backend returned ${nodes.length} nodes and ${edges.length} relationships.`;
+          return;
         }
 
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        
-        const svg = document.getElementById('graphSvg');
-        
-        const coords = {
-          "decision_1": { x: 400, y: 225 },
-          "commit_1": { x: 220, y: 120 },
-          "pr_1": { x: 580, y: 120 },
-          "index_1": { x: 250, y: 330 },
-          "file_1": { x: 550, y: 330 }
+        // Keep the sample balanced. The raw API list starts with many
+        // Repository -> Commit links, which otherwise overwhelm the view.
+        const nodeById = new Map(nodes.map(node => [node.id, node]));
+        const typeLimits = {
+          Repository: 2,
+          Commit: 6,
+          PullRequest: 3,
+          PR: 3,
+          Issue: 3,
+          Developer: 2,
+          File: 4,
         };
+        const visibleIds = new Set();
+        const visibleEdges = [];
+        const countsByType = new Map();
+        const relationCounts = new Map();
+        const visibleNodes = [];
 
-        const edgeBadges = [
-          { source: "decision_1", target: "commit_1", label: "JUSTIFIED_BY", tx: 310, ty: 172, w: 84 },
-          { source: "decision_1", target: "pr_1", label: "IMPLEMENTED_IN", tx: 490, ty: 172, w: 96 },
-          { source: "decision_1", target: "index_1", label: "STORED_IN", tx: 325, ty: 278, w: 76 },
-          { source: "decision_1", target: "file_1", label: "DEPENDS_ON", tx: 475, ty: 278, w: 76 }
-        ];
+        function addNode(id) {
+          if (visibleIds.has(id)) return true;
+          const node = nodeById.get(id);
+          if (!node || visibleNodes.length >= 24) return false;
+          const type = node.type || 'Other';
+          const limit = typeLimits[type] ?? 4;
+          const count = countsByType.get(type) || 0;
+          if (count >= limit) return false;
+          visibleIds.add(id);
+          visibleNodes.push(node);
+          countsByType.set(type, count + 1);
+          return true;
+        }
 
-        let svgContent = `<defs>
-          <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#8b5cf6" />
-            <stop offset="100%" stop-color="#3b82f6" />
-          </linearGradient>
-        </defs>`;
+        // Keep repository context visible, but choose only a few of its commits.
+        nodes.filter(node => node.type === 'Repository').slice(0, 2).forEach(node => addNode(node.id));
 
-        edgeBadges.forEach(edge => {
+        const relationPriority = {
+          INCLUDES_COMMIT: 0,
+          REFERENCES_ISSUE: 0,
+          CHANGED: 1,
+          AUTHORED_BY: 2,
+          HAS_COMMIT: 3,
+        };
+        const relationLimits = {
+          INCLUDES_COMMIT: 3,
+          REFERENCES_ISSUE: 3,
+          CHANGED: 4,
+          AUTHORED_BY: 2,
+          HAS_COMMIT: 2,
+        };
+        const prioritizedEdges = [...edges].sort((a, b) =>
+          (relationPriority[a.relation] ?? 2) - (relationPriority[b.relation] ?? 2)
+        );
+
+        for (const edge of prioritizedEdges) {
+          const relationCount = relationCounts.get(edge.relation) || 0;
+          if (relationCount >= (relationLimits[edge.relation] ?? 3)) continue;
+
+          const newIds = [edge.source, edge.target].filter(id => !visibleIds.has(id));
+          const canAdd = newIds.every(id => {
+            const node = nodeById.get(id);
+            if (!node) return false;
+            const type = node.type || 'Other';
+            const limit = typeLimits[type] ?? 4;
+            return (countsByType.get(type) || 0) < limit;
+          });
+          if (!canAdd || visibleNodes.length + newIds.length > 24) continue;
+
+          addNode(edge.source);
+          addNode(edge.target);
+          visibleEdges.push(edge);
+          relationCounts.set(edge.relation, relationCount + 1);
+        }
+
+        // Draw each relationship once even if the API returned duplicates.
+        const uniqueEdges = [...new Map(visibleEdges.map(edge =>
+          [`${edge.source}|${edge.relation}|${edge.target}`, edge]
+        )).values()];
+        const typeOrder = ['Repository', 'Commit', 'PullRequest', 'PR', 'Issue', 'Developer', 'File'];
+        const groups = new Map();
+        visibleNodes.forEach(node => {
+          const type = node.type || 'Other';
+          if (!groups.has(type)) groups.set(type, []);
+          groups.get(type).push(node);
+        });
+        const types = [...groups.keys()].sort((a, b) => {
+          const ai = typeOrder.indexOf(a);
+          const bi = typeOrder.indexOf(b);
+          return (ai === -1 ? typeOrder.length : ai) - (bi === -1 ? typeOrder.length : bi) || a.localeCompare(b);
+        });
+
+        const width = Math.max(960, types.length * 210 + 40);
+        const laneWidth = (width - 40) / types.length;
+        const height = Math.max(480, Math.max(...types.map(type => groups.get(type).length), 1) * 84 + 110);
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        svg.style.width = '100%';
+        svg.style.height = 'auto';
+        const coords = {};
+        const columnCenters = {};
+        types.forEach((type, columnIndex) => {
+          const x = 20 + columnIndex * laneWidth + laneWidth / 2;
+          columnCenters[type] = x;
+          groups.get(type).forEach((node, rowIndex) => {
+            coords[node.id] = { x, y: 96 + rowIndex * 84 };
+          });
+        });
+
+        let svgContent = `
+          <defs>
+            <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#8b5cf6" />
+              <stop offset="100%" stop-color="#3b82f6" />
+            </linearGradient>
+          </defs>
+          <text x="20" y="28" class="edge-text">NODES GROUPED BY TYPE · CLICK A NODE FOR DETAILS</text>`;
+
+        // Type lanes keep node cards separated; faint lines preserve the relationships.
+        types.forEach(type => {
+          const count = groups.get(type).length;
+          svgContent += `<text x="${columnCenters[type]}" y="62" text-anchor="middle" class="node-subtitle">${escapeSvgText(type)} (${count})</text>`;
+        });
+
+        uniqueEdges.forEach(edge => {
           const p1 = coords[edge.source];
           const p2 = coords[edge.target];
           if (p1 && p2) {
@@ -161,63 +423,81 @@
           }
         });
 
-        edgeBadges.forEach(edge => {
-          svgContent += `
-            <g transform="translate(${edge.tx}, ${edge.ty})">
-              <rect x="${-edge.w/2}" y="-9" width="${edge.w}" height="18" class="edge-badge" />
-              <text x="0" y="3" text-anchor="middle" class="edge-text">${edge.label}</text>
-            </g>`;
-        });
+        visibleNodes.forEach(node => {
+          const pos = coords[node.id];
+          const displayLabel = escapeSvgText(shortNodeLabel(node));
 
-        // Use backend data nodes dynamically
-        const nodesToRender = (data.nodes && data.nodes.length > 0) ? data.nodes : [];
-
-        nodesToRender.forEach((node, index) => {
-          const pos = coords[node.id] || { x: 200 + (index * 100), y: 225 };
-          const labelText = node.label || node.id;
-          const detailText = node.detail || '';
-          
           if (node.type === "Decision") {
+            const detailText = truncateText(node.details?.text || '', 16);
             svgContent += `
               <g class="node-group" transform="translate(${pos.x}, ${pos.y})">
-                <circle r="52" fill="url(#purpleGradient)" stroke="#c084fc" stroke-width="2"/>
-                <text x="0" y="-6" text-anchor="middle" class="node-title" font-size="14">${labelText}</text>
-                <text x="0" y="12" text-anchor="middle" class="node-subtitle">${detailText}</text>
+                <circle r="50" fill="url(#purpleGradient)" stroke="#c084fc" stroke-width="2"/>
+                <text x="0" y="${detailText ? '-4' : '4'}" text-anchor="middle" class="node-title">${displayLabel}</text>
+                ${detailText ? `<text x="0" y="12" text-anchor="middle" class="node-subtitle">${detailText}</text>` : ''}
               </g>`;
           } else if (node.type === "Commit") {
             svgContent += `
               <g class="node-group" transform="translate(${pos.x}, ${pos.y})">
-                <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#13102d" stroke="#6366f1" stroke-width="1.5"/>
-                <text x="0" y="4" text-anchor="middle" class="node-title mono-text" fill="#a5b4fc">${labelText}</text>
+                <rect x="-82" y="-23" width="164" height="46" rx="12" fill="#13102d" stroke="#6366f1" stroke-width="1.5"/>
+                <text x="0" y="4" text-anchor="middle" class="node-title mono-text" fill="#a5b4fc">${displayLabel}</text>
               </g>`;
-          } else if (node.type === "PullRequest") {
+          } else if (node.type === "PullRequest" || node.type === "PR") {
             svgContent += `
               <g class="node-group" transform="translate(${pos.x}, ${pos.y})">
-                <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#082f25" stroke="#10b981" stroke-width="1.5"/>
-                <text x="0" y="4" text-anchor="middle" class="node-title" fill="#6ee7b7">${labelText}</text>
+                <rect x="-82" y="-23" width="164" height="46" rx="12" fill="#082f25" stroke="#10b981" stroke-width="1.5"/>
+                <text x="0" y="4" text-anchor="middle" class="node-title" fill="#6ee7b7">${displayLabel}</text>
               </g>`;
           } else if (node.type === "Index") {
             svgContent += `
               <g class="node-group" transform="translate(${pos.x}, ${pos.y})">
-                <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#2e1505" stroke="#f59e0b" stroke-width="1.5"/>
-                <text x="0" y="4" text-anchor="middle" class="node-title" fill="#fde047">${labelText}</text>
+                <rect x="-82" y="-23" width="164" height="46" rx="12" fill="#2e1505" stroke="#f59e0b" stroke-width="1.5"/>
+                <text x="0" y="4" text-anchor="middle" class="node-title" fill="#fde047">${displayLabel}</text>
               </g>`;
           } else {
             svgContent += `
               <g class="node-group" transform="translate(${pos.x}, ${pos.y})">
-                <rect x="-75" y="-24" width="150" height="48" rx="12" fill="#240c38" stroke="#a855f7" stroke-width="1.5"/>
-                <text x="0" y="4" text-anchor="middle" class="node-title mono-text" fill="#e9d5ff">${labelText}</text>
+                <rect x="-82" y="-23" width="164" height="46" rx="12" fill="#240c38" stroke="#a855f7" stroke-width="1.5"/>
+                <text x="0" y="4" text-anchor="middle" class="node-title mono-text" fill="#e9d5ff">${displayLabel}</text>
               </g>`;
           }
         });
 
         svg.innerHTML = svgContent;
+
+        svg.querySelectorAll('.node-group').forEach((element, index) => {
+          element.addEventListener('click', () => showNodeDetails(visibleNodes[index]));
+          element.setAttribute('tabindex', '0');
+          element.setAttribute('role', 'button');
+          element.setAttribute('aria-label', `Show details for ${shortNodeLabel(visibleNodes[index])}`);
+          element.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              showNodeDetails(visibleNodes[index]);
+            }
+          });
+        });
+
+        const graphLabel = selectedRepository ? ` for ${selectedRepository}` : '';
+        document.getElementById('graphSummary').textContent =
+          `Showing a balanced sample${graphLabel}: ${visibleNodes.length} of ${nodes.length} nodes and ${uniqueEdges.length} of ${edges.length} relationships. Click a node for details.`;
       } catch (err) {
         console.error("Failed to load graph topology from backend:", err);
+        const svg = document.getElementById('graphSvg');
+        svg.innerHTML = `
+          <text x="480" y="210" text-anchor="middle" fill="#fca5a5" font-family="Plus Jakarta Sans" font-size="14">
+            Could not load the graph. Check that the backend is running, then refresh.
+          </text>
+          <text x="480" y="240" text-anchor="middle" fill="#a1a1aa" font-family="Plus Jakarta Sans" font-size="12">
+            ${escapeSvgText(err.message || 'Unknown error')}
+          </text>`;
+        document.getElementById('graphSummary').textContent = '';
       }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById('detailClose').addEventListener('click', () => {
+        document.getElementById('nodeDetails').classList.add('hidden');
+      });
       loadGraphTopology();
     });
   </script>

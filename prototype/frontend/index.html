@@ -6,6 +6,22 @@
   <title>Why The Code Is Like This - Evidence Engine</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .repo-input {
+      width: 100%;
+      background: rgba(10, 11, 26, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1rem;
+      color: var(--text-main);
+      font-size: 1rem;
+      outline: none;
+    }
+    .repo-input:focus { border-color: var(--primary-accent); }
+    .repo-status { margin: 0.8rem 0 0; color: var(--text-muted); }
+    .repo-status.error { color: #fca5a5; }
+    .repo-status.success { color: #6ee7b7; }
+  </style>
 </head>
 <body>
   <div class="ambient-glow glow-1"></div>
@@ -32,6 +48,29 @@
         <p class="hero-subtitle">Trace software architecture decisions back to historical commits, PRs, and team discussions with verifiable evidence.</p>
       </div>
 
+      <section class="glass-card input-card" aria-labelledby="repository-heading">
+        <div class="input-header">
+          <label id="repository-heading" for="repository-input">Add a public GitHub repository:</label>
+        </div>
+        <div class="input-wrapper">
+          <input
+            id="repository-input"
+            class="repo-input"
+            type="text"
+            placeholder="https://github.com/pallets/click or pallets/click"
+            autocomplete="url"
+            spellcheck="false"
+          >
+        </div>
+        <div class="input-footer">
+          <span class="hint-text">Imports recent commits, merged PRs, and issues. Public repos need no GitHub token.</span>
+          <button id="repository-submit-btn" class="glow-button" type="button" onclick="addRepository()">
+            <span>Add Repository</span>
+          </button>
+        </div>
+        <p id="repository-status" class="repo-status" role="status" aria-live="polite"></p>
+      </section>
+
       <div class="glass-card input-card">
         <div class="input-header">
           <label for="question-input">Ask an architectural query:</label>
@@ -44,7 +83,7 @@
           ></textarea>
         </div>
         <div class="input-footer">
-          <span class="hint-text">Powered by Neo4j GraphRAG + LLM</span>
+          <span class="hint-text">Powered by Neo4j graph evidence</span>
           <button id="submit-btn" class="glow-button" onclick="submitQuestion()">
             <span>Query System</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

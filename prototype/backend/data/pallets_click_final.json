@@ -1,0 +1,1866 @@
+{
+  "repository": {
+    "id": "pallets/click",
+    "name": "click",
+    "url": "https://github.com/pallets/click",
+    "source_url": "https://github.com/pallets/click"
+  },
+  "commits": [
+    {
+      "id": "pallets/click@06b2a678741131fd577ce170e23e5ca0aeba0309",
+      "sha": "06b2a678741131fd577ce170e23e5ca0aeba0309",
+      "message": "Deprecate parameter names that are: not a Python identifier, or a Python Keyword, or not lower-cased (#3866)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-23T04:07:17Z",
+      "url": "https://github.com/pallets/click/commit/06b2a678741131fd577ce170e23e5ca0aeba0309",
+      "source_url": "https://github.com/pallets/click/commit/06b2a678741131fd577ce170e23e5ca0aeba0309",
+      "files": [
+        "CHANGES.md",
+        "docs/upgrade-guides.md",
+        "pyproject.toml",
+        "src/click/core.py",
+        "tests/test_arguments.py",
+        "tests/test_deprecations.py",
+        "tests/test_options.py",
+        "uv.lock"
+      ],
+      "pull_request_ids": []
+    },
+    {
+      "id": "pallets/click@b90faad1788bc030bb3320938f07c9189f42d7d0",
+      "sha": "b90faad1788bc030bb3320938f07c9189f42d7d0",
+      "message": "Deprecate a parameter name that Click 9.0 will refuse or lower case\n\nPrepares the ground for #3827",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-11T07:44:03Z",
+      "url": "https://github.com/pallets/click/commit/b90faad1788bc030bb3320938f07c9189f42d7d0",
+      "source_url": "https://github.com/pallets/click/commit/b90faad1788bc030bb3320938f07c9189f42d7d0",
+      "files": [
+        "CHANGES.md",
+        "docs/upgrade-guides.md",
+        "src/click/core.py",
+        "tests/test_arguments.py",
+        "tests/test_deprecations.py",
+        "tests/test_options.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3866"
+      ]
+    },
+    {
+      "id": "pallets/click@a59f7c624fb7272e37d97921047dab8bf3ff0675",
+      "sha": "a59f7c624fb7272e37d97921047dab8bf3ff0675",
+      "message": "Start 8.6.0.",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-22T06:39:50Z",
+      "url": "https://github.com/pallets/click/commit/a59f7c624fb7272e37d97921047dab8bf3ff0675",
+      "source_url": "https://github.com/pallets/click/commit/a59f7c624fb7272e37d97921047dab8bf3ff0675",
+      "files": [
+        "CHANGES.md",
+        "pyproject.toml",
+        "uv.lock"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3866"
+      ]
+    },
+    {
+      "id": "pallets/click@3cbaa76b6014be7427d1ab06b4af40f01e7c278e",
+      "sha": "3cbaa76b6014be7427d1ab06b4af40f01e7c278e",
+      "message": "Merge stable into main (#3876)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-21T18:54:47Z",
+      "url": "https://github.com/pallets/click/commit/3cbaa76b6014be7427d1ab06b4af40f01e7c278e",
+      "source_url": "https://github.com/pallets/click/commit/3cbaa76b6014be7427d1ab06b4af40f01e7c278e",
+      "files": [
+        "CHANGES.md",
+        "docs/arguments.md",
+        "docs/documentation.md",
+        "src/click/core.py",
+        "src/click/types.py",
+        "src/click/utils.py",
+        "tests/test_arguments.py",
+        "tests/test_info_dict.py",
+        "tests/test_types/test_Path.py",
+        "tests/test_utils/test_make_default_short_help.py",
+        "tests/typing/typing_path.py"
+      ],
+      "pull_request_ids": []
+    },
+    {
+      "id": "pallets/click@bb695aaecdef95832d167fc1d508921745aa824e",
+      "sha": "bb695aaecdef95832d167fc1d508921745aa824e",
+      "message": "Always list all positional arguments (#3860)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-21T18:30:59Z",
+      "url": "https://github.com/pallets/click/commit/bb695aaecdef95832d167fc1d508921745aa824e",
+      "source_url": "https://github.com/pallets/click/commit/bb695aaecdef95832d167fc1d508921745aa824e",
+      "files": [
+        "CHANGES.md",
+        "docs/arguments.md",
+        "docs/documentation.md",
+        "src/click/core.py",
+        "tests/test_arguments.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@70689853e39c30e36eb0d83d586cc914a74db9d3",
+      "sha": "70689853e39c30e36eb0d83d586cc914a74db9d3",
+      "message": "Fix short help abbreviation (#3865)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-12T02:35:07Z",
+      "url": "https://github.com/pallets/click/commit/70689853e39c30e36eb0d83d586cc914a74db9d3",
+      "source_url": "https://github.com/pallets/click/commit/70689853e39c30e36eb0d83d586cc914a74db9d3",
+      "files": [
+        "CHANGES.md",
+        "src/click/utils.py",
+        "tests/test_utils/test_make_default_short_help.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@d036881798e34289a49b18a5c550c7cf687e5a7a",
+      "sha": "d036881798e34289a49b18a5c550c7cf687e5a7a",
+      "message": "Revert \"Deprecate a parameter name that is not a Python identifier\"\n\nThis reverts commit e2bddbc801dabc4efc3c3c1e32b53b3f938d3efc.",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-11T13:18:27Z",
+      "url": "https://github.com/pallets/click/commit/d036881798e34289a49b18a5c550c7cf687e5a7a",
+      "source_url": "https://github.com/pallets/click/commit/d036881798e34289a49b18a5c550c7cf687e5a7a",
+      "files": [
+        "CHANGES.md",
+        "docs/upgrade-guides.md",
+        "src/click/core.py",
+        "tests/test_arguments.py",
+        "tests/test_deprecations.py",
+        "tests/test_options.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@e2bddbc801dabc4efc3c3c1e32b53b3f938d3efc",
+      "sha": "e2bddbc801dabc4efc3c3c1e32b53b3f938d3efc",
+      "message": "Deprecate a parameter name that is not a Python identifier\n\nClick 9.0 refuses such a name; warn a release ahead so the break can diffuse.\nPrepares the ground for #3827, as promised in pull/3827#issuecomment-5583963038.",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-11T07:44:03Z",
+      "url": "https://github.com/pallets/click/commit/e2bddbc801dabc4efc3c3c1e32b53b3f938d3efc",
+      "source_url": "https://github.com/pallets/click/commit/e2bddbc801dabc4efc3c3c1e32b53b3f938d3efc",
+      "files": [
+        "CHANGES.md",
+        "docs/upgrade-guides.md",
+        "src/click/core.py",
+        "tests/test_arguments.py",
+        "tests/test_deprecations.py",
+        "tests/test_options.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@f67c2bb6c2f055c1c7a57cd46c3697fc26a7742e",
+      "sha": "f67c2bb6c2f055c1c7a57cd46c3697fc26a7742e",
+      "message": "Fix short help abbreviation",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-11T06:22:32Z",
+      "url": "https://github.com/pallets/click/commit/f67c2bb6c2f055c1c7a57cd46c3697fc26a7742e",
+      "source_url": "https://github.com/pallets/click/commit/f67c2bb6c2f055c1c7a57cd46c3697fc26a7742e",
+      "files": [
+        "CHANGES.md",
+        "src/click/utils.py",
+        "tests/test_utils/test_make_default_short_help.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3865",
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@6d5bac5c712195cbfa9666ba0ecbf0573cdea356",
+      "sha": "6d5bac5c712195cbfa9666ba0ecbf0573cdea356",
+      "message": "Move common `help` argument from `Option` and `Argument` to `Parameter` (#3861)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-10T19:29:49Z",
+      "url": "https://github.com/pallets/click/commit/6d5bac5c712195cbfa9666ba0ecbf0573cdea356",
+      "source_url": "https://github.com/pallets/click/commit/6d5bac5c712195cbfa9666ba0ecbf0573cdea356",
+      "files": [
+        "CHANGES.md",
+        "src/click/core.py",
+        "tests/test_info_dict.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@05f6fd0df4ecbd104eb7a229f9f185c2484dee69",
+      "sha": "05f6fd0df4ecbd104eb7a229f9f185c2484dee69",
+      "message": "Always return a help record for an `Argument`",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-10T09:11:43Z",
+      "url": "https://github.com/pallets/click/commit/05f6fd0df4ecbd104eb7a229f9f185c2484dee69",
+      "source_url": "https://github.com/pallets/click/commit/05f6fd0df4ecbd104eb7a229f9f185c2484dee69",
+      "files": [
+        "CHANGES.md",
+        "src/click/core.py",
+        "tests/test_arguments.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3860",
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@405a5481e4dbd5022799993d787bd8446137d9a3",
+      "sha": "405a5481e4dbd5022799993d787bd8446137d9a3",
+      "message": "Move common `help` argument from `Option` and `Argument` to `Parameter`",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-10T08:54:52Z",
+      "url": "https://github.com/pallets/click/commit/405a5481e4dbd5022799993d787bd8446137d9a3",
+      "source_url": "https://github.com/pallets/click/commit/405a5481e4dbd5022799993d787bd8446137d9a3",
+      "files": [
+        "CHANGES.md",
+        "src/click/core.py",
+        "tests/test_info_dict.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3861",
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@f25f697a439acc2b0d84aa8f5413330f4e2e75cf",
+      "sha": "f25f697a439acc2b0d84aa8f5413330f4e2e75cf",
+      "message": "List every argument in the `Positional arguments` help section\n\nCloup already renders the section this way: https://github.com/janluke/cloup/issues/210",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-09T09:17:20Z",
+      "url": "https://github.com/pallets/click/commit/f25f697a439acc2b0d84aa8f5413330f4e2e75cf",
+      "source_url": "https://github.com/pallets/click/commit/f25f697a439acc2b0d84aa8f5413330f4e2e75cf",
+      "files": [
+        "CHANGES.md",
+        "docs/arguments.md",
+        "docs/documentation.md",
+        "src/click/core.py",
+        "tests/test_arguments.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3860",
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@86949d19b930ef68a45566544cb4b9508d895d0d",
+      "sha": "86949d19b930ef68a45566544cb4b9508d895d0d",
+      "message": "Make `click.Path` generic on `path_type` (#3858)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-08T19:48:10Z",
+      "url": "https://github.com/pallets/click/commit/86949d19b930ef68a45566544cb4b9508d895d0d",
+      "source_url": "https://github.com/pallets/click/commit/86949d19b930ef68a45566544cb4b9508d895d0d",
+      "files": [
+        "CHANGES.md",
+        "src/click/types.py",
+        "tests/test_types/test_Path.py",
+        "tests/typing/typing_path.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@22177f857a34e3c35ba957553853a37f23feb37e",
+      "sha": "22177f857a34e3c35ba957553853a37f23feb37e",
+      "message": "`path_type` narrows the converted value's type for `convert` and `prompt`\n\nCloses #3822",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-08T10:33:40Z",
+      "url": "https://github.com/pallets/click/commit/22177f857a34e3c35ba957553853a37f23feb37e",
+      "source_url": "https://github.com/pallets/click/commit/22177f857a34e3c35ba957553853a37f23feb37e",
+      "files": [
+        "CHANGES.md",
+        "src/click/types.py",
+        "tests/test_types/test_Path.py",
+        "tests/typing/typing_path.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3858",
+        "pallets/click#3876"
+      ]
+    },
+    {
+      "id": "pallets/click@6aabf099bfdd4c1e75fe8d0e0d4241372b988ab1",
+      "sha": "6aabf099bfdd4c1e75fe8d0e0d4241372b988ab1",
+      "message": "Stable (#3851)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-06T01:28:42Z",
+      "url": "https://github.com/pallets/click/commit/6aabf099bfdd4c1e75fe8d0e0d4241372b988ab1",
+      "source_url": "https://github.com/pallets/click/commit/6aabf099bfdd4c1e75fe8d0e0d4241372b988ab1",
+      "files": [],
+      "pull_request_ids": []
+    },
+    {
+      "id": "pallets/click@7944461a80b780d060899c8835acab3c273a04a6",
+      "sha": "7944461a80b780d060899c8835acab3c273a04a6",
+      "message": "Merge branch 'main' into stable",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-06T01:27:33Z",
+      "url": "https://github.com/pallets/click/commit/7944461a80b780d060899c8835acab3c273a04a6",
+      "source_url": "https://github.com/pallets/click/commit/7944461a80b780d060899c8835acab3c273a04a6",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@7ecc8d7ee4a2e5c0732d6551baeb7597b7a73ade",
+      "sha": "7ecc8d7ee4a2e5c0732d6551baeb7597b7a73ade",
+      "message": "Split out types tests. (#3850)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-06T01:24:20Z",
+      "url": "https://github.com/pallets/click/commit/7ecc8d7ee4a2e5c0732d6551baeb7597b7a73ade",
+      "source_url": "https://github.com/pallets/click/commit/7ecc8d7ee4a2e5c0732d6551baeb7597b7a73ade",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@b8a4486d52083981babc1642449420db6b09662e",
+      "sha": "b8a4486d52083981babc1642449420db6b09662e",
+      "message": "Split out types tests.",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-06T01:22:18Z",
+      "url": "https://github.com/pallets/click/commit/b8a4486d52083981babc1642449420db6b09662e",
+      "source_url": "https://github.com/pallets/click/commit/b8a4486d52083981babc1642449420db6b09662e",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3850"
+      ]
+    },
+    {
+      "id": "pallets/click@87f7a316f482d88d7ef45660da12cdcc5a5c14f6",
+      "sha": "87f7a316f482d88d7ef45660da12cdcc5a5c14f6",
+      "message": "Add missing a reference for Windows and use the `kbd` role (#3829)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-02T13:10:03Z",
+      "url": "https://github.com/pallets/click/commit/87f7a316f482d88d7ef45660da12cdcc5a5c14f6",
+      "source_url": "https://github.com/pallets/click/commit/87f7a316f482d88d7ef45660da12cdcc5a5c14f6",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@00aca23ee9135eedc651c6929c7bc1d39e522431",
+      "sha": "00aca23ee9135eedc651c6929c7bc1d39e522431",
+      "message": "Add `Option.get_help_spec` to extract the help's left part of an hidden option (#3821)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-02T13:01:38Z",
+      "url": "https://github.com/pallets/click/commit/00aca23ee9135eedc651c6929c7bc1d39e522431",
+      "source_url": "https://github.com/pallets/click/commit/00aca23ee9135eedc651c6929c7bc1d39e522431",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@fa99fbd7b96883c60275203b62914d3ce6d51010",
+      "sha": "fa99fbd7b96883c60275203b62914d3ce6d51010",
+      "message": "Use the `kbd` role for keyboard sequences in the docs\n\nAlso adds a missing reference to `Ctrl+Z` on Windows, introduced by #3818",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-02T07:25:16Z",
+      "url": "https://github.com/pallets/click/commit/fa99fbd7b96883c60275203b62914d3ce6d51010",
+      "source_url": "https://github.com/pallets/click/commit/fa99fbd7b96883c60275203b62914d3ce6d51010",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3829"
+      ]
+    },
+    {
+      "id": "pallets/click@271effb3d96da5575eb527216ce3552bd7628fab",
+      "sha": "271effb3d96da5575eb527216ce3552bd7628fab",
+      "message": "Add `Option.get_help_spec` to return the option's help left part\n\nFollows up on: #2516, #2517",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-31T22:51:16Z",
+      "url": "https://github.com/pallets/click/commit/271effb3d96da5575eb527216ce3552bd7628fab",
+      "source_url": "https://github.com/pallets/click/commit/271effb3d96da5575eb527216ce3552bd7628fab",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3821"
+      ]
+    },
+    {
+      "id": "pallets/click@be13b152cf5949a362926322c835fa76019cc6fe",
+      "sha": "be13b152cf5949a362926322c835fa76019cc6fe",
+      "message": "Document calling a command as a regular function (#3820)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-02T00:20:14Z",
+      "url": "https://github.com/pallets/click/commit/be13b152cf5949a362926322c835fa76019cc6fe",
+      "source_url": "https://github.com/pallets/click/commit/be13b152cf5949a362926322c835fa76019cc6fe",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@bb86cdea6e83bc8e2711290eeffb4c8654baa7a3",
+      "sha": "bb86cdea6e83bc8e2711290eeffb4c8654baa7a3",
+      "message": "Document calling a command as a regular function\n\nCloses #1054",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-31T21:04:54Z",
+      "url": "https://github.com/pallets/click/commit/bb86cdea6e83bc8e2711290eeffb4c8654baa7a3",
+      "source_url": "https://github.com/pallets/click/commit/bb86cdea6e83bc8e2711290eeffb4c8654baa7a3",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3820"
+      ]
+    },
+    {
+      "id": "pallets/click@b0241232f775c45e28c5d5d4e9ea2fbc70b8448f",
+      "sha": "b0241232f775c45e28c5d5d4e9ea2fbc70b8448f",
+      "message": "Add FAQ entry about tab completion in prompts (#3826)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-01T21:32:53Z",
+      "url": "https://github.com/pallets/click/commit/b0241232f775c45e28c5d5d4e9ea2fbc70b8448f",
+      "source_url": "https://github.com/pallets/click/commit/b0241232f775c45e28c5d5d4e9ea2fbc70b8448f",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@e5cb12ba5e81ca382062a4b513daddb535a576e3",
+      "sha": "e5cb12ba5e81ca382062a4b513daddb535a576e3",
+      "message": "Document type auto-conversion and test `set` and `frozenset` (#3808)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-01T18:21:57Z",
+      "url": "https://github.com/pallets/click/commit/e5cb12ba5e81ca382062a4b513daddb535a576e3",
+      "source_url": "https://github.com/pallets/click/commit/e5cb12ba5e81ca382062a4b513daddb535a576e3",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@cb43e055741b2416bf3ec46b5f84b140cca23e18",
+      "sha": "cb43e055741b2416bf3ec46b5f84b140cca23e18",
+      "message": "Add FAQ entry about tab completion in prompts\n\nCloses #173",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-01T10:08:27Z",
+      "url": "https://github.com/pallets/click/commit/cb43e055741b2416bf3ec46b5f84b140cca23e18",
+      "source_url": "https://github.com/pallets/click/commit/cb43e055741b2416bf3ec46b5f84b140cca23e18",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3826"
+      ]
+    },
+    {
+      "id": "pallets/click@394088a09a210c152a4295e4a493ffdebd4c5047",
+      "sha": "394088a09a210c152a4295e4a493ffdebd4c5047",
+      "message": "Test frozen types; Documents type conversion\n\nRefs #3036",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-27T14:25:53Z",
+      "url": "https://github.com/pallets/click/commit/394088a09a210c152a4295e4a493ffdebd4c5047",
+      "source_url": "https://github.com/pallets/click/commit/394088a09a210c152a4295e4a493ffdebd4c5047",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3808"
+      ]
+    },
+    {
+      "id": "pallets/click@00f257bb8e714064bea16425007543bbc0800445",
+      "sha": "00f257bb8e714064bea16425007543bbc0800445",
+      "message": "Fix race condition on `KeyboardInterrupt` in `Command.main()` (#3818)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-31T23:42:24Z",
+      "url": "https://github.com/pallets/click/commit/00f257bb8e714064bea16425007543bbc0800445",
+      "source_url": "https://github.com/pallets/click/commit/00f257bb8e714064bea16425007543bbc0800445",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@fbdd434028fe07ecf35084c945b43b938dfd639f",
+      "sha": "fbdd434028fe07ecf35084c945b43b938dfd639f",
+      "message": "Deprecate `isolated_filesystem` and document its limits\n\nFix #3700\nRefs #3501",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-05-23T12:28:49Z",
+      "url": "https://github.com/pallets/click/commit/fbdd434028fe07ecf35084c945b43b938dfd639f",
+      "source_url": "https://github.com/pallets/click/commit/fbdd434028fe07ecf35084c945b43b938dfd639f",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@8ee83ddbf5a7a4c2eac5308c9599c5ee67ee005e",
+      "sha": "8ee83ddbf5a7a4c2eac5308c9599c5ee67ee005e",
+      "message": "Revert \"Deprecate `isolated_filesystem` and document its limits\"\n\nThis reverts commit fbdd434028fe07ecf35084c945b43b938dfd639f.",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-07-17T21:32:37Z",
+      "url": "https://github.com/pallets/click/commit/8ee83ddbf5a7a4c2eac5308c9599c5ee67ee005e",
+      "source_url": "https://github.com/pallets/click/commit/8ee83ddbf5a7a4c2eac5308c9599c5ee67ee005e",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@cc1e188bf5ac6267c2a2a81e7b2c8ad7e55d2862",
+      "sha": "cc1e188bf5ac6267c2a2a81e7b2c8ad7e55d2862",
+      "message": "Add 'shtab' project to contribution list",
+      "author_login": "casperdcl",
+      "committed_at": "2026-08-24T17:13:50Z",
+      "url": "https://github.com/pallets/click/commit/cc1e188bf5ac6267c2a2a81e7b2c8ad7e55d2862",
+      "source_url": "https://github.com/pallets/click/commit/cc1e188bf5ac6267c2a2a81e7b2c8ad7e55d2862",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3793"
+      ]
+    },
+    {
+      "id": "pallets/click@420c8fb44eeadb537cae69d2fee3796e808558dd",
+      "sha": "420c8fb44eeadb537cae69d2fee3796e808558dd",
+      "message": "Merge main into stable (#3800)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-27T04:07:04Z",
+      "url": "https://github.com/pallets/click/commit/420c8fb44eeadb537cae69d2fee3796e808558dd",
+      "source_url": "https://github.com/pallets/click/commit/420c8fb44eeadb537cae69d2fee3796e808558dd",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@ce57b87ac490ac8744491658d092bd86f571bf58",
+      "sha": "ce57b87ac490ac8744491658d092bd86f571bf58",
+      "message": "Add FAQ entry about `edit()` returning immediately\n\nCloses #2582",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-19T05:36:41Z",
+      "url": "https://github.com/pallets/click/commit/ce57b87ac490ac8744491658d092bd86f571bf58",
+      "source_url": "https://github.com/pallets/click/commit/ce57b87ac490ac8744491658d092bd86f571bf58",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3780"
+      ]
+    },
+    {
+      "id": "pallets/click@3cbcf9b11546f4cf10b36d3e2e531733ba6fe001",
+      "sha": "3cbcf9b11546f4cf10b36d3e2e531733ba6fe001",
+      "message": "Add FAQ entry about `edit()` returning immediately (#3780)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-29T04:45:55Z",
+      "url": "https://github.com/pallets/click/commit/3cbcf9b11546f4cf10b36d3e2e531733ba6fe001",
+      "source_url": "https://github.com/pallets/click/commit/3cbcf9b11546f4cf10b36d3e2e531733ba6fe001",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@f58ca3e81424a35626c8a475eb59ab95589008ce",
+      "sha": "f58ca3e81424a35626c8a475eb59ab95589008ce",
+      "message": "Fix `copy`, `deepcopy` and `pickle` of `Sentinel` members",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-28T21:28:17Z",
+      "url": "https://github.com/pallets/click/commit/f58ca3e81424a35626c8a475eb59ab95589008ce",
+      "source_url": "https://github.com/pallets/click/commit/f58ca3e81424a35626c8a475eb59ab95589008ce",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3805"
+      ]
+    },
+    {
+      "id": "pallets/click@4295457ddc7b5ca9a733d59ca40d9651b02b9b1d",
+      "sha": "4295457ddc7b5ca9a733d59ca40d9651b02b9b1d",
+      "message": "Fix `copy`, `deepcopy` and `pickle` of `Sentinel` members (#3805)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-29T15:12:36Z",
+      "url": "https://github.com/pallets/click/commit/4295457ddc7b5ca9a733d59ca40d9651b02b9b1d",
+      "source_url": "https://github.com/pallets/click/commit/4295457ddc7b5ca9a733d59ca40d9651b02b9b1d",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@08a7bc6d2a2af02268b09b3b5fd8079546c81c03",
+      "sha": "08a7bc6d2a2af02268b09b3b5fd8079546c81c03",
+      "message": "Add `shtab` to third-party contrib list (#3793)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-30T09:09:19Z",
+      "url": "https://github.com/pallets/click/commit/08a7bc6d2a2af02268b09b3b5fd8079546c81c03",
+      "source_url": "https://github.com/pallets/click/commit/08a7bc6d2a2af02268b09b3b5fd8079546c81c03",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@94f17e276fbdd7348b88b05170923ecacb7b32bf",
+      "sha": "94f17e276fbdd7348b88b05170923ecacb7b32bf",
+      "message": "Remove unused bindings and constants from `_winconsole`",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-31T08:47:36Z",
+      "url": "https://github.com/pallets/click/commit/94f17e276fbdd7348b88b05170923ecacb7b32bf",
+      "source_url": "https://github.com/pallets/click/commit/94f17e276fbdd7348b88b05170923ecacb7b32bf",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3817"
+      ]
+    },
+    {
+      "id": "pallets/click@cbb5b2df1ee3492115f8c2ee5cbb09e2271fc714",
+      "sha": "cbb5b2df1ee3492115f8c2ee5cbb09e2271fc714",
+      "message": "Remove unused bindings and constants from `_winconsole` (#3817)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-31T13:24:59Z",
+      "url": "https://github.com/pallets/click/commit/cbb5b2df1ee3492115f8c2ee5cbb09e2271fc714",
+      "source_url": "https://github.com/pallets/click/commit/cbb5b2df1ee3492115f8c2ee5cbb09e2271fc714",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@fc518e41218b447e875fe27244ae692c269bcb77",
+      "sha": "fc518e41218b447e875fe27244ae692c269bcb77",
+      "message": "Fix race condition on `KeyboardInterrupt` arriving in `Command.main()`\n\nCloses #3802",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-31T13:49:23Z",
+      "url": "https://github.com/pallets/click/commit/fc518e41218b447e875fe27244ae692c269bcb77",
+      "source_url": "https://github.com/pallets/click/commit/fc518e41218b447e875fe27244ae692c269bcb77",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3818"
+      ]
+    },
+    {
+      "id": "pallets/click@c4597ed340477f3a69cfb8a9944149fab9d09b74",
+      "sha": "c4597ed340477f3a69cfb8a9944149fab9d09b74",
+      "message": "Document completion of path in shells\n\nCloses #3135",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-31T19:24:42Z",
+      "url": "https://github.com/pallets/click/commit/c4597ed340477f3a69cfb8a9944149fab9d09b74",
+      "source_url": "https://github.com/pallets/click/commit/c4597ed340477f3a69cfb8a9944149fab9d09b74",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851",
+        "pallets/click#3819"
+      ]
+    },
+    {
+      "id": "pallets/click@b47c0529e99129d4785fecc2cb39a8ec8b4aa5f8",
+      "sha": "b47c0529e99129d4785fecc2cb39a8ec8b4aa5f8",
+      "message": "Document completion of path in shells (#3819)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-31T23:39:08Z",
+      "url": "https://github.com/pallets/click/commit/b47c0529e99129d4785fecc2cb39a8ec8b4aa5f8",
+      "source_url": "https://github.com/pallets/click/commit/b47c0529e99129d4785fecc2cb39a8ec8b4aa5f8",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3851"
+      ]
+    },
+    {
+      "id": "pallets/click@b3a191bf58db2a4bd13706981af78d41b7b5a056",
+      "sha": "b3a191bf58db2a4bd13706981af78d41b7b5a056",
+      "message": "Fix sdist include to ship CHANGES.md after changelog rename",
+      "author_login": "kobihikri",
+      "committed_at": "2026-07-12T16:55:16Z",
+      "url": "https://github.com/pallets/click/commit/b3a191bf58db2a4bd13706981af78d41b7b5a056",
+      "source_url": "https://github.com/pallets/click/commit/b3a191bf58db2a4bd13706981af78d41b7b5a056",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@c2ed41490baa08002714ab79afa4a41f2d67c02c",
+      "sha": "c2ed41490baa08002714ab79afa4a41f2d67c02c",
+      "message": "Deprecate `isolated_filesystem` and document its limits\n\nFix #3700\nRefs #3501",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-05-23T12:28:49Z",
+      "url": "https://github.com/pallets/click/commit/c2ed41490baa08002714ab79afa4a41f2d67c02c",
+      "source_url": "https://github.com/pallets/click/commit/c2ed41490baa08002714ab79afa4a41f2d67c02c",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@cfa01eeb7894a408af70b29d28c0b24f8680f9fb",
+      "sha": "cfa01eeb7894a408af70b29d28c0b24f8680f9fb",
+      "message": "Deprecate `isolated_filesystem` and document its limits (#3704)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-07-20T17:43:21Z",
+      "url": "https://github.com/pallets/click/commit/cfa01eeb7894a408af70b29d28c0b24f8680f9fb",
+      "source_url": "https://github.com/pallets/click/commit/cfa01eeb7894a408af70b29d28c0b24f8680f9fb",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@0585f456baa6eeb2edbaab7c85fa796a004aef86",
+      "sha": "0585f456baa6eeb2edbaab7c85fa796a004aef86",
+      "message": "`click.prompt` typing clarifications / improvements",
+      "author_login": "AndreasBackx",
+      "committed_at": "2026-07-16T05:23:28Z",
+      "url": "https://github.com/pallets/click/commit/0585f456baa6eeb2edbaab7c85fa796a004aef86",
+      "source_url": "https://github.com/pallets/click/commit/0585f456baa6eeb2edbaab7c85fa796a004aef86",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@3b16957cba718a6d77ef680114de8e0830c436ba",
+      "sha": "3b16957cba718a6d77ef680114de8e0830c436ba",
+      "message": "Make `prompt`/`ParamType` typing work without runtime `typing_extensions`",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-07-16T05:57:57Z",
+      "url": "https://github.com/pallets/click/commit/3b16957cba718a6d77ef680114de8e0830c436ba",
+      "source_url": "https://github.com/pallets/click/commit/3b16957cba718a6d77ef680114de8e0830c436ba",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@10b43c211b825181cb81ef383e8091fd41750150",
+      "sha": "10b43c211b825181cb81ef383e8091fd41750150",
+      "message": "Parametrize deprecation tests and check targets",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-07-22T18:47:44Z",
+      "url": "https://github.com/pallets/click/commit/10b43c211b825181cb81ef383e8091fd41750150",
+      "source_url": "https://github.com/pallets/click/commit/10b43c211b825181cb81ef383e8091fd41750150",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@5e906a8afb67242dffdd91404dbf31f469054b15",
+      "sha": "5e906a8afb67242dffdd91404dbf31f469054b15",
+      "message": "`click.prompt` typing clarifications / improvements (#3407)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-07-22T22:25:16Z",
+      "url": "https://github.com/pallets/click/commit/5e906a8afb67242dffdd91404dbf31f469054b15",
+      "source_url": "https://github.com/pallets/click/commit/5e906a8afb67242dffdd91404dbf31f469054b15",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@398f9154317f6c54bf98fe3359672ad5cb851585",
+      "sha": "398f9154317f6c54bf98fe3359672ad5cb851585",
+      "message": "Parametrize deprecation tests and check targets (#3715)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-07-22T22:29:10Z",
+      "url": "https://github.com/pallets/click/commit/398f9154317f6c54bf98fe3359672ad5cb851585",
+      "source_url": "https://github.com/pallets/click/commit/398f9154317f6c54bf98fe3359672ad5cb851585",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@0c9e836c7c22f72492e82c448d1981b59a20795e",
+      "sha": "0c9e836c7c22f72492e82c448d1981b59a20795e",
+      "message": "Update all GitHub actions, fix thread locking",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-07-23T10:57:00Z",
+      "url": "https://github.com/pallets/click/commit/0c9e836c7c22f72492e82c448d1981b59a20795e",
+      "source_url": "https://github.com/pallets/click/commit/0c9e836c7c22f72492e82c448d1981b59a20795e",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@42235de05e38e3b9c9346662a3c6b6a36901b8a1",
+      "sha": "42235de05e38e3b9c9346662a3c6b6a36901b8a1",
+      "message": "Fix `sdist` include to ship `CHANGES.md` after changelog rename (#3685)",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-07-23T11:45:17Z",
+      "url": "https://github.com/pallets/click/commit/42235de05e38e3b9c9346662a3c6b6a36901b8a1",
+      "source_url": "https://github.com/pallets/click/commit/42235de05e38e3b9c9346662a3c6b6a36901b8a1",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@5aa8ac43527f91c4c801a50b485c09576715d340",
+      "sha": "5aa8ac43527f91c4c801a50b485c09576715d340",
+      "message": "Update all GitHub actions (#3721)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-07-23T18:58:19Z",
+      "url": "https://github.com/pallets/click/commit/5aa8ac43527f91c4c801a50b485c09576715d340",
+      "source_url": "https://github.com/pallets/click/commit/5aa8ac43527f91c4c801a50b485c09576715d340",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@0f4738df88e3ea47c40a4a442103596a61cfee79",
+      "sha": "0f4738df88e3ea47c40a4a442103596a61cfee79",
+      "message": "Fix docs and changelog",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-07-17T09:33:21Z",
+      "url": "https://github.com/pallets/click/commit/0f4738df88e3ea47c40a4a442103596a61cfee79",
+      "source_url": "https://github.com/pallets/click/commit/0f4738df88e3ea47c40a4a442103596a61cfee79",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@00e592cea702e0b2caa0dee42489fdb1c22cd845",
+      "sha": "00e592cea702e0b2caa0dee42489fdb1c22cd845",
+      "message": "Pre-8.5.0 release changelog and doc fixes (#3697)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-07-24T20:26:39Z",
+      "url": "https://github.com/pallets/click/commit/00e592cea702e0b2caa0dee42489fdb1c22cd845",
+      "source_url": "https://github.com/pallets/click/commit/00e592cea702e0b2caa0dee42489fdb1c22cd845",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@047adef258fc25566163ffc3efd14effc0ef7352",
+      "sha": "047adef258fc25566163ffc3efd14effc0ef7352",
+      "message": "Preserve declaration order of help option names\n\nCo-authored-by: Jochen Sprickerhof <git@jochen.sprickerhof.de>",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-07-31T11:02:01Z",
+      "url": "https://github.com/pallets/click/commit/047adef258fc25566163ffc3efd14effc0ef7352",
+      "source_url": "https://github.com/pallets/click/commit/047adef258fc25566163ffc3efd14effc0ef7352",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@9c4dfdaebe0e6b2aabc566eb81f6f10eb5cd6ea1",
+      "sha": "9c4dfdaebe0e6b2aabc566eb81f6f10eb5cd6ea1",
+      "message": "Sort help args to make them reproducible (#3728)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-09T17:51:57Z",
+      "url": "https://github.com/pallets/click/commit/9c4dfdaebe0e6b2aabc566eb81f6f10eb5cd6ea1",
+      "source_url": "https://github.com/pallets/click/commit/9c4dfdaebe0e6b2aabc566eb81f6f10eb5cd6ea1",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@a2ac5839f29f61cf7f3f229c67b97d07988e479b",
+      "sha": "a2ac5839f29f61cf7f3f229c67b97d07988e479b",
+      "message": "Open the pager temp file in text mode\n\nCo-authored-by: H-Sorkatti <H.Sorkatti.B@Gmail.com>",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-13T09:03:18Z",
+      "url": "https://github.com/pallets/click/commit/a2ac5839f29f61cf7f3f229c67b97d07988e479b",
+      "source_url": "https://github.com/pallets/click/commit/a2ac5839f29f61cf7f3f229c67b97d07988e479b",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@8b44edfff7d9a6c895fa804148c16b3a0bc9efb5",
+      "sha": "8b44edfff7d9a6c895fa804148c16b3a0bc9efb5",
+      "message": "Changed `tempfile.NamedTemporaryFile` mode to `w` (#3739)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-14T18:51:51Z",
+      "url": "https://github.com/pallets/click/commit/8b44edfff7d9a6c895fa804148c16b3a0bc9efb5",
+      "source_url": "https://github.com/pallets/click/commit/8b44edfff7d9a6c895fa804148c16b3a0bc9efb5",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@3ee9309b9c1804528842392c461526760bff0035",
+      "sha": "3ee9309b9c1804528842392c461526760bff0035",
+      "message": "Run Flask's test suite in the nightly workflow\n\nWas dropped by mistake in 97b300c.\nCloses #3766.",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-15T06:49:14Z",
+      "url": "https://github.com/pallets/click/commit/3ee9309b9c1804528842392c461526760bff0035",
+      "source_url": "https://github.com/pallets/click/commit/3ee9309b9c1804528842392c461526760bff0035",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@f316d5cb3aa89b57c14aee54da6ac9062ac5bec4",
+      "sha": "f316d5cb3aa89b57c14aee54da6ac9062ac5bec4",
+      "message": "Land the progress bar on its final position\n\nCloses #3571.",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-15T07:01:10Z",
+      "url": "https://github.com/pallets/click/commit/f316d5cb3aa89b57c14aee54da6ac9062ac5bec4",
+      "source_url": "https://github.com/pallets/click/commit/f316d5cb3aa89b57c14aee54da6ac9062ac5bec4",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@150d1071d69c5cdad7de78590013ffe56cf9e3bb",
+      "sha": "150d1071d69c5cdad7de78590013ffe56cf9e3bb",
+      "message": "Settles progress bar on its final position (#3769)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-15T17:56:57Z",
+      "url": "https://github.com/pallets/click/commit/150d1071d69c5cdad7de78590013ffe56cf9e3bb",
+      "source_url": "https://github.com/pallets/click/commit/150d1071d69c5cdad7de78590013ffe56cf9e3bb",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@1f9cd54f686eb343cec714230ad825ce972739ab",
+      "sha": "1f9cd54f686eb343cec714230ad825ce972739ab",
+      "message": "Close the pager temp file before unlinking it",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-13T09:13:53Z",
+      "url": "https://github.com/pallets/click/commit/1f9cd54f686eb343cec714230ad825ce972739ab",
+      "source_url": "https://github.com/pallets/click/commit/1f9cd54f686eb343cec714230ad825ce972739ab",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@fc5c7f45da0a4443f60ba2d322fe4bf829977739",
+      "sha": "fc5c7f45da0a4443f60ba2d322fe4bf829977739",
+      "message": "Fix error reporting on Windows when an error is raised in the pager  (#3764)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-16T23:40:02Z",
+      "url": "https://github.com/pallets/click/commit/fc5c7f45da0a4443f60ba2d322fe4bf829977739",
+      "source_url": "https://github.com/pallets/click/commit/fc5c7f45da0a4443f60ba2d322fe4bf829977739",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@cbd7a4109da16ce58f54c2a618b4c986e3041fcf",
+      "sha": "cbd7a4109da16ce58f54c2a618b4c986e3041fcf",
+      "message": "Run Flask's test suite in the nightly workflow (#3768)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-16T23:43:41Z",
+      "url": "https://github.com/pallets/click/commit/cbd7a4109da16ce58f54c2a618b4c986e3041fcf",
+      "source_url": "https://github.com/pallets/click/commit/cbd7a4109da16ce58f54c2a618b4c986e3041fcf",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@bc32a92cd2ae77afb2352f79ebdf00997f35d333",
+      "sha": "bc32a92cd2ae77afb2352f79ebdf00997f35d333",
+      "message": "Refactor pager stream handling; drop text/binary branching",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-05-22T14:35:59Z",
+      "url": "https://github.com/pallets/click/commit/bc32a92cd2ae77afb2352f79ebdf00997f35d333",
+      "source_url": "https://github.com/pallets/click/commit/bc32a92cd2ae77afb2352f79ebdf00997f35d333",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@f36d58bbd7f188178de2d4fe1d0292c510375ca7",
+      "sha": "f36d58bbd7f188178de2d4fe1d0292c510375ca7",
+      "message": "Refactor pager stream handling (#3767)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-18T05:38:45Z",
+      "url": "https://github.com/pallets/click/commit/f36d58bbd7f188178de2d4fe1d0292c510375ca7",
+      "source_url": "https://github.com/pallets/click/commit/f36d58bbd7f188178de2d4fe1d0292c510375ca7",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@9835b0f7612d1b1ea180a975fd6d24cf16791ba8",
+      "sha": "9835b0f7612d1b1ea180a975fd6d24cf16791ba8",
+      "message": "Resolve the pager command once, in `_pager_contextmanager`\n\nFollow up on #3767",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-15T06:00:25Z",
+      "url": "https://github.com/pallets/click/commit/9835b0f7612d1b1ea180a975fd6d24cf16791ba8",
+      "source_url": "https://github.com/pallets/click/commit/9835b0f7612d1b1ea180a975fd6d24cf16791ba8",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@61b69e967e525bd502f5bf42def4d551e761fe0e",
+      "sha": "61b69e967e525bd502f5bf42def4d551e761fe0e",
+      "message": "Resolve the pager command once, in `_pager_contextmanager` (#3776)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-18T16:24:12Z",
+      "url": "https://github.com/pallets/click/commit/61b69e967e525bd502f5bf42def4d551e761fe0e",
+      "source_url": "https://github.com/pallets/click/commit/61b69e967e525bd502f5bf42def4d551e761fe0e",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@a6256bfb5971d5e58585fe7b6c656134e1ade5a4",
+      "sha": "a6256bfb5971d5e58585fe7b6c656134e1ade5a4",
+      "message": "Forwards all user's parameters set in `PAGER`\n\nImprove detection of raw mode by parsing the option tokens\nFix detection of `less.exe` on Windows",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-18T08:09:47Z",
+      "url": "https://github.com/pallets/click/commit/a6256bfb5971d5e58585fe7b6c656134e1ade5a4",
+      "source_url": "https://github.com/pallets/click/commit/a6256bfb5971d5e58585fe7b6c656134e1ade5a4",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@2103e157683c5e4cadc8ee1838df526a54bde9a4",
+      "sha": "2103e157683c5e4cadc8ee1838df526a54bde9a4",
+      "message": "Forward all user's parameters set in `PAGER` and improve flag detection (#3777)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-19T15:20:27Z",
+      "url": "https://github.com/pallets/click/commit/2103e157683c5e4cadc8ee1838df526a54bde9a4",
+      "source_url": "https://github.com/pallets/click/commit/2103e157683c5e4cadc8ee1838df526a54bde9a4",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@a1d87858abd77fa8e3ffc204670ccd75b96c4781",
+      "sha": "a1d87858abd77fa8e3ffc204670ccd75b96c4781",
+      "message": "Add support of `pathlib.Path` to `edit`\n\nCloses #2869",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-19T06:09:09Z",
+      "url": "https://github.com/pallets/click/commit/a1d87858abd77fa8e3ffc204670ccd75b96c4781",
+      "source_url": "https://github.com/pallets/click/commit/a1d87858abd77fa8e3ffc204670ccd75b96c4781",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@e1fd5946ab26aaf372009eaff1acf947140b40fb",
+      "sha": "e1fd5946ab26aaf372009eaff1acf947140b40fb",
+      "message": "Add support of `pathlib.Path` to `edit` (#3781)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-20T02:50:19Z",
+      "url": "https://github.com/pallets/click/commit/e1fd5946ab26aaf372009eaff1acf947140b40fb",
+      "source_url": "https://github.com/pallets/click/commit/e1fd5946ab26aaf372009eaff1acf947140b40fb",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@131c86aadddfa5cb6dca8339c9d6294c4eacb8ac",
+      "sha": "131c86aadddfa5cb6dca8339c9d6294c4eacb8ac",
+      "message": "Add FAQ entry about `UnicodeEncodeError` on Windows\n\nCloses #2121",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-08-19T04:40:07Z",
+      "url": "https://github.com/pallets/click/commit/131c86aadddfa5cb6dca8339c9d6294c4eacb8ac",
+      "source_url": "https://github.com/pallets/click/commit/131c86aadddfa5cb6dca8339c9d6294c4eacb8ac",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+      "sha": "2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+      "message": "Add FAQ entry about `UnicodeEncodeError` on Windows (#3778)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-20T16:12:10Z",
+      "url": "https://github.com/pallets/click/commit/2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+      "source_url": "https://github.com/pallets/click/commit/2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@8b19813f2bfca99f1018a587a8cf54fc959f2e5d",
+      "sha": "8b19813f2bfca99f1018a587a8cf54fc959f2e5d",
+      "message": "Release version 8.5.0",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-22T04:31:25Z",
+      "url": "https://github.com/pallets/click/commit/8b19813f2bfca99f1018a587a8cf54fc959f2e5d",
+      "source_url": "https://github.com/pallets/click/commit/8b19813f2bfca99f1018a587a8cf54fc959f2e5d",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    },
+    {
+      "id": "pallets/click@68e7ea7228ca144c52e4d1d282cc09da59f7771f",
+      "sha": "68e7ea7228ca144c52e4d1d282cc09da59f7771f",
+      "message": "Release version 8.5.0 (#3787)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-08-25T01:48:48Z",
+      "url": "https://github.com/pallets/click/commit/68e7ea7228ca144c52e4d1d282cc09da59f7771f",
+      "source_url": "https://github.com/pallets/click/commit/68e7ea7228ca144c52e4d1d282cc09da59f7771f",
+      "files": [],
+      "pull_request_ids": [
+        "pallets/click#3800"
+      ]
+    }
+  ],
+  "pull_requests": [
+    {
+      "id": "pallets/click#3858",
+      "number": 3858,
+      "title": "Make `click.Path` generic on `path_type`",
+      "body": "This is an attempt to make `click.Path` generic on `path_type` following #3407.\r\n\r\nCloses #3822\r\n",
+      "author_login": "kdeldycke",
+      "created_at": "2026-09-08T10:36:02Z",
+      "merged_at": "2026-09-08T19:48:10Z",
+      "url": "https://github.com/pallets/click/pull/3858",
+      "source_url": "https://github.com/pallets/click/pull/3858",
+      "commit_ids": [
+        "pallets/click@22177f857a34e3c35ba957553853a37f23feb37e"
+      ],
+      "issue_ids": [
+        "pallets/click#3822"
+      ]
+    },
+    {
+      "id": "pallets/click#3865",
+      "number": 3865,
+      "title": "Fix short help abbreviation",
+      "body": "Just a small bug I encountered in my CLIs, where as `vs.` or `e.g.` was prematurely ending the shorten version of a help message produced by `_make_default_short_help`.\r\n\r\nAlso use the opportunity to simplify the calculations and depends on Python's `textwrap.shorten`.",
+      "author_login": "kdeldycke",
+      "created_at": "2026-09-11T06:25:50Z",
+      "merged_at": "2026-09-12T02:35:08Z",
+      "url": "https://github.com/pallets/click/pull/3865",
+      "source_url": "https://github.com/pallets/click/pull/3865",
+      "commit_ids": [
+        "pallets/click@f67c2bb6c2f055c1c7a57cd46c3697fc26a7742e"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3861",
+      "number": 3861,
+      "title": "Move common `help` argument from `Option` and `Argument` to `Parameter`",
+      "body": "This is a small refactor which deduplicate the management of `help` argument from `Option` and `Argument` and move it to the common `Parameter` parent class.\r\n\r\nIts only side effect is that `Parameter.to_info_dict` now reports it.\r\n\r\nThis is a follow up on #3860.",
+      "author_login": "kdeldycke",
+      "created_at": "2026-09-10T08:59:16Z",
+      "merged_at": "2026-09-10T19:29:50Z",
+      "url": "https://github.com/pallets/click/pull/3861",
+      "source_url": "https://github.com/pallets/click/pull/3861",
+      "commit_ids": [
+        "pallets/click@405a5481e4dbd5022799993d787bd8446137d9a3"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3851",
+      "number": 3851,
+      "title": "Stable",
+      "body": "<!--\r\nBefore opening a PR, open a ticket describing the issue or feature the\r\nPR will address. An issue is not required for fixing typos in\r\ndocumentation, or other simple non-code changes.\r\n\r\nReplace this comment with a description of the change. Describe how it\r\naddresses the linked ticket.\r\n-->\r\n\r\n<!--\r\nLink to relevant issues or previous PRs, one per line. Use \"fixes\" to\r\nautomatically close an issue.\r\n\r\nfixes #<issue number>\r\n-->\r\n\r\n<!--\r\nEnsure each step in CONTRIBUTING.rst is complete, especially the following:\r\n\r\n- Add tests that demonstrate the correct behavior of the change. Tests\r\n  should fail without the change.\r\n- Add or update relevant docs, in the docs folder and in code.\r\n- Add an entry in CHANGES.rst summarizing the change and linking to the issue.\r\n- Add `.. versionchanged::` entries in any relevant code docs.\r\n-->\r\n",
+      "author_login": "Rowlando13",
+      "created_at": "2026-09-06T01:24:59Z",
+      "merged_at": "2026-09-06T01:28:42Z",
+      "url": "https://github.com/pallets/click/pull/3851",
+      "source_url": "https://github.com/pallets/click/pull/3851",
+      "commit_ids": [
+        "pallets/click@fbdd434028fe07ecf35084c945b43b938dfd639f",
+        "pallets/click@8ee83ddbf5a7a4c2eac5308c9599c5ee67ee005e",
+        "pallets/click@cc1e188bf5ac6267c2a2a81e7b2c8ad7e55d2862",
+        "pallets/click@420c8fb44eeadb537cae69d2fee3796e808558dd",
+        "pallets/click@ce57b87ac490ac8744491658d092bd86f571bf58",
+        "pallets/click@3cbcf9b11546f4cf10b36d3e2e531733ba6fe001",
+        "pallets/click@f58ca3e81424a35626c8a475eb59ab95589008ce",
+        "pallets/click@4295457ddc7b5ca9a733d59ca40d9651b02b9b1d",
+        "pallets/click@08a7bc6d2a2af02268b09b3b5fd8079546c81c03",
+        "pallets/click@94f17e276fbdd7348b88b05170923ecacb7b32bf",
+        "pallets/click@cbb5b2df1ee3492115f8c2ee5cbb09e2271fc714",
+        "pallets/click@fc518e41218b447e875fe27244ae692c269bcb77",
+        "pallets/click@c4597ed340477f3a69cfb8a9944149fab9d09b74",
+        "pallets/click@b47c0529e99129d4785fecc2cb39a8ec8b4aa5f8",
+        "pallets/click@00f257bb8e714064bea16425007543bbc0800445",
+        "pallets/click@394088a09a210c152a4295e4a493ffdebd4c5047",
+        "pallets/click@cb43e055741b2416bf3ec46b5f84b140cca23e18",
+        "pallets/click@e5cb12ba5e81ca382062a4b513daddb535a576e3",
+        "pallets/click@b0241232f775c45e28c5d5d4e9ea2fbc70b8448f",
+        "pallets/click@bb86cdea6e83bc8e2711290eeffb4c8654baa7a3",
+        "pallets/click@be13b152cf5949a362926322c835fa76019cc6fe",
+        "pallets/click@271effb3d96da5575eb527216ce3552bd7628fab",
+        "pallets/click@fa99fbd7b96883c60275203b62914d3ce6d51010",
+        "pallets/click@00aca23ee9135eedc651c6929c7bc1d39e522431",
+        "pallets/click@87f7a316f482d88d7ef45660da12cdcc5a5c14f6",
+        "pallets/click@b8a4486d52083981babc1642449420db6b09662e",
+        "pallets/click@7ecc8d7ee4a2e5c0732d6551baeb7597b7a73ade",
+        "pallets/click@7944461a80b780d060899c8835acab3c273a04a6"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3829",
+      "number": 3829,
+      "title": "Add missing a reference for Windows and use the `kbd` role",
+      "body": "While reviewing changes from documentation I introduced in #3818, I realized that I was missing a reference to `Ctrl+Z` on Windows. This PR adds it.\r\n\r\nAnd while doing that change, I use the [`kbd` Sphinx role](https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-kbd) to mark keystrokes sequences. Don't know if the theme currently use special CSS to render it, but that might be free styling if it supports it.",
+      "author_login": "kdeldycke",
+      "created_at": "2026-09-02T07:29:18Z",
+      "merged_at": "2026-09-02T13:10:04Z",
+      "url": "https://github.com/pallets/click/pull/3829",
+      "source_url": "https://github.com/pallets/click/pull/3829",
+      "commit_ids": [
+        "pallets/click@fa99fbd7b96883c60275203b62914d3ce6d51010"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3866",
+      "number": 3866,
+      "title": "Deprecate parameter names that are: not a Python identifier, or a Python Keyword, or not lower-cased",
+      "body": "This PR prepares the ground for #3827, which is going to refuse parameter names that are not valid Python identifiers.\r\n\r\nThis add `DeprecationWarning` that detect when `Parameter`, `Argument` or `Option` gets a `name` that will be not allowed in the future 9.0.0 release:\r\n- a parameter that is not a Python identifier (check against `str.identifier`)\r\n- a parameter that is a Python keyword (check against `keyword.iskeyword`)\r\n- an option name that is nor lower-cased\r\n\r\nThis PR also copy the majority of tests that were originally proposed in #3827, so the behavior of the `name` is locked down and frozen. This will prevent tweaking or introducing regressions during the full 8.x cycle.\r\n\r\nThis PR also inaugurate the 8.6.0 release on `main`.\r\n\r\n### Historical details\r\n\r\nOf course, I fucked-up the same way I fucked-up 2 months ago with https://github.com/pallets/click/pull/3701 , when juggling between `main` and `stable` branches made me push to `stable`. 😫\r\n\r\nSo:\r\n- I pushed by mistake https://github.com/pallets/click/commit/e2bddbc801dabc4efc3c3c1e32b53b3f938d3efc\r\n- I reverted my mistake on `stable` with https://github.com/pallets/click/commit/d036881798e34289a49b18a5c550c7cf687e5a7a\r\n- And this PR is what it should have been all along\r\n\r\nAnyway, this was resolved by resyncing both branches with https://github.com/pallets/click/pull/3876 .",
+      "author_login": "kdeldycke",
+      "created_at": "2026-09-11T13:26:10Z",
+      "merged_at": "2026-09-23T04:07:18Z",
+      "url": "https://github.com/pallets/click/pull/3866",
+      "source_url": "https://github.com/pallets/click/pull/3866",
+      "commit_ids": [
+        "pallets/click@a59f7c624fb7272e37d97921047dab8bf3ff0675",
+        "pallets/click@b90faad1788bc030bb3320938f07c9189f42d7d0"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3850",
+      "number": 3850,
+      "title": "Split out types tests.",
+      "body": "<!--\r\nBefore opening a PR, open a ticket describing the issue or feature the\r\nPR will address. An issue is not required for fixing typos in\r\ndocumentation, or other simple non-code changes.\r\n\r\nReplace this comment with a description of the change. Describe how it\r\naddresses the linked ticket.\r\n-->\r\n\r\n<!--\r\nLink to relevant issues or previous PRs, one per line. Use \"fixes\" to\r\nautomatically close an issue.\r\n\r\nfixes #<issue number>\r\n-->\r\n\r\n<!--\r\nEnsure each step in CONTRIBUTING.rst is complete, especially the following:\r\n\r\n- Add tests that demonstrate the correct behavior of the change. Tests\r\n  should fail without the change.\r\n- Add or update relevant docs, in the docs folder and in code.\r\n- Add an entry in CHANGES.rst summarizing the change and linking to the issue.\r\n- Add `.. versionchanged::` entries in any relevant code docs.\r\n-->\r\n",
+      "author_login": "Rowlando13",
+      "created_at": "2026-09-06T01:23:12Z",
+      "merged_at": "2026-09-06T01:24:20Z",
+      "url": "https://github.com/pallets/click/pull/3850",
+      "source_url": "https://github.com/pallets/click/pull/3850",
+      "commit_ids": [
+        "pallets/click@b8a4486d52083981babc1642449420db6b09662e"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3860",
+      "number": 3860,
+      "title": "Always list all positional arguments",
+      "body": "This is inconsistent with the way options are displayed, as every options are displayed including those without help.\r\n\r\nThe reason to display all arguments in the `Positional arguments` section is to not introduce subtle confusion, as an argument without help would only be noticeable in the usage line.\r\n\r\nCloup already renders the section this way (see https://github.com/janluke/cloup/issues/210) and is the source discussion with @janluke for that bug fix.\r\n\r\nIn this implementation, I refrained to always display the `Positional arguments` section. So I made the decision to not print the `Positional arguments` section in full if and only if at least one of its argument has an `help`. This decision is open to discussion.\r\n\r\nThis is a follow up on https://github.com/pallets/click/pull/3473",
+      "author_login": "kdeldycke",
+      "created_at": "2026-09-09T09:31:22Z",
+      "merged_at": "2026-09-21T18:31:00Z",
+      "url": "https://github.com/pallets/click/pull/3860",
+      "source_url": "https://github.com/pallets/click/pull/3860",
+      "commit_ids": [
+        "pallets/click@f25f697a439acc2b0d84aa8f5413330f4e2e75cf",
+        "pallets/click@05f6fd0df4ecbd104eb7a229f9f185c2484dee69"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3876",
+      "number": 3876,
+      "title": "Merge stable into main",
+      "body": "<!--\nBefore opening a PR, open a ticket describing the issue or feature the\nPR will address. An issue is not required for fixing typos in\ndocumentation, or other simple non-code changes.\n\nReplace this comment with a description of the change. Describe how it\naddresses the linked ticket.\n-->\n\n<!--\nLink to relevant issues or previous PRs, one per line. Use \"fixes\" to\nautomatically close an issue.\n\nfixes #<issue number>\n-->\n\n<!--\nEnsure each step in CONTRIBUTING.rst is complete, especially the following:\n\n- Add tests that demonstrate the correct behavior of the change. Tests\n  should fail without the change.\n- Add or update relevant docs, in the docs folder and in code.\n- Add an entry in CHANGES.rst summarizing the change and linking to the issue.\n- Add `.. versionchanged::` entries in any relevant code docs.\n-->",
+      "author_login": "Rowlando13",
+      "created_at": "2026-09-21T18:52:27Z",
+      "merged_at": "2026-09-21T18:54:48Z",
+      "url": "https://github.com/pallets/click/pull/3876",
+      "source_url": "https://github.com/pallets/click/pull/3876",
+      "commit_ids": [
+        "pallets/click@22177f857a34e3c35ba957553853a37f23feb37e",
+        "pallets/click@86949d19b930ef68a45566544cb4b9508d895d0d",
+        "pallets/click@f25f697a439acc2b0d84aa8f5413330f4e2e75cf",
+        "pallets/click@405a5481e4dbd5022799993d787bd8446137d9a3",
+        "pallets/click@05f6fd0df4ecbd104eb7a229f9f185c2484dee69",
+        "pallets/click@6d5bac5c712195cbfa9666ba0ecbf0573cdea356",
+        "pallets/click@f67c2bb6c2f055c1c7a57cd46c3697fc26a7742e",
+        "pallets/click@e2bddbc801dabc4efc3c3c1e32b53b3f938d3efc",
+        "pallets/click@d036881798e34289a49b18a5c550c7cf687e5a7a",
+        "pallets/click@70689853e39c30e36eb0d83d586cc914a74db9d3",
+        "pallets/click@bb695aaecdef95832d167fc1d508921745aa824e"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3820",
+      "number": 3820,
+      "title": "Document calling a command as a regular function",
+      "body": "Document an old open issue on how to call a command as a regular function.\r\n\r\nCloses #1054.",
+      "author_login": "kdeldycke",
+      "created_at": "2026-08-31T21:06:24Z",
+      "merged_at": "2026-09-02T00:20:14Z",
+      "url": "https://github.com/pallets/click/pull/3820",
+      "source_url": "https://github.com/pallets/click/pull/3820",
+      "commit_ids": [
+        "pallets/click@bb86cdea6e83bc8e2711290eeffb4c8654baa7a3"
+      ],
+      "issue_ids": [
+        "pallets/click#1054"
+      ]
+    },
+    {
+      "id": "pallets/click#3821",
+      "number": 3821,
+      "title": "Add `Option.get_help_spec` to extract the help's left part of an hidden option",
+      "body": "This PR splits the production of an option's left help column into its own dedicated column. This always returns the invocation specification of an option, even if that option is hidden.\r\n\r\n`get_help_record()` on the other hand is unmodified and still keep returning the whole option's help that is to be displayed.\r\n\r\nThat distinction help separate the rendering layer:\r\n- `get_help_record()` is returning what should be displayed to the user \r\n- `get_help_spec()` is returning what the option specification is, regardless of the decision to display it to the user\r\n\r\nThis allows finer introspection of the Click machinery and its rendering pipeline.\r\n\r\nThis is the other half of a work I initiated 2 years ago with:\r\n- #2516\r\n- #2517",
+      "author_login": "kdeldycke",
+      "created_at": "2026-08-31T23:01:32Z",
+      "merged_at": "2026-09-02T13:01:39Z",
+      "url": "https://github.com/pallets/click/pull/3821",
+      "source_url": "https://github.com/pallets/click/pull/3821",
+      "commit_ids": [
+        "pallets/click@271effb3d96da5575eb527216ce3552bd7628fab"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3818",
+      "number": 3818,
+      "title": "Fix race condition on `KeyboardInterrupt` in `Command.main()`",
+      "body": "This PR address https://github.com/pallets/click/issues/3802 by unifying the policy that was already implemented elsewhere in the code.\r\n\r\nThis applies the policy the pager has had since #351, where a late interrupt must not replace the intended outcome:\r\nhttps://github.com/pallets/click/blob/8b19813f2bfca99f1018a587a8cf54fc959f2e5d/src/click/_termui_impl.py#L618-L632\r\n\r\nSo now in `main()`, every handler takes the same two steps:\r\n- propagate when standalone mode is off, or\r\n- collect the message and the exit code.\r\n\r\nA final step then prints the message and exits, so a late interrupt can only lose the message, not the code.\r\n\r\nThis save one nesting level in the `try...except` cascade of `main()`.\r\n\r\nThis is in accordance with older policy choices from:\r\n- #2380: where we decided that the first interrupt still reaches non-standalone callers as `Abort`, and keeps the interrupt as its `__cause__`\r\n- #2584: where we decided not to change the `Aborted!` message\r\n\r\nWith these changes, we do not crash anymore, and a late interrupt after a successful run now exits 0, instead of printing a traceback.\r\n\r\nThis PR also adds stress tests that introduce random delays in the execution so we can catch regression at different points in time with real SIGINTs.\r\n\r\nOff course we can discuss the policy we rely on and I'm ready to change the code accordingly.",
+      "author_login": "kdeldycke",
+      "created_at": "2026-08-31T15:12:47Z",
+      "merged_at": "2026-08-31T23:42:24Z",
+      "url": "https://github.com/pallets/click/pull/3818",
+      "source_url": "https://github.com/pallets/click/pull/3818",
+      "commit_ids": [
+        "pallets/click@fc518e41218b447e875fe27244ae692c269bcb77"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3819",
+      "number": 3819,
+      "title": "Document completion of path in shells",
+      "body": "Closes #3135 by explaining the completion process between Click and the shell, and why this cannot be fixed by Click.\r\n",
+      "author_login": "kdeldycke",
+      "created_at": "2026-08-31T20:01:49Z",
+      "merged_at": "2026-08-31T23:39:08Z",
+      "url": "https://github.com/pallets/click/pull/3819",
+      "source_url": "https://github.com/pallets/click/pull/3819",
+      "commit_ids": [
+        "pallets/click@c4597ed340477f3a69cfb8a9944149fab9d09b74"
+      ],
+      "issue_ids": [
+        "pallets/click#3135"
+      ]
+    },
+    {
+      "id": "pallets/click#3808",
+      "number": 3808,
+      "title": "Document type auto-conversion and test `set` and `frozenset`",
+      "body": "This is an ongoing exploration of usage of `set` and `frozenset` types in various places in the public API. It addresses the suspicion I had for a long time about inconsistent behavior, as detailed in https://github.com/pallets/click/issues/3036.\r\n\r\nThese tests for the moment only freeze the current behavior of Click. But reveals inconsistent or awkward behavior that are left to be discussed and decided upon for eventual bug fixes.\r\n\r\n1. A `set`, `frozenset` or `dict` default is guessed as a `STRING`, not a container type (`test_type_from_default_container`, `test_convert_type_from_container_default`). This contradicts the documented rule of *\"If no type is provided, the type of the default value is used\"* Should we change that so we guess a container type instead of the current `STRING`?\r\n\r\n2. An explicit `type=set` or `type=frozenset` is splitting the value provided to it (see `test_explicit_container_type_splits_string`). This looks like a bug we want to fix. My instinct is to split on commas, which overlaps an older discussion at: https://github.com/pallets/click/issues/2771#issuecomment-4750207191 and my preference for it. Also dug out an old proposal at: https://github.com/pallets/click/pull/422.\r\n\r\nAlso note that this also affects the envvars as demonstrated by my tests.\r\n\r\nCloses #3036.",
+      "author_login": "kdeldycke",
+      "created_at": "2026-08-29T10:30:28Z",
+      "merged_at": "2026-09-01T18:21:58Z",
+      "url": "https://github.com/pallets/click/pull/3808",
+      "source_url": "https://github.com/pallets/click/pull/3808",
+      "commit_ids": [
+        "pallets/click@394088a09a210c152a4295e4a493ffdebd4c5047"
+      ],
+      "issue_ids": [
+        "pallets/click#3036"
+      ]
+    },
+    {
+      "id": "pallets/click#3826",
+      "number": 3826,
+      "title": "Add FAQ entry about tab completion in prompts",
+      "body": "This PR add a FAQ entry to:\r\n- show users how to use `readline` to customize completion within prompts\r\n- point them to Python documentation for more details about `readline` behavior on different platforms\r\n- add a list of popular third-party interactive input libraries for users looking for fancy features\r\n\r\nCloses #173 that is open since 2014. Its original request, completion when prompting for a path, works today: Click's prompt reads through `input()`, so `readline` handles the line.\r\n\r\nFancier interactive input at a prompt has been declined before:\r\n- #1122\r\n- #2047\r\n- #2795\r\n- #1411 (still open about a customization hook)",
+      "author_login": "kdeldycke",
+      "created_at": "2026-09-01T10:29:55Z",
+      "merged_at": "2026-09-01T21:32:54Z",
+      "url": "https://github.com/pallets/click/pull/3826",
+      "source_url": "https://github.com/pallets/click/pull/3826",
+      "commit_ids": [
+        "pallets/click@cb43e055741b2416bf3ec46b5f84b140cca23e18"
+      ],
+      "issue_ids": [
+        "pallets/click#173"
+      ]
+    },
+    {
+      "id": "pallets/click#3805",
+      "number": 3805,
+      "title": "Fix `copy`, `deepcopy` and `pickle` of `Sentinel` members",
+      "body": "Just a small issue I encountered on Python 3.10, where `Enum` has no `__deepcopy__`. Now that every parameter have a sentinel, `copy.deepcopy()` of any `Option`, `Argument` or `Command` fails on Python 3.10. And `pickle` fails on every Python version. This PR fix this issue.",
+      "author_login": "kdeldycke",
+      "created_at": "2026-08-28T21:43:45Z",
+      "merged_at": "2026-08-29T15:12:36Z",
+      "url": "https://github.com/pallets/click/pull/3805",
+      "source_url": "https://github.com/pallets/click/pull/3805",
+      "commit_ids": [
+        "pallets/click@f58ca3e81424a35626c8a475eb59ab95589008ce"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3817",
+      "number": 3817,
+      "title": "Remove unused bindings and constants from `_winconsole`",
+      "body": "These constants are not used anywhere, so I would classify them as left-over from the previous Python 2 cleanup that was performed by @Rowlando13 in https://github.com/pallets/click/pull/3695 or @davidism in 00883dd3d0a29f68f375cab5e21cef0669941aba.\r\n\r\nThese were introduced 11 years ago in Click 6.x (see https://github.com/pallets/click/commit/bcf8feceb41b3f75f3cd07eb851734fa96cd1991) for Python 2 compatibility and not touched since then.\r\n\r\nAnd because this module is private, I choose not to add a changelog. Just tell me if you think it needs one and I will update this PR.",
+      "author_login": "kdeldycke",
+      "created_at": "2026-08-31T08:56:37Z",
+      "merged_at": "2026-08-31T13:24:59Z",
+      "url": "https://github.com/pallets/click/pull/3817",
+      "source_url": "https://github.com/pallets/click/pull/3817",
+      "commit_ids": [
+        "pallets/click@94f17e276fbdd7348b88b05170923ecacb7b32bf"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3793",
+      "number": 3793,
+      "title": "Add `shtab` to third-party contrib list",
+      "body": "Adds `shtab` to https://click.palletsprojects.com/en/stable/contrib/#third-party-projects (sorted by stars).\r\n\r\n[`shtab.click`](https://tqdm.github.io/shtab/ref/#shtabclick) speeds up `click`'s tab completion (particularly noticeable for complex apps) and adds support for more shells natively (currently `bash`, `zsh`, `fish`, `tcsh`, `pwsh`, `powershell`).\r\n\r\n> [!NOTE]\r\n> `click`'s `_APP_COMPLETE=bash_source app` creates a script which calls `_APP_COMPLETE=bash_complete app` on every <kbd>TAB</kbd> press, while `shtab.click` has the opposite approach - completions a pre-generated by default, and dynamic completions must be explicitly requested via e.g. [`shtab.cmd`](https://tqdm.github.io/shtab/use/#library-usage).\r\n\r\nExisting projects are supported without any source code changes, e.g.:\r\n\r\n-|example usage\r\n--|--\r\nclick|`eval \"$(_DOITLIVE_COMPLETE=bash_source doitlive)\"`\r\nshtab<sup>[1](https://github.com/sloria/doitlive/blob/main/src/doitlive/cli.py)</sup>|`eval \"$(shtab -u doitlive.cli.cli --prog doitlive)\"`\r\nclick|`_ZENODO_GET_COMPLETE=zsh_source zenodo_get > _zenodo_get`\r\nshtab<sup>[2](https://github.com/dvolgyes/zenodo_get/blob/main/zenodo_get/zget.py)</sup>|`shtab -u zenodo_get.zget.cli --prog zenodo_get -s zsh > _zenodo_get`\r\nclick|`_SQLITE_UTILS_COMPLETE=fish_source sqlite-utils \\| source`\r\nshtab<sup>[3](https://github.com/simonw/sqlite-utils/blob/main/sqlite_utils/cli.py)</sup>|`shtab -u sqlite_utils.cli.cli --prog sqlite-utils -s fish \\| source`",
+      "author_login": "casperdcl",
+      "created_at": "2026-08-24T17:25:10Z",
+      "merged_at": "2026-08-30T09:09:20Z",
+      "url": "https://github.com/pallets/click/pull/3793",
+      "source_url": "https://github.com/pallets/click/pull/3793",
+      "commit_ids": [
+        "pallets/click@cc1e188bf5ac6267c2a2a81e7b2c8ad7e55d2862"
+      ],
+      "issue_ids": []
+    },
+    {
+      "id": "pallets/click#3780",
+      "number": 3780,
+      "title": "Add FAQ entry about `edit()` returning immediately",
+      "body": "This explain why some editors are returning immediately and does not respect the contract of the `edit()` utility.\r\n\r\nAlso added a warning admonition to the `edit()` docstring itself so developers relying on it get informed about the limitations.\r\n\r\nCloses #2582.",
+      "author_login": "kdeldycke",
+      "created_at": "2026-08-19T05:38:02Z",
+      "merged_at": "2026-08-29T04:45:56Z",
+      "url": "https://github.com/pallets/click/pull/3780",
+      "source_url": "https://github.com/pallets/click/pull/3780",
+      "commit_ids": [
+        "pallets/click@ce57b87ac490ac8744491658d092bd86f571bf58"
+      ],
+      "issue_ids": [
+        "pallets/click#2582"
+      ]
+    },
+    {
+      "id": "pallets/click#3800",
+      "number": 3800,
+      "title": "Merge main into stable",
+      "body": "<!--\r\nBefore opening a PR, open a ticket describing the issue or feature the\r\nPR will address. An issue is not required for fixing typos in\r\ndocumentation, or other simple non-code changes.\r\n\r\nReplace this comment with a description of the change. Describe how it\r\naddresses the linked ticket.\r\n-->\r\n\r\n<!--\r\nLink to relevant issues or previous PRs, one per line. Use \"fixes\" to\r\nautomatically close an issue.\r\n\r\nfixes #<issue number>\r\n-->\r\n\r\n<!--\r\nEnsure each step in CONTRIBUTING.rst is complete, especially the following:\r\n\r\n- Add tests that demonstrate the correct behavior of the change. Tests\r\n  should fail without the change.\r\n- Add or update relevant docs, in the docs folder and in code.\r\n- Add an entry in CHANGES.rst summarizing the change and linking to the issue.\r\n- Add `.. versionchanged::` entries in any relevant code docs.\r\n-->\r\n",
+      "author_login": "Rowlando13",
+      "created_at": "2026-08-27T04:05:38Z",
+      "merged_at": "2026-08-27T04:07:04Z",
+      "url": "https://github.com/pallets/click/pull/3800",
+      "source_url": "https://github.com/pallets/click/pull/3800",
+      "commit_ids": [
+        "pallets/click@b3a191bf58db2a4bd13706981af78d41b7b5a056",
+        "pallets/click@c2ed41490baa08002714ab79afa4a41f2d67c02c",
+        "pallets/click@cfa01eeb7894a408af70b29d28c0b24f8680f9fb",
+        "pallets/click@0585f456baa6eeb2edbaab7c85fa796a004aef86",
+        "pallets/click@3b16957cba718a6d77ef680114de8e0830c436ba",
+        "pallets/click@10b43c211b825181cb81ef383e8091fd41750150",
+        "pallets/click@5e906a8afb67242dffdd91404dbf31f469054b15",
+        "pallets/click@398f9154317f6c54bf98fe3359672ad5cb851585",
+        "pallets/click@0c9e836c7c22f72492e82c448d1981b59a20795e",
+        "pallets/click@42235de05e38e3b9c9346662a3c6b6a36901b8a1",
+        "pallets/click@5aa8ac43527f91c4c801a50b485c09576715d340",
+        "pallets/click@0f4738df88e3ea47c40a4a442103596a61cfee79",
+        "pallets/click@00e592cea702e0b2caa0dee42489fdb1c22cd845",
+        "pallets/click@047adef258fc25566163ffc3efd14effc0ef7352",
+        "pallets/click@9c4dfdaebe0e6b2aabc566eb81f6f10eb5cd6ea1",
+        "pallets/click@a2ac5839f29f61cf7f3f229c67b97d07988e479b",
+        "pallets/click@8b44edfff7d9a6c895fa804148c16b3a0bc9efb5",
+        "pallets/click@3ee9309b9c1804528842392c461526760bff0035",
+        "pallets/click@f316d5cb3aa89b57c14aee54da6ac9062ac5bec4",
+        "pallets/click@150d1071d69c5cdad7de78590013ffe56cf9e3bb",
+        "pallets/click@1f9cd54f686eb343cec714230ad825ce972739ab",
+        "pallets/click@fc5c7f45da0a4443f60ba2d322fe4bf829977739",
+        "pallets/click@cbd7a4109da16ce58f54c2a618b4c986e3041fcf",
+        "pallets/click@bc32a92cd2ae77afb2352f79ebdf00997f35d333",
+        "pallets/click@f36d58bbd7f188178de2d4fe1d0292c510375ca7",
+        "pallets/click@9835b0f7612d1b1ea180a975fd6d24cf16791ba8",
+        "pallets/click@61b69e967e525bd502f5bf42def4d551e761fe0e",
+        "pallets/click@a6256bfb5971d5e58585fe7b6c656134e1ade5a4",
+        "pallets/click@2103e157683c5e4cadc8ee1838df526a54bde9a4",
+        "pallets/click@a1d87858abd77fa8e3ffc204670ccd75b96c4781",
+        "pallets/click@e1fd5946ab26aaf372009eaff1acf947140b40fb",
+        "pallets/click@131c86aadddfa5cb6dca8339c9d6294c4eacb8ac",
+        "pallets/click@2c8cd3ac958a7eb316d67f2d316c27086c4c0369",
+        "pallets/click@8b19813f2bfca99f1018a587a8cf54fc959f2e5d",
+        "pallets/click@68e7ea7228ca144c52e4d1d282cc09da59f7771f"
+      ],
+      "issue_ids": []
+    }
+  ],
+  "issues": [
+    {
+      "id": "pallets/click#3875",
+      "number": 3875,
+      "title": "[rejected AI] test permission probe please ignore",
+      "body": "Sorry — this was an accidental API permission probe while trying to open a pull request for #3362. Closing immediately.\n\nThe real work is on branch Pitchfork-and-Torch:fix/usage-hyphen-wrap (cannot open the PR via API from this token; will open via the web UI).",
+      "author_login": "Pitchfork-and-Torch",
+      "created_at": "2026-09-17T23:47:59Z",
+      "updated_at": "2026-10-02T00:33:50Z",
+      "url": "https://github.com/pallets/click/issues/3875",
+      "source_url": "https://github.com/pallets/click/issues/3875"
+    },
+    {
+      "id": "pallets/click#3881",
+      "number": 3881,
+      "title": "[rejected AI] click.Path.to_info_dict() and PathInfoDict omit resolve_path and executable",
+      "body": "`click.Path.to_info_dict()` and its typing definition `PathInfoDict` in `src/click/types.py` do not serialize the `resolve_path` and `executable` attributes.\n\nWhile the other boolean parameters (`exists`, `file_okay`, `dir_okay`, `writable`, `readable`, `allow_dash`) are included, `resolve_path` and `executable` are missing from both `Path.to_info_dict()` and `PathInfoDict`.\n\n### Reproduction\n\n```python\nimport click\n\np = click.Path(executable=True, resolve_path=True)\ninfo = p.to_info_dict()\n\n# Missing keys in output:\nassert \"executable\" in info, \"executable missing from to_info_dict\"\nassert \"resolve_path\" in info, \"resolve_path missing from to_info_dict\"\n```\n\n### Actual Behavior\n\n```python\n{\n    'exists': False, \n    'file_okay': True, \n    'dir_okay': True, \n    'writable': False, \n    'readable': True, \n    'allow_dash': False, \n    'param_type': 'Path', \n    'name': 'path'\n}\n```\n\n### Expected Behavior\n\n`info` should include `'resolve_path': True` and `'executable': True` (and default to `False`), and `PathInfoDict` should declare `resolve_path: bool` and `executable: bool`.\n\n### Environment\n\n- Python version: 3.13 (reproducible on all versions)\n- Click version: `main` / `8.1.8`\n\n---\n\nI have a patch with regression test coverage in `tests/test_info_dict.py` verified against the test suite and would be happy to submit a PR if this is welcome.",
+      "author_login": "Aditya-XR",
+      "created_at": "2026-09-24T18:02:13Z",
+      "updated_at": "2026-09-24T18:04:02Z",
+      "url": "https://github.com/pallets/click/issues/3881",
+      "source_url": "https://github.com/pallets/click/issues/3881"
+    },
+    {
+      "id": "pallets/click#3879",
+      "number": 3879,
+      "title": "[rejected AI] Case-insensitive Choice completion misses Unicode case-folding matches",
+      "body": "### Description\n\n`Choice` uses `casefold()` for case-insensitive conversion, but `shell_complete()` lowercases the incomplete value and compares it with `lower()`. This makes completion fail for Unicode case-folding expansions.\n\nFor example, `Choice([\"ẞ\"], case_sensitive=False)` accepts `\"ß\"` during conversion because both values case-fold to `\"ss\"`, but completion for the incomplete value `\"ß\"` returns no suggestion because `\"ss\".lower().startswith(\"ß\")` is false.\n\n### Steps to reproduce\n\n```python\nfrom click import Choice\n\nchoice = Choice([\"ẞ\"], case_sensitive=False)\nassert choice.convert(\"ß\", None, None) == \"ẞ\"\n\n# A completion callback using this Choice receives incomplete=\"ß\".\n# It currently produces no completion item, even though the normalized choice is \"ss\".\n```\n\nThe relevant implementation is `Choice.shell_complete()` in `src/click/types.py`; it uses `lower()` while `normalize_choice()` uses `casefold()`.\n\n### Expected behavior\n\nCase-insensitive shell completion should use the same Unicode-aware normalization as conversion and return the normalized `\"ss\"` suggestion for incomplete `\"ß\"`.\n\n### Actual behavior\n\nNo completion item is returned.\n\n### Environment\n\n- Latest `main` at the time of filing\n- Python 3.12+\n- Click shell completion\n\nI searched existing issues and pull requests for Unicode casefolding and Choice completion and did not find a matching report. A regression test covering `ẞ`/`ß` would prevent this from recurring.\n",
+      "author_login": "januththedev",
+      "created_at": "2026-09-24T15:06:17Z",
+      "updated_at": "2026-09-24T15:32:05Z",
+      "url": "https://github.com/pallets/click/issues/3879",
+      "source_url": "https://github.com/pallets/click/issues/3879"
+    },
+    {
+      "id": "pallets/click#3822",
+      "number": 3822,
+      "title": "`click.Path` should be generic on `path_type`",
+      "body": "Click 8.5.0 made `click.prompt` and `click.ParamType` generic, so the return type of `click.prompt` is now normally clever enough to reveal the actual type of the value as converted from raw input.\n\nHowever, `click.Path` has a `path_type` parameter to which the input is converted, but  that information is not reflected in the return type of `click.Path.convert`, so it's always typed as `str | bytes | os.PathLike[str]`, regardless of the value of `path_type`.\n\n```python\n# mre.py\nimport pathlib\n\nfrom typing_extensions import assert_type\n\nimport click\n\nmy_type = click.Path(file_okay=False, path_type=pathlib.Path)\npath = click.prompt(\"Enter a name\", type=my_type)\n\n# expected: pathlib.Path, actual: str | bytes | os.PathLike[str]\nassert_type(path, pathlib.Path)\n```\n\nI checked the above MRE with mypy and pyright, as well as ty for completeness, on a local clone of the repo @ `main`:\n\n```console\n$ uv run mypy mre.py\nmre.py:12: error: Expression is of type \"str | bytes | PathLike[str]\", not \"Path\"  [assert-type]\n    assert_type(path, pathlib.Path)\n    ^\nFound 1 error in 1 file (checked 1 source file)\n```\n\n```console\n$ uv run pyright mre.py\nWARNING: there is a new pyright version available (v1.1.408 -> v1.1.411).\nPlease install the new version or set PYRIGHT_PYTHON_FORCE_VERSION to `latest`\n\n/Users/edgarramirez/Contrib/pallets/click/mre.py\n  /Users/edgarramirez/Contrib/pallets/click/mre.py:12:13 - error: \"assert_type\" mismatch: expected \"Path\" but received \"str | bytes | PathLike[str]\" (reportAssertTypeFailure)\n1 error, 0 warnings, 0 informations\n```\n\n```console\n$ uv run ty check mre.py\nerror[type-assertion-failure]: Argument does not have asserted type `Path`\n  --> mre.py:12:1\n   |\n12 | assert_type(path, pathlib.Path)\n   | ^^^^^^^^^^^^----^^^^^^^^^^^^^^^\n   |             |\n   |             Inferred type is `str | bytes | PathLike[str]`\ninfo: `Path` and `str | bytes | PathLike[str]` are not equivalent types\n\nFound 1 diagnostic\n```\n\nI expect the return type of `click.prompt` to match the `path_type` value passed to `click.Path`.\n\nEnvironment:\n\n- Python version: 3.14\n- Click version: 8.5.0\n",
+      "author_login": "edgarrmondragon",
+      "created_at": "2026-09-01T00:05:35Z",
+      "updated_at": "2026-09-23T00:29:08Z",
+      "url": "https://github.com/pallets/click/issues/3822",
+      "source_url": "https://github.com/pallets/click/issues/3822"
+    },
+    {
+      "id": "pallets/click#2847",
+      "number": 2847,
+      "title": "Long option completion with = broken",
+      "body": "When using Click shell completion in bash and zsh, long option completion is not working properly when = is used to separate the option from the value (e.g., `command --long-option=value` vs. `command --long-option value`). In zsh, the option being completed is replaced with the incomplete value or matched value, essentially \"gobbling\" up the option. In bash, the option isn't completed at all. I did not test fish.\n\n## Steps to reproduce the issue\n\n1. Create the following script and place it in the bin directory of an activated virtual environment with *click* installed:\n\n```python\n# gobble\n\n#!/usr/bin/env python\nimport click\n\n\n@click.command\n@click.option(\"--color\", type=click.Choice([\"auto\", \"always\", \"never\"]), default=None,\n              help=\"Control colors in output.\")\n@click.option(\"--name\",\n              help=\"Name of something.\")\ndef main(color: str | None, name: str | None) -> None:\n    \"\"\"Test long options.\"\"\"\n    click.echo(f\"{color=}, {name=}\")\n\n\nif __name__ == \"__main__\":\n    main()\n```\n\n2. Open a zsh shell and enable script completion: `eval \"$(_GOBBLE_COMPLETE=zsh_source gobble)\"`\n\n3. Attempt to tab complete the `--color` option using both styles\n\n| before tab completion | after tab completion | offered completions |\n|--------------------------|----------------------------------------|------------------------------|\n| gobble --color= | gobble | |\n| gobble --color=a | gobble a | |\n| gobble --color=al | gobble always | |\n| gobble --color  | gobble --color | auto always never |\n| gobble --color a | gobble --color a | auto always |\n| gobble --color al | gobble --color always | |\n\n4. Open a bash shell and enable script completion: `eval \"$(_GOBBLE_COMPLETE=bash_source gobble)\"`\n\n5. Attempt to tab complete the `--color` option using both styles\n\n| before tab completion | after tab completion | offered completions |\n|--------------------------|----------------------------------------|------------------------------|\n| gobble --color= | gobble --color= | auto always never|\n| gobble --color=a | gobble --color=a | |\n| gobble --color=al | gobble --color=al | |\n| gobble --color  | gobble --color | auto always never |\n| gobble --color a | gobble --color a | auto always |\n| gobble --color al | gobble --color always | |\n\n## Expected behavior\n\n| before tab completion | after tab completion | offered completions | alternate completions |\n|--------------------------|----------------------------------------|------------------------------|-------------------------------|\n| gobble --color= | gobble --color= | auto always never| --color=auto --color=always --color=never |\n| gobble --color=a | gobble --color=a | auto always | --color=auto --color=always |\n| gobble --color=al | gobble --color=always | | |\n| gobble --color  | gobble --color | auto always never | |\n| gobble --color a | gobble --color a | auto always | |\n| gobble --color al | gobble --color always | | |\n\n\n## Environment:\n\n- Python version: 3.12.7\n- Click version: 8.1.8\n",
+      "author_login": "brandon-avantus",
+      "created_at": "2025-01-23T00:22:07Z",
+      "updated_at": "2026-09-21T16:00:41Z",
+      "url": "https://github.com/pallets/click/issues/2847",
+      "source_url": "https://github.com/pallets/click/issues/2847"
+    },
+    {
+      "id": "pallets/click#3843",
+      "number": 3843,
+      "title": "[rejected AI] Envvar for multiple=True + nargs>1 silently drops incomplete trailing tokens",
+      "body": "﻿When an option uses `multiple=True` and `nargs > 1`, an environment-variable value whose whitespace-split token count is **not a multiple of `nargs`** is accepted with exit code 0, and the trailing incomplete group is **silently discarded**.\n\nThe same values on the CLI are rejected (e.g. `Got unexpected extra argument`). Non-multiple `nargs > 1` options already reject incomplete envvar values with `BadParameter` (`Takes N values but M were given.`). The `multiple=True` path should do the same instead of truncating.\n\nRoot cause: `Option.value_from_envvar()` calls `batch()`, which uses `zip(..., strict=False)` and drops remainder tokens.\n\n## Reproduction\n\n```python\nimport click\nfrom click.testing import CliRunner\n\nrunner = CliRunner()\n\n@click.command()\n@click.option(\"--arg\", nargs=2, multiple=True)\ndef cli(arg):\n    click.echo(repr(arg))\n\n# Envvar: silently drops \"c\"\nr = runner.invoke(cli, [], auto_envvar_prefix=\"TEST\", env={\"TEST_ARG\": \"a b c\"})\nprint(r.exit_code, r.output.strip())\n# Actual: 0  \"(('a', 'b'),)\"\n\n# CLI: rejects the extra token\nr2 = runner.invoke(cli, [\"--arg\", \"a\", \"b\", \"c\"])\nprint(r2.exit_code)\nprint(r2.output)\n# Actual: exit 2, \"Got unexpected extra argument (c)\"\n```\n\nAlso reproduces with `envvar=\"ARG\"` and `env={\"ARG\": \"a b c\"}`.\n\nWith five tokens (`\"a b c d e\"`), the result is `(('a', 'b'), ('c', 'd'))` — `e` is silently discarded.\n\n## Expected behavior\n\nEnvvar parsing should raise `BadParameter` (same family of arity error used for non-multiple `nargs` envvars), instead of silently dropping tokens and exiting 0.\n\n## Environment\n\n- Python version: 3.12.10\n- Click version: main @ 36baa15 (8.5.1 unreleased)\n\n**AI assistance disclosure:** This bug report was prepared with assistance from Cursor (AI coding agent). I reproduced and validated the behavior locally.\r\n",
+      "author_login": "ShamikOfficial",
+      "created_at": "2026-09-05T21:56:57Z",
+      "updated_at": "2026-09-21T00:34:06Z",
+      "url": "https://github.com/pallets/click/issues/3843",
+      "source_url": "https://github.com/pallets/click/issues/3843"
+    },
+    {
+      "id": "pallets/click#3846",
+      "number": 3846,
+      "title": "[rejected AI] `BOOL` raises `AttributeError` on numeric input since 8.2.2",
+      "body": "`BOOL` crashes with `AttributeError` when it receives a number instead of a\nstring. Command line values are always strings, so this only shows up when a\nnumber reaches the converter from inside the program: a boolean option with\n`default=1` or `default=0`, a `default_map` loaded from a config file where a\nboolean came through as a number, or `click.prompt(type=bool)` with a numeric\ndefault. `--help` still works, so the failure only appears at invocation.\n\nClick 8.0 through 8.2.1 accepted `0` and `1` through the `value in {False, True}`\nguard added in e79c2b4. #2956 (released in 8.2.2) replaced it with\n`isinstance(value, bool)` while reworking `str_to_bool`, so numbers now fall\nthrough to `value.strip()`. \n\nMinimal reproduction:\n\n```python\nimport click\nclick.BOOL(1)\n```\n\nAs a command:\n\n```python\nimport click\n\n\n@click.command()\n@click.option(\"--verbose\", is_flag=True, default=1)\ndef cli(verbose):\n    click.echo(f\"verbose={verbose}\")\n\n\nif __name__ == \"__main__\":\n    cli()\n```\n\n```text\n$ python cli.py\nTraceback (most recent call last):\n  ...\n  File \".../click/core.py\", line 2565, in type_cast_value\n    return convert(value)\n  File \".../click/core.py\", line 2540, in convert\n    return self.type(value, param=self, ctx=ctx)\n  File \".../click/types.py\", line 90, in __call__\n    return self.convert(value, param, ctx)\n  File \".../click/types.py\", line 860, in convert\n    normalized = self.str_to_bool(value)\n  File \".../click/types.py\", line 857, in str_to_bool\n    return BoolParamType.bool_states.get(value.strip().lower())\n                                         ^^^^^^^^^^^\nAttributeError: 'int' object has no attribute 'strip'\n```\n\nExpected: `click.BOOL(1)` returns `True` and `click.BOOL(0)` returns `False`,\nas in 8.0 through 8.2.1, and the command above prints `verbose=True`. Any\nother non-string value should produce the normal\n`... is not a valid boolean` usage error rather than a traceback.\n\nEnvironment:\n\n- Python version: 3.12.13\n- Click version: 8.5.0 and `main` (36baa15); every release since 8.2.2",
+      "author_login": "Wahib294",
+      "created_at": "2026-09-06T00:32:26Z",
+      "updated_at": "2026-09-21T00:34:05Z",
+      "url": "https://github.com/pallets/click/issues/3846",
+      "source_url": "https://github.com/pallets/click/issues/3846"
+    },
+    {
+      "id": "pallets/click#3841",
+      "number": 3841,
+      "title": "[rejected AI] count=True ignores non-zero default when counting flags",
+      "body": "<!--\r\nThis issue tracker is a tool to address bugs in Click itself. Please use\r\nGitHub Discussions or the Pallets Discord for questions about your own code.\r\n\r\nReplace this comment with a clear outline of what the bug is.\r\n-->\r\n\r\nWhen an option uses `count=True` with a non-zero `default`, each occurrence of the flag counts from **0** instead of from the configured default. Passing fewer flags than the default can therefore produce a value **lower than the default** (or leave `default=1` unchanged when the flag is passed once).\r\n\r\nThis differs from `argparse.ArgumentParser` with `action=\"count\"`, which increments relative to the default (for example `default=3` plus one flag occurrence yields `4`).\r\n\r\n<!--\r\nDescribe how to replicate the bug.\r\n\r\nInclude a minimal reproducible example that demonstrates the bug.\r\nInclude the full traceback if there was an exception.\r\n-->\r\n\r\n```python\r\nimport argparse\r\nimport click\r\nfrom click.testing import CliRunner\r\n\r\n# argparse (expected-aligned behavior)\r\np = argparse.ArgumentParser()\r\np.add_argument(\"-v\", action=\"count\", default=3)\r\nprint(\"argparse no flags\", p.parse_args([]).v)        # 3\r\nprint(\"argparse one flag\", p.parse_args([\"-v\"]).v)    # 4\r\nprint(\"argparse two flags\", p.parse_args([\"-vv\"]).v)  # 5\r\n\r\n# click\r\n@click.command()\r\n@click.option(\"-v\", count=True, default=3)\r\ndef cli(v):\r\n    click.echo(v)\r\n\r\nrunner = CliRunner()\r\nprint(\"click no flags\", runner.invoke(cli, []).output.strip())       # 3\r\nprint(\"click one flag\", runner.invoke(cli, [\"-v\"]).output.strip())   # 1  ← bug\r\nprint(\"click two flags\", runner.invoke(cli, [\"-vv\"]).output.strip()) # 2  ← bug\r\n```\r\n\r\nRoot cause appears to be in `click/parser.py`, where the count action always starts from `0`:\r\n\r\n```python\r\nstate.opts[self.dest] = state.opts.get(self.dest, 0) + 1\r\n```\r\n\r\nOnce a command-line count is present, `consume_value()` takes that value and never applies the option default as a baseline.\r\n\r\n<!--\r\nDescribe the expected behavior that should have happened but didn't.\r\n-->\r\n\r\nExpected (argparse-compatible): command-line counts are **additive** on top of the option default.\r\n\r\n| Invocation | Expected | Actual (Click) |\r\n|---|---|---|\r\n| `(none)` | `3` | `3` |\r\n| one `-v` | `4` | `1` |\r\n| `-vv` | `5` | `2` |\r\n| `-vvv` | `6` | `3` |\r\n\r\nWith `default=1`, a single flag occurrence should yield `2`, but currently yields `1` (same as omitting the flag).\r\n\r\nEnvironment:\r\n\r\n- Python version: 3.12.10\r\n- Click version: 8.5.1.dev0 (main)\r\n",
+      "author_login": "ShamikOfficial",
+      "created_at": "2026-09-05T21:53:04Z",
+      "updated_at": "2026-09-21T00:34:04Z",
+      "url": "https://github.com/pallets/click/issues/3841",
+      "source_url": "https://github.com/pallets/click/issues/3841"
+    },
+    {
+      "id": "pallets/click#3847",
+      "number": 3847,
+      "title": "More private utilities that need to be marked and public api deprecated",
+      "body": "In types.py\n- [ ]  `convert_type` - rename to _convert_type - currently has no top level import\n- [ ] `FuncParamType` - maybe typing thing? - currently has no top level import\n\nIn _ ?,\n- [ ] consider deprecating 'open_file'",
+      "author_login": "Rowlando13",
+      "created_at": "2026-09-06T00:43:13Z",
+      "updated_at": "2026-09-20T13:39:02Z",
+      "url": "https://github.com/pallets/click/issues/3847",
+      "source_url": "https://github.com/pallets/click/issues/3847"
+    },
+    {
+      "id": "pallets/click#3838",
+      "number": 3838,
+      "title": "[rejected AI] Literal mutable default silently accumulates mutations across CliRunner.invoke() calls with a pass-through ParamType",
+      "body": "**AI disclosure:** this was investigated and written with the assistance of Claude (Anthropic). I independently reproduced it against a fresh clone of `main` myself before filing.\n\n## Summary\n\nA literal mutable default (e.g. `default=[]`, `default={}`) on an `Option` silently accumulates mutations across separate command invocations within one process, when combined with a `ParamType` whose `convert()` validates and returns the value unchanged (e.g. `type=click.UNPROCESSED`, or any custom type handling structured data like a JSON/dict param).\n\nThis is the classic Python mutable-default-argument trap — Click's own docs correctly recommend `default=list`/`default=dict` (a callable factory) as the safe pattern, and that path genuinely works. But a literal mutable default only gets protected from this trap by accident, when the default type-coercion path happens to stringify/rebuild the value (e.g. plain `--items` with no `type=` routes through `StringParamType`). Nothing actually copies the default before handing it to the callback.\n\n## Reproduction\n\n```python\nimport click\nfrom click.testing import CliRunner\n\n@click.command()\n@click.option(\"--items\", type=click.UNPROCESSED, default=[])\ndef cmd(items):\n    items.append(\"x\")\n    click.echo(f\"len={len(items)}\")\n\nrunner = CliRunner()\nprint(runner.invoke(cmd, []).output.strip())  # len=1\nprint(runner.invoke(cmd, []).output.strip())  # len=2  <- same list object, not reset\nprint(runner.invoke(cmd, []).output.strip())  # len=3\n```\n\nConfirmed against current `main`: `id(items)` is identical across all three calls.\n\n## Root cause\n\n`Parameter.get_default()` (`click/core.py:2445-2476`) only special-cases *callable* defaults (`if call and callable(value): value = value()`, line 2473) — a literal default value is returned as-is, no copy. `type_cast_value`/`consume_value` never copy it either before it reaches the callback.\n\nThe reason a plain `default=[]` doesn't normally show this (and why it's easy to miss): Click's type-inference (`click/types.py` `_guess_type`) routes an untyped list default through `StringParamType`, which effectively rebuilds the value rather than passing the same object through. `type=click.UNPROCESSED` (documented, and the natural choice for custom structured-data types) explicitly opts out of that coercion — and loses the incidental protection along with it.\n\n## Scope\n\nOnly manifests in a long-running process that invokes the same command repeatedly — a test suite using `CliRunner.invoke()` in a loop, a REPL-style tool, or any host process embedding Click commands. A single-shot CLI invocation never notices, since the process exits after one call.\n\nChecked `gh search issues --repo pallets/click` for \"mutable default\", \"default list shared\", \"get_default copy\" — no matching prior report found.\n\nHappy to put together a PR (something like: deep-copy a literal mutable default via `copy.deepcopy` in `get_default()`, mirroring the protection callable defaults already get) if this is confirmed worth fixing.\n",
+      "author_login": "tritsystem",
+      "created_at": "2026-09-04T16:49:15Z",
+      "updated_at": "2026-09-19T00:30:16Z",
+      "url": "https://github.com/pallets/click/issues/3838",
+      "source_url": "https://github.com/pallets/click/issues/3838"
+    },
+    {
+      "id": "pallets/click#3832",
+      "number": 3832,
+      "title": "Terminal escape-sequence injection in error messages",
+      "body": "### Summary\nClick is vulnerable to terminal escape-sequence injection because command-line tokens are interpolated raw into error messages that are written to the user's terminal without control-character filtering.\n\nVerified on Click at commit https://github.com/pallets/click/commit/36baa15ff831b939a22bc527cd76ce653ef6f66d (8.5.1.dev0).\n### Details\nClick reflects unsanitised `argv` tokens into error output at two locations:\n\n`click/src/click/core.py:1391` interpolates the raw tokens:\n\n```python\nngettext(\n    \"Got unexpected extra argument ({args})\",\n    \"Got unexpected extra arguments ({args})\",\n    len(args),\n).format(args=\" \".join(map(str, args)))\n```\n\n`click/src/click/types.py:1013` interpolates the raw filename:\n\n```python\nself.fail(\n    f\"'{format_filename(value)}': {e.strerror}\",\n    param,\n    ctx,\n)\n```\n\nBoth reach the terminal through `echo()` (`utils.py:324`), whose only sanitisation is `strip_ansi()`. That sanitisation does not apply here, for two independent reasons:\n\n- `should_strip_ansi()` (`_compat.py:499-506`) returns `not isatty(stream)`, so stripping is skipped entirely when the stream is a terminal.\n- `_ansi_re` (`_compat.py:19`) is `r\"\\033\\[[0-?]*[ -/]*[@-~]\"`, which matches only 7-bit CSI. OSC, DCS, APC, 8-bit C1 (`\\x9b`), `ESC c`, and bare C0 controls (`\\r`, `\\b`) are never stripped.\n\nConsequently an attacker-supplied token is delivered to the terminal emulator byte-for-byte. This permits window-title spoofing (OSC 0), forged program output by moving the cursor and overwriting earlier lines (CSI / `\\r`), attacker-controlled hyperlinks under arbitrary anchor text (OSC 8), and — on terminals where clipboard write is enabled — silently staging a shell command in the victim's clipboard for their next paste (OSC 52).\n\n### PoC\n1. Create a file named `poc.py` with the following content:\n```python\nimport click\n \n@click.command()\n@click.option(\"--f\", type=click.File(\"r\"))\ndef cli(f):\n    click.echo(\"ok\")\n \nif __name__ == \"__main__\":\n    cli()\n```\n2. Run the Python script:\n```\npython3 poc.py $(echo -en '\\x0dOVERWRITTEN USING ESCAPE SEQUENCE')\n```\n3. Observe that the raw escape bytes reach the terminal.\n\n### Suggested Remediation\nApply `!r` at both reflection sites, matching the convention already used everywhere else in the codebase:\n\n```diff\ndiff --git a/src/click/core.py b/src/click/core.py\nindex de129ec..5c6c9de 100644\n--- a/src/click/core.py\n+++ b/src/click/core.py\n@@ -1391,7 +1391,7 @@ class Command:\n                     \"Got unexpected extra argument ({args})\",\n                     \"Got unexpected extra arguments ({args})\",\n                     len(args),\n-                ).format(args=\" \".join(map(str, args)))\n+                ).format(args=\" \".join(map(repr, args)))\n             )\n \n         ctx.args = args\ndiff --git a/src/click/types.py b/src/click/types.py\nindex 0eb8462..2d9e30f 100644\n--- a/src/click/types.py\n+++ b/src/click/types.py\n@@ -1010,7 +1010,7 @@ class File(ParamType[t.IO[t.Any]]):\n             return f\n         except OSError as e:\n             self.fail(\n-                f\"'{format_filename(value)}': {e.strerror}\",\n+                f\"'{format_filename(value)!r}': {e.strerror}\",\n                 param,\n                 ctx,\n             )\ndiff --git a/tests/test_arguments.py b/tests/test_arguments.py\nindex fea48cc..5a0e3e3 100644\n--- a/tests/test_arguments.py\n+++ b/tests/test_arguments.py\n@@ -76,7 +76,7 @@ def test_nargs_err(runner):\n \n     result = runner.invoke(copy, [\"foo\", \"bar\"])\n     assert result.exit_code == 2\n-    assert \"Got unexpected extra argument (bar)\" in result.output\n+    assert \"Got unexpected extra argument ('bar')\" in result.output\n \n \n def test_bytes_args(runner, monkeypatch):\n```\n\n### Credits\nFound by [OSTIF](https://ostif.org/) using AI with their own harness.\nManually verified, fixed, and reported by [Shielder](https://www.shielder.com/).",
+      "author_login": "ndaprela",
+      "created_at": "2026-09-03T12:14:29Z",
+      "updated_at": "2026-09-18T00:30:41Z",
+      "url": "https://github.com/pallets/click/issues/3832",
+      "source_url": "https://github.com/pallets/click/issues/3832"
+    },
+    {
+      "id": "pallets/click#3362",
+      "number": 3362,
+      "title": "`HelpFormatter.write_usage` breaks options at a hyphen",
+      "body": "If an option containing a hyphen in its name is printed at the line break limit, it’s broken at the hyphen.\n\n### Reproduction\n\n```python\nimport click\n\noptions = [\n    \"--enable-verbose-logging\",\n    \"--output-file-path\",\n    \"--max-retry-count\",\n    \"--disable-cache-mode\",\n    \"--config-file-location\",\n    \"--user-auth-token\",\n    \"--auto-update-interval\",\n    \"--force-overwrite-existing\",\n    \"--network-timeout-seconds\",\n    \"--debug-trace-enabled\",\n]\n\nf = click.HelpFormatter(width=65)\nf.write_usage(\"program\", \" \".join(options))\nprint(f.getvalue())\n```\n\n### Expected output\n```\nUsage: program --enable-verbose-logging --output-file-path\n               --max-retry-count --disable-cache-mode\n               --config-file-location --user-auth-token\n               --auto-update-interval --force-overwrite-existing\n               --network-timeout-seconds --debug-trace-enabled\n```\n\n### Actual output\n```\nUsage: program --enable-verbose-logging --output-file-path --max-\n               retry-count --disable-cache-mode --config-file-\n               location --user-auth-token --auto-update-interval\n               --force-overwrite-existing --network-timeout-\n               seconds --debug-trace-enabled\n```\n\n### Environment\n\n- Python version: 3.12.3\n- Click version: 8.3.1\n\n### Additional information\n\n#### `width` option\n\nThis also happens without specifying `width`. The `width` option is altered in the example to make the issue more frequent.\n\n#### Relevance to other use cases\n\nThis may likely only affect:\n\n- direct users of `click.HelpFormatter`,\n- users of `click.argument` with custom `metavar` containing hyphens. \n\nOn the other hand, `click` prints `[OPTIONS]` instead of listing individual options on the usage line and uses underscores instead of hyphens in argument names (unless specifying `metavar`).\n\n#### Cause\n\nI looked into the code and found that `textwrap.TextWrapper` is used under the hood, which has the [`break_on_hyphens`](https://docs.python.org/3/library/textwrap.html#textwrap.TextWrapper.break_on_hyphens) option. However, there is no option for the `click` user to influence this, apart from reimplementing `HelpFormatter.write_usage` (in a subclass) and `wrap_text`.",
+      "author_login": "Melebius",
+      "created_at": "2026-04-21T10:23:55Z",
+      "updated_at": "2026-09-18T00:22:42Z",
+      "url": "https://github.com/pallets/click/issues/3362",
+      "source_url": "https://github.com/pallets/click/issues/3362"
+    },
+    {
+      "id": "pallets/click#1411",
+      "number": 1411,
+      "title": "Allow a type to customize the prompt",
+      "body": "As of Click 7, `click.Choice` appears only to support choice prompting by string, i.e. the user must specify the exact string (modulo case sensitivity) from the choices. It would be nice if Click could support two additional modes of selection:\r\n\r\nNumeric:\r\n```bash\r\nChoose from:\r\n[1] Choice A...\r\n[2] Choice B...\r\n[3] Choice C...\r\nEnter the index for one of the above choices: 2\r\n\"Choice B...\" was selected\r\n```\r\n\r\nor partial matches as long as what the user enters is unique:\r\n\r\n```bash\r\nChoose from:\r\nThis thing\r\nThat thing\r\nThose things\r\nEnter choice: thi\r\n\"This thing\" was selected\r\n```\r\n(\"thi\" is unique amongst the three strings so is chosen)\r\n\r\nI thought it would be easy to implement this by subclassing `click.Choice` but unfortunately not: `click.Choice` does not provide the initial prompt message (only the prompt after an invalid choice) - this is provided by `click.prompt` from the specified choices list. The prompt message in at least the first example above would require to be changed to add numeric indexes. It seems to me therefore that this functionality requires more structural changes to click and so I thought I'd submit this issue.",
+      "author_login": "SeanDS",
+      "created_at": "2019-10-20T10:46:13Z",
+      "updated_at": "2026-09-17T00:30:30Z",
+      "url": "https://github.com/pallets/click/issues/1411",
+      "source_url": "https://github.com/pallets/click/issues/1411"
+    },
+    {
+      "id": "pallets/click#3831",
+      "number": 3831,
+      "title": "Nightly \"Stress\" jobs run the normal test suite; the stress tests never execute",
+      "body": "The four `test_stress_*` tests do not run in CI, or anywhere else. The nightly Stress jobs run the ordinary test suite with those tests deselected.\n\n### Why\n\n`pyproject.toml:91` deselects them globally:\n\n```toml\naddopts = \"-m 'not stress'\"\n```\n\n`pyproject.toml:178-183` defines an environment that overrides it, and that environment is correct:\n\n```toml\n[tool.tox.env.stress]\ncommands = [[\"pytest\", \"-v\", \"--tb=short\", \"-x\", \"-m\", \"stress\",\n             \"--basetemp={env_tmp_dir}\", \"--override-ini=addopts=\", ...]]\n```\n\nBut `nightly.yaml:27-29` does not run `stress`. It runs `stress-py3.14` and `stress-py3.14t`, which are listed in `env_list` at `pyproject.toml:150`:\n\n```yaml\n- {name: Stress 3.14,     python: '3.14',  tox: stress-py3.14}\n- {name: Stress 3.14t,    python: '3.14t', tox: stress-py3.14t}\n- {name: Stress Mac 3.14t, python: '3.14t', tox: stress-py3.14t, os: macos-latest}\n```\n\ntox's TOML source does not decompose factors for `[tool.tox.env.<name>]`, so `stress-py3.14` does not inherit from `[tool.tox.env.stress]`. It is generated from `env_run_base` instead.\n\n### Reproducing\n\nWith tox 4.52.0 (the version in `uv.lock:1370`) and tox-uv:\n\n```\n$ tox config -e stress-py3.14\ncommands = pytest -v --tb=short --basetemp=<workdir>/stress-py3.14/tmp\nbase     = tool.tox.env_run_base\n\n$ tox config -e stress\ncommands = pytest -v --tb=short -x -m stress --basetemp=<workdir>/stress/tmp --override-ini=addopts=\n```\n\n`stress-py3.14` gets neither `-m stress` nor `--override-ini=addopts=`, so it inherits `-m 'not stress'` and runs the normal suite. The `py3.14` factor *is* honoured (`base_python = py3.14`), which is what makes the name look like it worked; the `stress-` prefix matches nothing.\n\nNo warning is emitted — stderr is empty, and `tox -vv config -e stress-py3.14` produces no mention of an unmatched name. `tox config -e totally-made-up-env` does fail with \"provided environments not found in configuration file\", so the name resolves specifically because `env_list` contains it.\n\n### Not running anywhere\n\n- `tests/test_stream_lifecycle.py:495` `test_stress_thread_pool_with_exit`\n- `tests/test_stream_lifecycle.py:512` `test_stress_logging_sequential_invocations`\n- `tests/test_stream_lifecycle.py:528` `test_stress_gc_between_invocations`\n- `tests/test_utils/test_echo_via_pager.py:231` `test_stress_echo_via_pager_exception_cleanup`\n\nHappy to open a PR if you have a preference on the fix — the matrix could name `stress`, or the environments could be defined per-Python.",
+      "author_login": "RAJUSHANIGARAPU",
+      "created_at": "2026-09-02T22:50:29Z",
+      "updated_at": "2026-09-17T00:30:29Z",
+      "url": "https://github.com/pallets/click/issues/3831",
+      "source_url": "https://github.com/pallets/click/issues/3831"
+    },
+    {
+      "id": "pallets/click#3802",
+      "number": 3802,
+      "title": "`KeyboardInterrupt` during `click.prompt()` can race",
+      "body": "## Bug\n\nWhen a user uses Ctrl-C during `click.prompt()`, this may cause an unhandled exception. Seen during CI on an Ubuntu 22.04 arm github runner. The same test on Ubuntu 22.04 x64, macOS arm, Windows x64/arm succeeded. This is likely to be a race that doesn't pop up every time\n\n```\n    | --- tty: Ctrl+C aborts at a prompt ---\n    | spawn /home/runner/work/ethstaker-deposit-cli/ethstaker-deposit-cli/ethstaker_deposit-cli-c082a10-linux-arm64/deposit --language english --ignore_connectivity generate-mnemonic\n    | Please choose the language of the mnemonic word list [1. 简体中文, 2. 繁體中文, 3. čeština, 4. English, 5. Français, 6. Italiano, 7. 日本語, 8. 한국어, 9. Português, 10. Español]:  [english]: ^CTraceback (most recent call last):\n    |   File \"click/core.py\", line 1490, in main\n    |   File \"click/core.py\", line 1968, in invoke\n    |   File \"click/core.py\", line 1300, in make_context\n    |   File \"click/core.py\", line 1311, in parse_args\n    |   File \"click/core.py\", line 2686, in handle_parse_result\n    |   File \"click/core.py\", line 3508, in consume_value\n    |   File \"ethstaker_deposit/utils/click.py\", line 62, in prompt_for_value\n    |   File \"click/core.py\", line 3372, in prompt_for_value\n    |   File \"click/termui.py\", line 218, in prompt\n    |   File \"click/termui.py\", line 201, in prompt_func\n    | click.exceptions.Abort\n    | \n    | During handling of the above exception, another exception occurred:\n    | \n    | Traceback (most recent call last):\n    |   File \"deposit.py\", line 128, in <module>\n    |   File \"deposit.py\", line 121, in run\n    |   File \"click/core.py\", line 1569, in __call__\n    |   File \"click/core.py\", line 1532, in main\n    |   File \"click/utils.py\", line 337, in echo\n    |   File \"click/_compat.py\", line 509, in should_strip_ansi\n    |   File \"click/_compat.py\", line 578, in isatty\n    | KeyboardInterrupt\n    | [PYI-3853:ERROR] Failed to execute script 'deposit' due to unhandled exception!\n    | \n    | [TEST FAIL] Unexpected EOF while waiting for: Aborted\n```\n\n## Replication\n\nProbably a `click.prompt()` with Ctrl-C on a slower machine, run often enough to eventually trigger this race condition. In our case it was the free github `ubuntu-22.04-arm` runner.\n\n## Expected\n\nclick handles the KeyboardInterrupt exception gracefully, regardless of timing or architecture.\n\nEnvironment:\n\n- Python version: 3.14\n- Click version: 8.4.2\n",
+      "author_login": "yorickdowne",
+      "created_at": "2026-08-28T16:16:08Z",
+      "updated_at": "2026-09-16T00:30:31Z",
+      "url": "https://github.com/pallets/click/issues/3802",
+      "source_url": "https://github.com/pallets/click/issues/3802"
+    },
+    {
+      "id": "pallets/click#3135",
+      "number": 3135,
+      "title": "Add support for partial shell completion options like in Path",
+      "body": "When tab completing a path on the shell, the options only display a part and ommit the prefix path, making it much easier to read. I.e. completing \"/home/user\" will offer\n\n`Documents    Downloads    Pictures`\n\nrather than\n\n`/home/user/Documents    /home/user/Downloads    /home/user/Pictures`\n\nWhile click already supports this for paths, it would be nice if a similar feature would be implemented for custom parameters (i.e. comma separated values).\n",
+      "author_login": "maltevesper",
+      "created_at": "2025-11-04T10:56:19Z",
+      "updated_at": "2026-09-16T00:30:30Z",
+      "url": "https://github.com/pallets/click/issues/3135",
+      "source_url": "https://github.com/pallets/click/issues/3135"
+    },
+    {
+      "id": "pallets/click#3824",
+      "number": 3824,
+      "title": "[rejected AI] Atomic `open_file`: path-based `chmod` can follow a symlink, and a failed `chmod` leaks the fd",
+      "body": "`click.open_file(..., atomic=True)` (and `click.File` with `atomic=True`) creates a sibling temp file with `os.open(..., O_CREAT|O_EXCL)`, then:\n\n```python\nfd = os.open(tmp_filename, flags, 0o666 if perm is None else perm)\nif perm is not None:\n    os.chmod(tmp_filename, perm)  # restore bits umask stripped\n```\n\nThe atomic branch has two related problems:\n\n1. **Leaked fd.** If `os.chmod` raises, `fd` is never closed and never wrapped in a file object. The exception propagates from `open_stream`.\n2. **chmod by name.** `os.open` already has `fd`. Linux `os.chmod(path)` follows symlinks. Between `open` and `chmod`, a writer who can create names in the destination directory can replace `tmp_filename` with a symlink; `chmod` then changes the **target** of that symlink. `os.fchmod(fd, perm)` would only touch the inode that was just created.\n\n# Reproduction\n\n\n## 1) Leaked fd when `chmod` fails\n\n```python\nimport errno\nimport os\nimport tempfile\n\nimport click\n\nworkdir = tempfile.mkdtemp()\ndest = os.path.join(workdir, \"target.txt\")\nwith open(dest, \"w\") as f:\n    f.write(\"old\\n\")\nos.chmod(dest, 0o644)\n\nreal_chmod = os.chmod\n\ndef boom_chmod(path, mode, *args, **kwargs):\n    if os.path.basename(str(path)).startswith(\".__atomic-write\"):\n        raise OSError(errno.EPERM, \"chmod denied\", path)\n    return real_chmod(path, mode, *args, **kwargs)\n\nbefore = len(os.listdir(\"/proc/self/fd\"))\nos.chmod = boom_chmod\ntry:\n    click.open_file(dest, \"w\", atomic=True)\nexcept OSError:\n    pass\nafter = len(os.listdir(\"/proc/self/fd\"))\nos.chmod = real_chmod\nprint(f\"fd before={before} after={after} leaked={after - before}\")\n```\n\nObserved:\n\n```\nfd before=9 after=10 leaked=1\n```\n\nExpected:\n```\nfd before=9 after=9 leaked=0 \n```\n\n## 2) `chmod` follows a replacement symlink\n\nThe swap below is what a concurrent directory writer can do in the window between `os.open` and `os.chmod`. This requires a concurrent writer with access to the destination directory; it is not a remote exploit.\n\n```python\nimport errno\nimport os\nimport stat\nimport tempfile\n\nimport click\n\nworkdir = tempfile.mkdtemp()\ndest = os.path.join(workdir, \"atomic-out.txt\")\nvictim = os.path.join(workdir, \"victim.txt\")\nwith open(dest, \"w\") as f:\n    f.write(\"dest\\n\")\nwith open(victim, \"w\") as f:\n    f.write(\"secret\\n\")\nos.chmod(dest, 0o644)\nos.chmod(victim, 0o600)\nprint(\"victim before\", oct(stat.S_IMODE(os.stat(victim).st_mode)))\n\nreal_chmod = os.chmod\n\ndef attack_chmod(path, mode, *args, **kwargs):\n    path = os.fspath(path)\n    if os.path.basename(path).startswith(\".__atomic-write\"):\n        os.unlink(path)\n        os.symlink(victim, path)\n        real_chmod(path, mode, *args, **kwargs)\n        print(\"victim after chmod\", oct(stat.S_IMODE(os.stat(victim).st_mode)))\n        raise OSError(errno.EPERM, \"stop after chmod\", path)\n    return real_chmod(path, mode, *args, **kwargs)\n\nos.chmod = attack_chmod\ntry:\n    click.open_file(dest, \"w\", atomic=True)\nexcept OSError:\n    pass\nos.chmod = real_chmod\nprint(\"victim final\", oct(stat.S_IMODE(os.stat(victim).st_mode)))\n```\nObserved:\n\n```\nvictim before 0o600\nvictim after chmod 0o644\nvictim final 0o644\n```\n\nExpected:\n```\nvictim before 0o600\nvictim final 0o600\n```\n\nThe victim file was never passed to `open_file`. Its mode changed because `os.chmod` followed the symlink.\n\n\n## Environment:\n\n- Python version: 3.12.3\n- Click version: 8.5.1.dev \n",
+      "author_login": "anonymous756fsd",
+      "created_at": "2026-09-01T09:40:55Z",
+      "updated_at": "2026-09-16T00:30:29Z",
+      "url": "https://github.com/pallets/click/issues/3824",
+      "source_url": "https://github.com/pallets/click/issues/3824"
+    },
+    {
+      "id": "pallets/click#173",
+      "number": 173,
+      "title": "tab completion during interactive prompts",
+      "body": "It would be nice if click would support tab completion when prompting for files and paths.\n",
+      "author_login": "chaoflow",
+      "created_at": "2014-06-26T11:47:53Z",
+      "updated_at": "2026-09-16T00:30:28Z",
+      "url": "https://github.com/pallets/click/issues/173",
+      "source_url": "https://github.com/pallets/click/issues/173"
+    },
+    {
+      "id": "pallets/click#3840",
+      "number": 3840,
+      "title": "`click.edit` on Windows throws WinError 14001 or 87",
+      "body": "I found this bug while testing my own Click application. In about half the times `click.edit()` is attempted on Windows, `notepad.exe` will fail to launch with one of these two error messages (output under spoilers):\n\n<details>\n<summary>OSError: [WinError 87] The parameter is incorrect</summary>\n\n```\nPS C:\\Users\\Emory> python .\\click-notepad-me.py\nTraceback (most recent call last):\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\click\\_termui_impl.py\", line 729, in edit_files\n    c = subprocess.Popen(\n        args=shlex.split(editor) + list(filenames),\n        env=environ,\n    )\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\subprocess.py\", line 1038, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                        pass_fds, cwd, env,\n                        ^^^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n                        gid, gids, uid, umask,\n                        ^^^^^^^^^^^^^^^^^^^^^^\n                        start_new_session, process_group)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\subprocess.py\", line 1552, in _execute_child\n    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,\n                       ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n                             # no special security\n                             ^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n                             cwd,\n                             ^^^^\n                             startupinfo)\n                             ^^^^^^^^^^^^\nOSError: [WinError 87] The parameter is incorrect\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\Emory\\click-notepad-me.py\", line 3, in <module>\n    _ = click.edit()\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\click\\termui.py\", line 904, in edit\n    return ed.edit(text)\n           ~~~~~~~^^^^^^\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\click\\_termui_impl.py\", line 783, in edit\n    self.edit_files((name,))\n    ~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\click\\_termui_impl.py\", line 739, in edit_files\n    raise ClickException(\n        _(\"{editor}: Editing failed: {e}\").format(editor=editor, e=e)\n    ) from e\nclick.exceptions.ClickException: notepad: Editing failed: [WinError 87] The parameter is incorrect\n```\n</details>\n\nor\n\n<details>\n<summary>OSError: [WinError 14001] The application has failed to start because its side-by-side configuration is incorrect. Please see the application event log or use the command-line sxstrace.exe tool for more detail</summary>\n\n```\nPS C:\\Users\\Emory> python .\\click-notepad-me.py\nTraceback (most recent call last):\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\click\\_termui_impl.py\", line 729, in edit_files\n    c = subprocess.Popen(\n        args=shlex.split(editor) + list(filenames),\n        env=environ,\n    )\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\subprocess.py\", line 1038, in __init__\n    self._execute_child(args, executable, preexec_fn, close_fds,\n    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                        pass_fds, cwd, env,\n                        ^^^^^^^^^^^^^^^^^^^\n    ...<5 lines>...\n                        gid, gids, uid, umask,\n                        ^^^^^^^^^^^^^^^^^^^^^^\n                        start_new_session, process_group)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\subprocess.py\", line 1552, in _execute_child\n    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,\n                       ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n                             # no special security\n                             ^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n                             cwd,\n                             ^^^^\n                             startupinfo)\n                             ^^^^^^^^^^^^\nOSError: [WinError 14001] The application has failed to start because its side-by-side configuration is incorrect. Please see the application event log or use the command-line sxstrace.exe tool for more detail\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\Emory\\click-notepad-me.py\", line 3, in <module>\n    _ = click.edit()\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\click\\termui.py\", line 904, in edit\n    return ed.edit(text)\n           ~~~~~~~^^^^^^\n  File \"C:\\Users\\Emory\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\click\\_termui_impl.py\", line 783, in edit\n    self.edit_files((name,))\n    ~~~~~~~~~~~~~~~^",
+      "author_login": "emorynb",
+      "created_at": "2026-09-05T13:49:09Z",
+      "updated_at": "2026-09-14T12:06:35Z",
+      "url": "https://github.com/pallets/click/issues/3840",
+      "source_url": "https://github.com/pallets/click/issues/3840"
+    },
+    {
+      "id": "pallets/click#2582",
+      "number": 2582,
+      "title": "The `edit` utility does not work on Windows for Visual Studio Code",
+      "body": "A new editor tab opens with the temporary file but the file is immediately deleted. To reproduce:\r\n\r\n1. Install Visual Studio Code\r\n2. Set the `EDITOR` environment variable to `code`\r\n\r\nEnvironment:\r\n\r\n- Python version: 3.11\r\n- Click version: 8.1.6\r\n",
+      "author_login": "ofek",
+      "created_at": "2023-08-09T04:28:53Z",
+      "updated_at": "2026-09-13T00:34:44Z",
+      "url": "https://github.com/pallets/click/issues/2582",
+      "source_url": "https://github.com/pallets/click/issues/2582"
+    },
+    {
+      "id": "pallets/click#3010",
+      "number": 3010,
+      "title": "Impossible to get single newlines in help text",
+      "body": "The expected format is:\n```\n  --annotations [disabled|comment]\n                                  Specify the type of annotations to include in the XML output.\n                                  'Disabled' - no annotations.\n                                  'Comment' - annotations as comments.\n```\nThe actual format is either:\n```\n  --annotations [disabled|comment]\n                                  Specify the type of annotations to include in the XML output.\n\n                                  'Disabled' - no annotations.\n                                  'Comment' - annotations as comments.\n```\nor:\n```\n  --annotations [disabled|comment]\n                                  Specify the type of annotations to include in the XML output. 'Disabled' - no annotations. 'Comment' - annotations as comments.\n```\n\n\n\nHowever the text either has _no_ newlines, or it has double newlines.\nI expected this to work:\n```python\n@click.option(\n    \"--annotations\",\n    type=click.Choice(Annotations, case_sensitive=False),\n    default=Annotations.Comment,\n    help=\"\"\"Specify the type of annotations to include in the XML output.\n    \\b\n    'Disabled' - no annotations.\n    'Comment' - annotations as comments.\"\"\",\n)\n```\nBut that ends up without any newlines.\nAdding an extra blank line before the `\\b` does work, but that also results in an extra blank line in the output (as seen above):\n```python\n@click.option(\n    \"--annotations\",\n    type=click.Choice(Annotations, case_sensitive=False),\n    default=Annotations.Comment,\n    help=\"\"\"Specify the type of annotations to include in the XML output.\n\n    \\b\n    'Disabled' - no annotations.\n    'Comment' - annotations as comments.\"\"\",\n)\n```\n\n\n\nEnvironment:\n\n- Python version: 3.10.11\n- Click version: 8.2.1\n",
+      "author_login": "learn-more",
+      "created_at": "2025-07-22T16:18:36Z",
+      "updated_at": "2026-09-12T22:13:42Z",
+      "url": "https://github.com/pallets/click/issues/3010",
+      "source_url": "https://github.com/pallets/click/issues/3010"
+    },
+    {
+      "id": "pallets/click#3786",
+      "number": 3786,
+      "title": "release 8.5.0",
+      "body": "[Pallets release steps](https://palletsprojects.com/contributing/release)\n\n- [x] Decide to make a release.\n- [x] Ensure the change log has entries for each user-facing non-docs change, with links to the related issue reports.\n- [x] Ensure each issue and PR is in the milestone. \n- [x] verify or trigger [nightly tests](https://github.com/pallets/click/actions/workflows/nightly.yaml)\n- [x] Create a release-A.B.C branch.\n- [x] Change \"Unreleased\" to \"Released YYYY-MM-DD\" in CHANGES.md.\n- [x] Remove the \".dev\" suffix from the version in pyproject.toml.\n- [x] Commit git commit -am 'release version A.B.C' and create a PR.\n- [x] Tag `git tag -am 'release version A.B.C' A.B.C` and push `git push upstream A.B.C.`\n- [x] Watch the tests pass and build jobs begin.\n- [x] Edit the generated draft release page with our standard message template.\n- [x] Approve the upload job.\n- [x] Merge the PR. Use \"create a merge commit\", not \"squash\" or \"rebase\"!\n- [x] Close the milestone.\n- [x] Publish the draft release page.\n- [x] Merge main into stable (or stable into main): \n- [x] Start the next version(s), creating a change log section, bumping the version in pyproject.toml with the .dev suffix.\n- [x] Done!\n",
+      "author_login": "Rowlando13",
+      "created_at": "2026-08-22T04:20:57Z",
+      "updated_at": "2026-09-11T00:31:06Z",
+      "url": "https://github.com/pallets/click/issues/3786",
+      "source_url": "https://github.com/pallets/click/issues/3786"
+    },
+    {
+      "id": "pallets/click#3154",
+      "number": 3154,
+      "title": "Click 9.0",
+      "body": "Theme: reduce overhead and actually fix hacks that we had to make to patch bugs \n\nTentative Guidelines: \n- make sure to add guidance to the upgrade guide \n- Remove deprecations made in 8.5.0\n- https://github.com/pallets/click/pull/3827\n- https://github.com/pallets/click/discussions/3147#discussioncomment-14998543",
+      "author_login": "Rowlando13",
+      "created_at": "2025-11-22T18:57:01Z",
+      "updated_at": "2026-09-08T11:53:27Z",
+      "url": "https://github.com/pallets/click/issues/3154",
+      "source_url": "https://github.com/pallets/click/issues/3154"
+    },
+    {
+      "id": "pallets/click#3036",
+      "number": 3036,
+      "title": "Add support for `set` and `frozenset` (and `dict`?) as native Click types",
+      "body": "### Context\n\nThis is a follow-up on https://github.com/pallets/click/issues/2610. Half of the latter has been solved by #3030. This ticket contain the other half that was not fixed by #3030.\n\nCC @drunkwcodes",
+      "author_login": "kdeldycke",
+      "created_at": "2025-08-13T12:01:19Z",
+      "updated_at": "2026-09-08T11:52:20Z",
+      "url": "https://github.com/pallets/click/issues/3036",
+      "source_url": "https://github.com/pallets/click/issues/3036"
+    },
+    {
+      "id": "pallets/click#3788",
+      "number": 3788,
+      "title": "support @click.argument(hidden=True)",
+      "body": "Should work the same way as `@click.option(hidden=True)`.\n\nPerhaps add to the `Parameter` (base class of both `Argument` & `Option`)?\n\nVaguely related: #3473",
+      "author_login": "casperdcl",
+      "created_at": "2026-08-22T11:00:13Z",
+      "updated_at": "2026-09-06T00:34:55Z",
+      "url": "https://github.com/pallets/click/issues/3788",
+      "source_url": "https://github.com/pallets/click/issues/3788"
+    },
+    {
+      "id": "pallets/click#2869",
+      "number": 2869,
+      "title": "Support pathlib.Path in edit filename",
+      "body": "Would you welcome a PR to avoid this?\n\n```\nArgument of type \"Path\" cannot be assigned to parameter \"filename\" of type \"str | None\" in function \"edit\"\n  Type \"Path\" is not assignable to type \"str | None\"\n    \"Path\" is not assignable to \"str\"\n    \"Path\" is not assignable to \"None\"Pylance[reportArgumentType](https://github.com/microsoft/pyright/blob/main/docs/configuration.md#reportArgumentType)\n```\n\nEasy workaround with:\n```py\nclick.edit(filename=str(export_common.path))\n```\n\nbut would be nice if didn't need `str`.",
+      "author_login": "davetapley",
+      "created_at": "2025-03-10T20:15:54Z",
+      "updated_at": "2026-09-04T00:29:15Z",
+      "url": "https://github.com/pallets/click/issues/2869",
+      "source_url": "https://github.com/pallets/click/issues/2869"
+    },
+    {
+      "id": "pallets/click#2121",
+      "number": 2121,
+      "title": "`UnicodeEncodeError` on Windows when there are Unicode chars in the help message ",
+      "body": "I have come across an error when I try to print the help message for my app (`--help`) on Windows (using bash, cmd, and powershell). My help message has unicode characters in it (the project name) which is what seems to be causing the problem:\r\n\r\n* https://github.com/leouieda/nene/blob/main/nene/cli.py#L72\r\n\r\nThis PR tests running the app with `--help` and it fails on Windows and Python 3.6 and 3.10: https://github.com/leouieda/nene/pull/12\r\n\r\nHere is a minimum example that fails:\r\n\r\n```python\r\n# example.py\r\nimport click\r\n\r\n@click.command(context_settings={\"help_option_names\": [\"-h\", \"--help\"]})\r\ndef main():\r\n    \"\"\"\r\n    App description with Unicode ‣\r\n    \"\"\"\r\n    pass\r\n\r\nif __name__ == '__main__':\r\n    main()\r\n```\r\n\r\n```\r\n$ python example.py -h\r\nTraceback (most recent call last):\r\n  File \"example.py\", line 11, in <module>\r\n    main()\r\n  File \"C:\\hostedtoolcache\\windows\\Python\\3.6.8\\x64\\lib\\site-packages\\click\\core.py\", line 1128, in __call__\r\n    return self.main(*args, **kwargs)\r\n  File \"C:\\hostedtoolcache\\windows\\Python\\3.6.8\\x64\\lib\\site-packages\\click\\core.py\", line 1052, in main\r\n    with self.make_context(prog_name, args, **extra) as ctx:\r\n  File \"C:\\hostedtoolcache\\windows\\Python\\3.6.8\\x64\\lib\\site-packages\\click\\core.py\", line 914, in make_context\r\n    self.parse_args(ctx, args)\r\n  File \"C:\\hostedtoolcache\\windows\\Python\\3.6.8\\x64\\lib\\site-packages\\click\\core.py\", line 1370, in parse_args\r\n    value, args = param.handle_parse_result(ctx, opts, args)\r\n  File \"C:\\hostedtoolcache\\windows\\Python\\3.6.8\\x64\\lib\\site-packages\\click\\core.py\", line 2347, in handle_parse_result\r\n    value = self.process_value(ctx, value)\r\n  File \"C:\\hostedtoolcache\\windows\\Python\\3.6.8\\x64\\lib\\site-packages\\click\\core.py\", line 2309, in process_value\r\n    value = self.callback(ctx, self, value)\r\n  File \"C:\\hostedtoolcache\\windows\\Python\\3.6.8\\x64\\lib\\site-packages\\click\\core.py\", line 1270, in show_help\r\n    echo(ctx.get_help(), color=ctx.color)\r\n  File \"C:\\hostedtoolcache\\windows\\Python\\3.6.8\\x64\\lib\\site-packages\\click\\utils.py\", line 298, in echo\r\n    file.write(out)  # type: ignore\r\n  File \"C:\\hostedtoolcache\\windows\\Python\\3.6.8\\x64\\lib\\encodings\\cp1252.py\", line 19, in encode\r\n    return codecs.charmap_encode(input,self.errors,encoding_table)[0]\r\nUnicodeEncodeError: 'charmap' codec can't encode character '\\u2023' in position 62: character maps to <undefined>\r\n```\r\nI can confirm that it's the Unicode characters in the docstring of the function wrapped with the main `@click.command` that causes the issue. Removing them fixes the problem (the second CI run on https://github.com/leouieda/nene/pull/12). This issue does not happen on Linux and Mac.\r\n\r\nFor now, I'll remove the unicode characters so I'm not pushing a broken package but it would be great to be able to include the proper spelling of the package name in the future.\r\n\r\n<!--\r\nDescribe the expected behavior that should have happened but didn't.\r\n-->\r\n\r\nEnvironment:\r\n\r\n- Python version: 3.6 and 3.10\r\n- Click version: 8.0.3\r\n",
+      "author_login": "leouieda",
+      "created_at": "2021-11-01T16:46:16Z",
+      "updated_at": "2026-09-04T00:29:14Z",
+      "url": "https://github.com/pallets/click/issues/2121",
+      "source_url": "https://github.com/pallets/click/issues/2121"
+    },
+    {
+      "id": "pallets/click#2626",
+      "number": 2626,
+      "title": "Make ProgressBar type available in public interface",
+      "body": "\r\n`mypy` considers function `click.progressbar()` as generic with type parameter `V`: https://github.com/pallets/click/blob/ca5e1c3d75e95cbc70fa6ed51ef263592e9ac0d0/src/click/termui.py#L287-L303\r\n\r\nIn most cases type parameter `V` will be inferred from `iterable` function parameter:\r\n\r\n```python\r\nfrom typing import reveal_type\r\n\r\nimport click\r\n\r\nwith click.progressbar([1, 2, 3]) as bar:\r\n    reveal_type(bar) # Revealed type is \"click._termui_impl.ProgressBar[builtins.int]\"\r\n```\r\n\r\nHowever,  if `iterable` parameter is not specified (or if it's empty list), type parameter `V` cannot be inferred: \r\n\r\n```python\r\nimport click\r\n\r\nwith click.progressbar(length=1) as bar:\r\n    pass\r\n```\r\n\r\n```\r\n$ mypy mypy_click/__init__.py \r\nmypy_click/__init__.py:3: error: Need type annotation for \"bar\"  [var-annotated]\r\n```\r\n\r\nThis issue can be solved with manually specified type parameter:\r\n\r\n```python\r\nimport click\r\n\r\nwith click.progressbar[int](length=1) as bar:\r\n    pass\r\n```\r\nUnfortunately, this doesn't work for functions:\r\n\r\n```\r\n$ mypy mypy_click/\r\nmypy_click/__init__.py:3: error: Type application is only supported for generic classes  [misc]\r\n```\r\n\r\nAnother way to fix this is specify type for variable `bar`:\r\n\r\n```python\r\nfrom typing import cast\r\n\r\nimport click\r\nfrom click._termui_impl import ProgressBar\r\n\r\nwith cast(ProgressBar[int], click.progressbar(length=1)) as bar:\r\n    pass\r\n\r\n# or\r\n\r\nwith click.progressbar(length=1) as bar: # type: ProgressBar[int]\r\n    pass\r\n``` \r\n\r\nBut in this case `ProgressBar` is imported as not a part of public interface.\r\n\r\nSo, I think `ProgressBar` *type* should be a part of the public interface. Maybe it should not\r\nbe exported directly like class, because users should use `click.progressbar()` function instead.\r\nPublic `ProgressBar` type can be defined as [protocol](https://peps.python.org/pep-0544/) and `click.progressbar()` just returns its implementation.\r\n\r\nEnvironment:\r\n\r\n- Python version: 3.11.5\r\n- Click version: 8.1.7\r\n- Mypy version: 1.6.1",
+      "author_login": "ikokostya",
+      "created_at": "2023-10-19T23:26:53Z",
+      "updated_at": "2026-09-03T00:32:30Z",
+      "url": "https://github.com/pallets/click/issues/2626",
+      "source_url": "https://github.com/pallets/click/issues/2626"
+    },
+    {
+      "id": "pallets/click#3766",
+      "number": 3766,
+      "title": "docs/contributing.md describes .github/workflows/test-flask.yaml, which was removed in 97b300c",
+      "body": "`docs/contributing.md` (line 28) tells contributors:\r\n\r\n> -   A CI workflow (`.github/workflows/test-flask.yaml`) runs Flask's test suite to catch downstream regressions.\r\n\r\nThat workflow no longer exists. It was removed in 97b300c (\"add zizmor to scan workflows\", 2026-04-03); the same commit modified `lock.yaml`, `pre-commit.yaml`, `publish.yaml` and `tests.yaml` and added `zizmor.yaml`, but `test-flask.yaml` was deleted rather than updated, and the commit message doesn't mention it. The current workflow set is `lock`, `nightly`, `pre-commit`, `publish`, `tests`, `zizmor`, and none of them run Flask's suite as far as I can see.\r\n\r\nSo the docs describe a downstream safety net that isn't running. Two different fixes depending on intent, which is why I'm asking rather than sending a patch:\r\n\r\n- **If dropping it was deliberate**: happy to open a PR removing that bullet from `docs/contributing.md`.\r\n- **If it was collateral** in the zizmor pass, then the Flask downstream regression check has been off since April and the docs are the only thing that noticed.\r\n\r\nFound this with a tool I'm building that verifies documentation claims against the repository and its git history; the \"documented file was deleted and never restored\" check is what flagged it. Happy to send either patch, or neither if you'd rather handle it.\r\n\r\n",
+      "author_login": "melbinjp",
+      "created_at": "2026-08-14T20:30:37Z",
+      "updated_at": "2026-09-02T00:31:41Z",
+      "url": "https://github.com/pallets/click/issues/3766",
+      "source_url": "https://github.com/pallets/click/issues/3766"
+    },
+    {
+      "id": "pallets/click#2943",
+      "number": 2943,
+      "title": "_pipepager() fails with mutli-call binaries",
+      "body": "Programs such as BusyBox, Toybox and Coreutils (also gzib, bzip etc) in multi-call mode derive their identity from the symlink. Resolving the symlink causes them to misbehave.\n\nEnvironment:\n\n- Python version: python3.12\n- Click version: 8.2.1\n",
+      "author_login": "ghost",
+      "created_at": "2025-05-25T21:18:49Z",
+      "updated_at": "2026-09-02T00:31:40Z",
+      "url": "https://github.com/pallets/click/issues/2943",
+      "source_url": "https://github.com/pallets/click/issues/2943"
+    },
+    {
+      "id": "pallets/click#1054",
+      "number": 1054,
+      "title": "Use function both as API and click function?",
+      "body": "I am trying to reduce boilerplate code and it was my idea to just decorate an existing function with click decorators to make it available via click. It's unclear to me from the documentation if this use case is supported. I also search the issues for the below error message and couldn't find anything related.\r\n\r\nWhen I decorate a function with click, I am not able to use it as a function within Python:\r\n\r\nHere's the function code:\r\n\r\n```python\r\n@click.command()\r\n@click.argument('datestr')\r\ndef nasa_date_to_iso(datestr):\r\n    \"\"\"Convert the day-number based NASA format to ISO.\r\n\r\n    Parameters\r\n    ----------\r\n    datestr : str\r\n        Date string in the form Y-j\r\n\r\n    Returns\r\n    -------\r\n    Datestring in ISO standard yyyy-mm-ddTHH:MM:SS.MMMMMM\r\n    \"\"\"\r\n    date = dt.datetime.strptime(datestr, nasa_date_format)\r\n    click.echo(date.isoformat())\r\n    return date.isoformat()\r\n```\r\n\r\nSimple enough, right?\r\nI install it via setup.py like so:\r\n```\r\n    entry_points={\r\n        \"console_scripts\": [\r\n            'nasa_date_to_iso = planetpy.utils:nasa_date_to_iso',\r\n        ]\r\n    },\r\n```\r\nbut when I call it within ipython I get this:\r\n```python\r\nIn [1]: from planetpy.utils import nasa_date_to_iso\r\n\r\nIn [2]: nasa_date_to_iso('2017-090')\r\nUsage: ipython [OPTIONS] DATESTR\r\n\r\nError: Got unexpected extra arguments (0 1 7 - 0 9 0)\r\nAn exception has occurred, use %tb to see the full traceback.\r\n\r\nSystemExit: 2\r\n\r\n/Users/klay6683/miniconda3/envs/stable/lib/python3.6/site-packages/IPython/core/interactiveshell.py:2971: UserWarning: To exit: use 'exit', 'quit', or Ctrl-D.\r\n  warn(\"To exit: use 'exit', 'quit', or Ctrl-D.\", stacklevel=1)\r\n```\r\n\r\nSo, is it not possible to have the same function both as a click-cli function and an python-internal API?\r\n\r\nSystem: Py3.6 via conda on macOS 10.12.6, click version 6.7",
+      "author_login": "michaelaye",
+      "created_at": "2018-06-23T12:33:27Z",
+      "updated_at": "2026-09-02T00:24:34Z",
+      "url": "https://github.com/pallets/click/issues/1054",
+      "source_url": "https://github.com/pallets/click/issues/1054"
+    }
+  ]
+}
