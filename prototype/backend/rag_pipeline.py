@@ -1,144 +1,189 @@
 import os
-from typing import Dict, Any, List
+import re
+from pathlib import Path
+from typing import Any, Dict, List
+
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import PromptTemplate
 
-# Load environment variables from .env
-load_dotenv()
+
+# Load credentials from prototype/backend/.env, regardless of the terminal folder.
+load_dotenv(Path(__file__).with_name(".env"))
 
 NEO4J_URI = os.getenv("NEO4J_URI")
 NEO4J_USER = os.getenv("NEO4J_USER") or os.getenv("NEO4J_USERNAME", "neo4j")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+NO_EVIDENCE_ANSWER = "Insufficient evidence in repository history to answer this question."
+
+STOP_WORDS = {
+    "a", "about", "an", "and", "are", "as", "at", "be", "been", "by",
+    "can", "code", "does", "do", "for", "from", "had", "has", "have",
+    "how", "i", "in", "is", "it", "of", "on", "or", "our", "the", "their",
+    "this", "to", "was", "were", "what", "when", "where", "which", "who",
+    "why", "will", "with",
+}
+
 
 class EvidenceRAGPipeline:
-    def __init__(self):
-        # Initialize Neo4j Driver safely with URI validation
-        if NEO4J_URI and NEO4J_PASSWORD and NEO4J_URI.strip():
-            try:
-                self.driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
-            except Exception as e:
-                print(f"Warning: Neo4j Driver failed to initialize: {e}")
-                self.driver = None
-        else:
-            self.driver = None
+    """Find repository evidence in Neo4j and summarize it without a paid LLM."""
 
-        # Initialize LLM with zero temperature for factual adherence
-        # Uses explicit key or falls back gracefully
-        self.llm = ChatOpenAI(
-            model="gpt-4o-mini",
-            temperature=0.0,
-            api_key=OPENAI_API_KEY if OPENAI_API_KEY else "dummy-key-for-init"
-        )
+    def __init__(self) -> None:
+        self.driver = None
 
-        # Define system prompt enforcing strict evidence vs inference separation
-        self.prompt_template = PromptTemplate(
-            template="""
-You are an evidence-backed software architecture assistant. Your job is to explain WHY a codebase or module was designed a certain way based strictly on historical repository context.
+        if NEO4J_URI and NEO4J_PASSWORD:
+            self.driver = GraphDatabase.driver(
+                NEO4J_URI,
+                auth=(NEO4J_USER, NEO4J_PASSWORD),
+            )
 
-STRICT INSTRUCTIONS:
-1. Base your answer ONLY on the provided Repository Evidence below.
-2. If the provided evidence contains enough information, explain the reasoning clearly.
-3. Explicitly categorize your findings into:
-   - DIRECT EVIDENCE: Historical facts, commit messages, PR discussions, and issue comments.
-   - INFERENCE: Logical interpretations directly supported by the evidence.
-4. CITE SOURCES: Include exact commit hashes, PR IDs, author names, dates, and source URLs where applicable.
-5. FALLBACK RULE: If the retrieved evidence does NOT contain the reason or is empty, output EXACTLY this response:
-   "Insufficient evidence in repository history to answer this question." Do NOT speculate or invent reasons.
+    def extract_keywords(self, question: str) -> List[str]:
+        """Keep meaningful words from a natural-language question."""
+        words = re.findall(r"[a-zA-Z0-9_]+", question.lower())
 
-Repository Evidence:
-{context}
+        keywords = [
+            word
+            for word in words
+            if len(word) > 1
+            and word not in STOP_WORDS
+        ]
 
-User Question:
-{question}
+        # Remove duplicates while keeping the original order.
+        return list(dict.fromkeys(keywords))
 
-Structured Answer:
-""",
-            input_variables=["context", "question"]
-        )
-
-    def fetch_graph_evidence(self, question: str) -> List[Dict[str, Any]]:
-        """
-        Retrieves relevant commits, pull requests, and issues from Neo4j.
-        Supports multiple schema property naming variations.
-        """
+    def fetch_graph_evidence(
+        self,
+        question: str,
+        repository: str | None = None,
+    ) -> List[Dict[str, Any]]:
+        """Return matching records, optionally restricted to one repository."""
         if not self.driver:
+            raise RuntimeError(
+                "Neo4j is not configured. Check NEO4J_URI, "
+                "NEO4J_USERNAME, and NEO4J_PASSWORD in prototype/backend/.env."
+            )
+
+        keywords = self.extract_keywords(question)
+        if not keywords:
             return []
 
-        # Cypher query with multi-property fallbacks
+        repository = repository.strip().lower() if repository and repository.strip() else None
+
         cypher_query = """
         MATCH (e)
-        WHERE (e:Commit OR e:PullRequest OR e:Issue OR e:Decision)
-          AND (toLower(coalesce(e.message, "")) CONTAINS toLower($search_term) 
-            OR toLower(coalesce(e.description, "")) CONTAINS toLower($search_term)
-            OR toLower(coalesce(e.summary, "")) CONTAINS toLower($search_term)
-            OR toLower(coalesce(e.body, "")) CONTAINS toLower($search_term)
-            OR toLower(coalesce(e.title, "")) CONTAINS toLower($search_term))
-        RETURN 
+        WHERE (e:Commit OR e:PullRequest OR e:Issue)
+          AND (
+              $repository IS NULL OR (
+                  e.id IS NOT NULL AND (
+                      toLower(toString(e.id)) STARTS WITH $repository + "@"
+                      OR toLower(toString(e.id)) STARTS WITH $repository + "#"
+                  )
+              )
+          )
+        WITH e, [
+            toLower(coalesce(e.message, "")),
+            toLower(coalesce(e.title, "")),
+            toLower(coalesce(e.body, "")),
+            toLower(coalesce(e.summary, "")),
+            toLower(coalesce(e.description, ""))
+        ] AS searchable_text
+        WITH e, searchable_text,
+            reduce(
+                score = 0,
+                keyword IN $keywords |
+                score + CASE
+                    WHEN any(text IN searchable_text WHERE text CONTAINS keyword)
+                    THEN 1
+                    ELSE 0
+                END
+            ) AS match_score
+        WHERE match_score > 0
+        RETURN
             labels(e)[0] AS entity_type,
             coalesce(e.hash, e.id, e.number, "N/A") AS identifier,
-            coalesce(e.message, e.summary, e.title, e.description, e.body, "") AS detail,
-            coalesce(e.author, e.user, "Unknown") AS author,
-            coalesce(e.date, e.created_at, "Unknown Date") AS date,
-            coalesce(e.url, e.html_url, "") AS url
-        LIMIT 5
+            coalesce(e.message, e.title, e.body, e.summary, e.description, "")
+                AS detail,
+            coalesce(e.author, e.author_login, e.user, "Unknown") AS author,
+            coalesce(
+                e.date,
+                e.committed_at,
+                e.created_at,
+                "Unknown Date"
+            ) AS date,
+            coalesce(e.url, e.source_url, e.html_url, "") AS url,
+            match_score
+        ORDER BY match_score DESC, toString(date) DESC
+        LIMIT 10
         """
-        try:
-            with self.driver.session() as session:
-                result = session.run(cypher_query, search_term=question)
-                records = [record.data() for record in result]
-                return records
-        except Exception as e:
-            print(f"Error querying Neo4j: {e}")
-            return []
 
-    def format_context(self, evidence_records: List[Dict[str, Any]]) -> str:
-        """Formats Neo4j records into a structured context string for the LLM."""
+        with self.driver.session() as session:
+            result = session.run(
+                cypher_query,
+                keywords=keywords,
+                repository=repository,
+            )
+            return [record.data() for record in result]
+
+    def make_evidence_answer(
+        self,
+        evidence_records: List[Dict[str, Any]],
+    ) -> str:
+        """Summarize what matching records say without inventing a rationale."""
         if not evidence_records:
-            return ""
+            return NO_EVIDENCE_ANSWER
 
-        formatted_str = ""
-        for idx, item in enumerate(evidence_records, start=1):
-            formatted_str += f"--- Record {idx} [{item.get('entity_type')}] ---\n"
-            formatted_str += f"ID: {item.get('identifier')}\n"
-            formatted_str += f"Author: {item.get('author')} | Date: {item.get('date')}\n"
-            formatted_str += f"Details: {item.get('detail')}\n"
-            if item.get('url'):
-                formatted_str += f"URL: {item.get('url')}\n"
-            formatted_str += "\n"
-        return formatted_str
+        lines = [
+            "### DIRECT EVIDENCE",
+            "These repository records matched the words in your question:",
+        ]
+
+        for record in evidence_records[:5]:
+            detail = str(record.get("detail") or "").replace("\n", " ").strip()
+            if len(detail) > 500:
+                detail = detail[:497] + "..."
+
+            lines.append(
+                f"- **[{record.get('entity_type', 'Evidence')}]** "
+                f"`{record.get('identifier', 'N/A')}`: {detail}"
+            )
+
+        lines.extend(
+            [
+                "",
+                "### LIMITATION",
+                "These records show what was recorded, but matching text alone "
+                "does not prove why the change was made. Open the source links "
+                "to read the original context.",
+                "",
+                "*(Generated using the no-cost evidence path.)*",
+            ]
+        )
+        return "\n".join(lines)
 
     def answer_question(self, question: str) -> Dict[str, Any]:
-        """Runs retrieval, checks context sufficiency, and invokes the LLM chain."""
-        evidence_records = self.fetch_graph_evidence(question)
-        context = self.format_context(evidence_records)
-
-        # Fallback early if no graph context is returned
-        if not context.strip():
+        """Retrieve matching records and return an evidence-based response."""
+        question = question.strip()
+        if not question:
             return {
                 "question": question,
-                "answer": "Insufficient evidence in repository history to answer this question.",
+                "answer": NO_EVIDENCE_ANSWER,
                 "evidence_found": False,
-                "sources": []
+                "sources": [],
             }
 
-        # Run LLM chain
-        chain = self.prompt_template | self.llm
-        response = chain.invoke({"context": context, "question": question})
-        answer_text = response.content.strip()
+        evidence_records = self.fetch_graph_evidence(question)
 
         return {
             "question": question,
-            "answer": answer_text,
-            "evidence_found": "Insufficient evidence" not in answer_text,
-            "sources": evidence_records
+            "answer": self.make_evidence_answer(evidence_records),
+            "evidence_found": bool(evidence_records),
+            "sources": evidence_records,
         }
 
-    def close(self):
+    def close(self) -> None:
         if self.driver:
             self.driver.close()
 
-# Singleton instance for export
+
+# main.py imports this shared instance.
 rag_pipeline = EvidenceRAGPipeline()
