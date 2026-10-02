@@ -147,7 +147,7 @@
       <div class="nav-links">
         <a href="index.html" class="nav-item">Evidence Engine</a>
         <a href="graph.html" class="nav-item active">Graph Explorer</a>
-        <a href="http://127.0.0.1:8000/docs" target="_blank" rel="noopener noreferrer" class="nav-item">Documentation</a>
+        <a href="https://repoinsight-qjj0.onrender.com/docs" target="_blank" rel="noopener noreferrer" class="nav-item">Documentation</a>
       </div>
     </nav>
 
@@ -269,7 +269,7 @@
         // Focus Graph Explorer on the repository from the last successful import.
         // Without a selection, load the default graph for existing data.
         const selectedRepository = localStorage.getItem('lastImportedRepository') || '';
-        const graphUrl = new URL('http://127.0.0.1:8000/api/graph');
+        const graphUrl = new URL('https://repoinsight-qjj0.onrender.com/api/graph')
         if (selectedRepository) graphUrl.searchParams.set('q', selectedRepository);
         const response = await fetch(graphUrl);
         if (!response.ok) {

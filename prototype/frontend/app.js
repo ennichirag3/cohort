@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "https://repoinsight-qjj0.onrender.com";
 const API_URL = `${API_BASE_URL}/api/ask`;
 const REPOSITORY_STATE_KEY = "evidenceRepositoryState";
 const RESULT_STATE_KEY = "evidenceQueryResult";
