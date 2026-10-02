@@ -31,7 +31,9 @@ def import_data(tx, data):
     tx.run(
         """
         MERGE (r:Repository {id: $id})
-        SET r.name = $name, r.source_url = $source_url
+        SET r.name = $name,
+            r.source_url = $source_url,
+            r.url = $source_url
         """,
         id=repo["id"],
         name=repo["name"],
@@ -45,14 +47,17 @@ def import_data(tx, data):
             MERGE (c:Commit {id: $commit_id})
             SET c.message = $message,
                 c.date = $date,
-                c.source_url = $source_url
+                c.author = $author,
+                c.source_url = $source_url,
+                c.url = $source_url
             MERGE (r)-[:HAS_COMMIT]->(c)
             """,
             repo_id=repo["id"],
             commit_id=commit["id"],
-            message=commit["message"],
-            date=commit["committed_at"],
-            source_url=commit["source_url"],
+            message=commit.get("message", ""),
+            date=commit.get("committed_at"),
+            author=commit.get("author_login"),
+            source_url=commit.get("source_url"),
         )
 
         author = commit.get("author_login")
@@ -87,11 +92,18 @@ def import_data(tx, data):
             """
             MERGE (i:Issue {id: $id})
             SET i.title = $title,
-                i.source_url = $source_url
+                i.body = $body,
+                i.author = $author,
+                i.created_at = $created_at,
+                i.source_url = $source_url,
+                i.url = $source_url
             """,
             id=issue["id"],
-            title=issue["title"],
-            source_url=issue["source_url"],
+            title=issue.get("title", ""),
+            body=issue.get("body_excerpt", ""),
+            author=issue.get("author_login"),
+            created_at=issue.get("created_at"),
+            source_url=issue.get("source_url"),
         )
 
     for pull_request in data.get("pull_requests", []):
@@ -100,16 +112,21 @@ def import_data(tx, data):
             MATCH (r:Repository {id: $repo_id})
             MERGE (p:PullRequest {id: $id})
             SET p.title = $title,
+                p.body = $body,
+                p.author = $author,
                 p.source_url = $source_url,
+                p.url = $source_url,
                 p.created_at = $created_at,
                 p.merged_at = $merged_at
             """,
             repo_id=repo["id"],
             id=pull_request["id"],
-            title=pull_request["title"],
-            source_url=pull_request["source_url"],
-            created_at=pull_request["created_at"],
-            merged_at=pull_request["merged_at"],
+            title=pull_request.get("title", ""),
+            body=pull_request.get("body", ""),
+            author=pull_request.get("author_login"),
+            source_url=pull_request.get("source_url"),
+            created_at=pull_request.get("created_at"),
+            merged_at=pull_request.get("merged_at"),
         )
 
         for commit_id in pull_request.get("commit_ids", []):

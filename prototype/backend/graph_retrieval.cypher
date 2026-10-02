@@ -1,4 +1,4 @@
-MATCH (r:Repository {id: "demo-repository"})-[:HAS_COMMIT]->(c:Commit)
+MATCH (r:Repository {id: "pallets/click"})-[:HAS_COMMIT]->(c:Commit)
 OPTIONAL MATCH (c)-[:CHANGED]->(f:File)
 OPTIONAL MATCH (pr:PullRequest)-[:INCLUDES_COMMIT]->(c)
 RETURN
@@ -12,4 +12,3 @@ RETURN
     coalesce(pr.url, pr.source_url) AS pull_request_url,
     coalesce(c.url, c.source_url) AS commit_url
 ORDER BY committed_at;
-
