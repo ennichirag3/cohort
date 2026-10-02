@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+from fastapi import HTTPException
+from rag_pipeline import rag_pipeline
 
 # 1. Define explicit response models with descriptive fields
 class MessageResponse(BaseModel):
@@ -16,7 +18,7 @@ class QueryRequest(BaseModel):
 
 class QueryResponse(BaseModel):
     answer: str
-    sources: list = []
+    sources: list[dict] = Field(default_factory=list)
 
 # 2. Instantiate the app with rich metadata
 app = FastAPI(
@@ -61,15 +63,53 @@ async def health_check():
     "/api/ask",
     tags=["GraphRAG"],
     summary="Execute Architectural Query",
-    description="Accepts an architectural question, queries the Neo4j GraphRAG pipeline, and returns a synthesized response with evidence.",
-    response_model=QueryResponse
+    description="Searches Neo4j for graph evidence related to the question.",
+    response_model=QueryResponse,
 )
-async def ask_question(body: QueryRequest):
-    # TODO: Connect this to your actual graph retrieval and LLM logic
-    return {
-        "answer": f"Processed query regarding: '{body.question}'. Neo4j graph traversal successfully extracted connected commit nodes and file references.",
-        "sources": ["main.py", "rag_pipeline.py", "Graph DB Schema"]
-    }
+def ask_question(body: QueryRequest):
+    try:
+        evidence = rag_pipeline.fetch_graph_evidence(body.question)
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Could not retrieve evidence from Neo4j: {exc}",
+        ) from exc
+
+    sources = []
+
+    for record in evidence:
+        title = (
+            record.get("title")
+            or record.get("summary")
+            or record.get("message")
+            or record.get("description")
+            or str(record.get("identifier", "Graph evidence"))
+        )
+
+        sources.append(
+            {
+                "type": record.get("entity_type", "Evidence"),
+                "title": title,
+                "url": record.get("source_url") or record.get("url"),
+                "excerpt": record.get("summary")
+                or record.get("description")
+                or record.get("message")
+                or title,
+            }
+        )
+
+    if not sources:
+        answer = (
+            "I couldn't find matching evidence in the Neo4j graph. "
+            "Try asking with specific words that appear in a commit, issue, or pull request."
+        )
+    else:
+        answer = (
+            f"I found {len(sources)} matching record(s) in the Neo4j graph. "
+            "Review the sources for the supporting evidence."
+        )
+
+    return {"answer": answer, "sources": sources}
 
 # 6. Graph Explorer Topology Endpoint
 @app.get(
