@@ -1,6 +1,12 @@
+# Local secrets
+.env
+
 # Virtual Environments
 venv/
 .venv/
+.venv313/
+**/.venv311/
+/.venv311/
 ENV/
 
 # Python Cache
