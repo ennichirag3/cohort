@@ -1,0 +1,229 @@
+{
+  "repository": {
+    "id": "pallets/click",
+    "name": "click",
+    "source_url": "https://github.com/pallets/click"
+  },
+  "commits": [
+    {
+      "id": "pallets/click@06b2a678741131fd577ce170e23e5ca0aeba0309",
+      "sha": "06b2a678741131fd577ce170e23e5ca0aeba0309",
+      "message": "Deprecate parameter names that are: not a Python identifier, or a Python Keyword, or not lower-cased (#3866)",
+      "author_login": "Rowlando13",
+      "committed_at": "2026-09-23T04:07:17Z",
+      "source_url": "https://github.com/pallets/click/commit/06b2a678741131fd577ce170e23e5ca0aeba0309",
+      "files": [
+        "CHANGES.md",
+        "docs/upgrade-guides.md",
+        "pyproject.toml",
+        "src/click/core.py",
+        "tests/test_arguments.py",
+        "tests/test_deprecations.py",
+        "tests/test_options.py",
+        "uv.lock"
+      ],
+      "pull_request_ids": []
+    },
+    {
+      "id": "pallets/click@b90faad1788bc030bb3320938f07c9189f42d7d0",
+      "sha": "b90faad1788bc030bb3320938f07c9189f42d7d0",
+      "message": "Deprecate a parameter name that Click 9.0 will refuse or lower case\n\nPrepares the ground for #3827",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-11T07:44:03Z",
+      "source_url": "https://github.com/pallets/click/commit/b90faad1788bc030bb3320938f07c9189f42d7d0",
+      "files": [
+        "CHANGES.md",
+        "docs/upgrade-guides.md",
+        "src/click/core.py",
+        "tests/test_arguments.py",
+        "tests/test_deprecations.py",
+        "tests/test_options.py"
+      ],
+      "pull_request_ids": []
+    },
+    {
+      "id": "pallets/click@a59f7c624fb7272e37d97921047dab8bf3ff0675",
+      "sha": "a59f7c624fb7272e37d97921047dab8bf3ff0675",
+      "message": "Start 8.6.0.",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-22T06:39:50Z",
+      "source_url": "https://github.com/pallets/click/commit/a59f7c624fb7272e37d97921047dab8bf3ff0675",
+      "files": [
+        "CHANGES.md",
+        "pyproject.toml",
+        "uv.lock"
+      ],
+      "pull_request_ids": []
+    },
+    {
+      "id": "pallets/click@22177f857a34e3c35ba957553853a37f23feb37e",
+      "sha": "22177f857a34e3c35ba957553853a37f23feb37e",
+      "message": "`path_type` narrows the converted value's type for `convert` and `prompt`\n\nCloses #3822",
+      "author_login": "kdeldycke",
+      "committed_at": "2026-09-08T10:33:40Z",
+      "source_url": "https://github.com/pallets/click/commit/22177f857a34e3c35ba957553853a37f23feb37e",
+      "files": [
+        "CHANGES.md",
+        "src/click/types.py",
+        "tests/test_types/test_Path.py",
+        "tests/typing/typing_path.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3858"
+      ]
+    },
+    {
+      "id": "pallets/click@47c878239f560eb636beacf7e0f090784aefbb1f",
+      "sha": "47c878239f560eb636beacf7e0f090784aefbb1f",
+      "message": "feat(color): support FORCE_COLOR, NO_COLOR, and PYTHON_COLORS environment variables",
+      "author_login": "taran-dev4u",
+      "committed_at": "2026-09-05T23:42:06Z",
+      "source_url": "https://github.com/pallets/click/commit/47c878239f560eb636beacf7e0f090784aefbb1f",
+      "files": [
+        "src/click/_compat.py",
+        "src/click/globals.py",
+        "src/click/testing.py",
+        "tests/test_utils/test_echo.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3845"
+      ]
+    },
+    {
+      "id": "pallets/click@e05912a7c97628477b6cecb3cb3afbdacd6761d6",
+      "sha": "e05912a7c97628477b6cecb3cb3afbdacd6761d6",
+      "message": "Update types.py",
+      "author_login": "garganupam",
+      "committed_at": "2026-09-16T08:20:23Z",
+      "source_url": "https://github.com/pallets/click/commit/e05912a7c97628477b6cecb3cb3afbdacd6761d6",
+      "files": [
+        "src/click/types.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3873"
+      ]
+    },
+    {
+      "id": "pallets/click@38c657ba5d5372cd57d3878af655e9b183e77141",
+      "sha": "38c657ba5d5372cd57d3878af655e9b183e77141",
+      "message": "Change IntParamType conversion increment from 1 to 2",
+      "author_login": "garganupam",
+      "committed_at": "2026-09-16T12:53:29Z",
+      "source_url": "https://github.com/pallets/click/commit/38c657ba5d5372cd57d3878af655e9b183e77141",
+      "files": [
+        "src/click/types.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3873"
+      ]
+    },
+    {
+      "id": "pallets/click@b8db3a92329608f5ed15936827a18ee5f4011c36",
+      "sha": "b8db3a92329608f5ed15936827a18ee5f4011c36",
+      "message": "Change IntParamType conversion increment from 2 to 3",
+      "author_login": "garganupam",
+      "committed_at": "2026-09-16T13:08:32Z",
+      "source_url": "https://github.com/pallets/click/commit/b8db3a92329608f5ed15936827a18ee5f4011c36",
+      "files": [
+        "src/click/types.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3873"
+      ]
+    },
+    {
+      "id": "pallets/click@86851b5691d3c14f7db41f259496808483632236",
+      "sha": "86851b5691d3c14f7db41f259496808483632236",
+      "message": "Change IntParamType conversion increment from 3 to 4",
+      "author_login": "garganupam",
+      "committed_at": "2026-09-16T13:16:58Z",
+      "source_url": "https://github.com/pallets/click/commit/86851b5691d3c14f7db41f259496808483632236",
+      "files": [
+        "src/click/types.py"
+      ],
+      "pull_request_ids": [
+        "pallets/click#3873"
+      ]
+    }
+  ],
+  "pull_requests": [
+    {
+      "id": "pallets/click#3858",
+      "number": 3858,
+      "title": "Make `click.Path` generic on `path_type`",
+      "body": "This is an attempt to make `click.Path` generic on `path_type` following #3407.\r\n\r\nCloses #3822\r\n",
+      "author_login": "kdeldycke",
+      "created_at": "2026-09-08T10:36:02Z",
+      "merged_at": "2026-09-08T19:48:10Z",
+      "source_url": "https://github.com/pallets/click/pull/3858",
+      "commit_ids": [
+        "pallets/click@22177f857a34e3c35ba957553853a37f23feb37e"
+      ],
+      "issue_ids": [
+        "pallets/click#3822"
+      ]
+    },
+    {
+      "id": "pallets/click#3845",
+      "number": 3845,
+      "title": "[rejected AI] support FORCE_COLOR, NO_COLOR, and PYTHON_COLORS environment variables",
+      "body": "## Description\n\nCurrently, Click only determines the default color preference by checking whether the output stream is a physical TTY (`isatty(stream)`). In CI/CD environments (GitHub Actions, GitLab CI, Jenkins) and automated build logs, output streams are pipes/files where `isatty()` is False, which strips color and ANSI styling unless `color=True` is explicitly passed.\n\nStandards like [NO_COLOR](https://no-color.org), [FORCE_COLOR](https://force-color.org), and Python 3.13's standard `PYTHON_COLORS` allow users and build environments to control ANSI color output globally.\n\n### Changes\n1. **`src/click/globals.py`**:\n   - Extended `resolve_color_default()` to inspect `NO_COLOR`, `FORCE_COLOR`, and `PYTHON_COLORS` when no explicit `color` flag or `ctx.color` is configured:\n     - `NO_COLOR` (non-empty) or `PYTHON_COLORS=\"0\"` / `FORCE_COLOR=\"0\"` -> returns `False` (disable color).\n     - `FORCE_COLOR` (non-zero/true) or `PYTHON_COLORS=\"1\"` -> returns `True` (enable color).\n2. **`src/click/_compat.py`**:\n   - Updated `should_strip_ansi()` to respect `NO_COLOR`, `FORCE_COLOR`, and `PYTHON_COLORS` when `color is None`.\n3. **`src/click/testing.py`**:\n   - Updated `CliRunner.isolation()`'s `should_strip_ansi` mock to evaluate environment variables during test runs.\n4. **`tests/test_utils/test_echo.py`**:\n   - Added `test_echo_force_color` testing `FORCE_COLOR=1`, `FORCE_COLOR=true`, `FORCE_COLOR=0`, `PYTHON_COLORS=1`, `PYTHON_COLORS=0`, and explicit `color=False` override on non-TTY streams.\n   - Added `test_echo_no_color` testing `NO_COLOR=1`, `NO_COLOR=\"\"`, and explicit `color=True` override on TTY streams.\n   - Added `test_echo_runner_env_color` testing `CliRunner` invocations with environment variables.\n\nCloses #3022\n",
+      "author_login": "taran-dev4u",
+      "created_at": "2026-09-05T23:42:19Z",
+      "merged_at": null,
+      "source_url": "https://github.com/pallets/click/pull/3845",
+      "commit_ids": [
+        "pallets/click@47c878239f560eb636beacf7e0f090784aefbb1f"
+      ],
+      "issue_ids": [
+        "pallets/click#3022"
+      ]
+    },
+    {
+      "id": "pallets/click#3873",
+      "number": 3873,
+      "title": "spam",
+      "body": "<!--\r\nBefore opening a PR, open a ticket describing the issue or feature the\r\nPR will address. An issue is not required for fixing typos in\r\ndocumentation, or other simple non-code changes.\r\n\r\nReplace this comment with a description of the change. Describe how it\r\naddresses the linked ticket.\r\n-->\r\n\r\n<!--\r\nLink to relevant issues or previous PRs, one per line. Use \"fixes\" to\r\nautomatically close an issue.\r\n\r\nfixes #<issue number>\r\n-->\r\n\r\n<!--\r\nEnsure each step in CONTRIBUTING.rst is complete, especially the following:\r\n\r\n- Add tests that demonstrate the correct behavior of the change. Tests\r\n  should fail without the change.\r\n- Add or update relevant docs, in the docs folder and in code.\r\n- Add an entry in CHANGES.rst summarizing the change and linking to the issue.\r\n- Add `.. versionchanged::` entries in any relevant code docs.\r\n-->\r\n",
+      "author_login": "garganupam",
+      "created_at": "2026-09-16T13:17:43Z",
+      "merged_at": null,
+      "source_url": "https://github.com/pallets/click/pull/3873",
+      "commit_ids": [
+        "pallets/click@e05912a7c97628477b6cecb3cb3afbdacd6761d6",
+        "pallets/click@38c657ba5d5372cd57d3878af655e9b183e77141",
+        "pallets/click@b8db3a92329608f5ed15936827a18ee5f4011c36",
+        "pallets/click@86851b5691d3c14f7db41f259496808483632236"
+      ],
+      "issue_ids": []
+    }
+  ],
+  "issues": [
+    {
+      "id": "pallets/click#3822",
+      "number": 3822,
+      "title": "`click.Path` should be generic on `path_type`",
+      "author_login": "edgarrmondragon",
+      "created_at": "2026-09-01T00:05:35Z",
+      "source_url": "https://github.com/pallets/click/issues/3822",
+      "body_excerpt": "Click 8.5.0 made `click.prompt` and `click.ParamType` generic, so the return type of `click.prompt` is now normally clever enough to reveal the actual type of the value as converted from raw input.\n\nHowever, `click.Path` has a `path_type` parameter to which the input is converted, but  that information is not reflected in the return type of `click.Path.convert`, so it's always typed as `str | bytes | os.PathLike[str]`, regardless of the value of `path_type`.\n\n```python\n# mre.py\nimport pathlib\n\nfrom typing_extensions import assert_type\n\nimport click\n\nmy_type = click.Path(file_okay=False, path_type=pathlib.Path)\npath = click.prompt(\"Enter a name\", type=my_type)\n\n# expected: pathlib.Path, actual: str | bytes | os.PathLike[str]\nassert_type(path, pathlib.Path)\n```\n\nI checked the above MRE with mypy and pyright, as well as ty for completeness, on a local clone of the repo @ `main`:\n\n```console\n$ uv run mypy mre.py\nmre.py:12: error: Expression is of type \"str | bytes | PathLike[str]\", not \"Path\"  [assert-type]\n    assert_type(path, pathlib.Path)\n    ^\nFound 1 error in 1 file (checked 1 source file)\n```\n\n```console\n$ uv run pyright mre.py\nWARNING: there is a new pyright version available (v1.1.408 -> v1.1.411).\nPlease install the new version or set PYRIGHT_PYTHON_FORCE_VERSION to `latest`\n\n/Users/edgarramirez/Contrib/pallets/click/mre.py\n  /Users/edgarramirez/Contrib/pallets/click/mre.py:12:13 - error: \"assert_type\" mismatch: expected \"Path\" but received \"str | bytes | PathLike[str]\" (reportAssertTypeFailure)\n1 error, 0 warnings, 0 informations\n```\n\n```console\n$ uv run ty check mre.py\nerror[type-assertion-failure]: Argument does not have asserted type `Path`\n  --> mre.py:12:1\n   |\n12 | assert_type(path, pathlib.Path)\n   | ^^^^^^^^^^^^----^^^^^^^^^^^^^^^\n   |             |\n   |             Inferred type is `str | bytes | PathLike[str]`\ninfo: `Path` and `str | bytes | PathLike[str]` are not equivalent types\n\nFound 1 diagnostic\n```\n\nI expect the return type of `click.prompt` to match the `path_type` value passed to `click.Path`.\n\nEnvironment:\n\n- Python version: 3.14\n- Click version: 8.5.0\n"
+    },
+    {
+      "id": "pallets/click#3022",
+      "number": 3022,
+      "title": "Support `FORCE_COLOR` and `NO_COLOR` environment variables",
+      "author_login": "ascopes",
+      "created_at": "2025-07-30T08:30:01Z",
+      "source_url": "https://github.com/pallets/click/issues/3022",
+      "body_excerpt": "It would be great if the `FORCE_COLOR` and `NO_COLOR` environment variables could be used during calls to `click.echo`/`click.secho` to determine the default preference for colouring of stdout/stderr when an explicit preference for outputting colour is not set.\n\nIt appears that currently, click simply inspects whether the output stream considers itself to be a physical TTY. This is problematic on build systems such as GitLab or Jenkins or GitHub Actions, as logs that could be output in colour will not be since the output stream is still technically a file.\n\nSupporting this would allow simpler catering for outputs that are designed to help visually impaired users when viewing automated build outputs, but may have other applications as well.\n\nThese environment variables are a good candidate to be used, because [the Python interpreter already considers these specific variables](https://docs.python.org/3/using/cmdline.html#controlling-color), and other libraries such as `colorlog` also respect this."
+    },
+    {
+      "id": "pallets/click#3875",
+      "number": 3875,
+      "title": "[rejected AI] test permission probe please ignore",
+      "author_login": "Pitchfork-and-Torch",
+      "created_at": "2026-09-17T23:47:59Z",
+      "source_url": "https://github.com/pallets/click/issues/3875",
+      "body_excerpt": "Sorry — this was an accidental API permission probe while trying to open a pull request for #3362. Closing immediately.\n\nThe real work is on branch Pitchfork-and-Torch:fix/usage-hyphen-wrap (cannot open the PR via API from this token; will open via the web UI)."
+    }
+  ]
+}
