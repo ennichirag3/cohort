@@ -21,8 +21,8 @@ The current question path uses keyword extraction and match scoring. It returns 
 
 - prototype/frontend/ — Evidence Engine, Graph Explorer, Documentation, and shared styling.
 - prototype/backend/ — FastAPI endpoints, GitHub ingestion, Neo4j importer, and retrieval.
-- prototype/backend/data/ — sample and final normalized datasets for pallets/click.
-- Build-Log/ — Activities 1–6 and the project specification.
+- prototype/backend/data/ — the final normalized dataset for pallets/click.
+- Build-Log/ — the compiled Build Log and its supporting screenshots.
 - Build-Summary.md — final project summary.
 
 ## Run the backend locally
@@ -63,7 +63,7 @@ The frontend's Evidence Engine and Graph Explorer currently point to the hosted 
 - Keyword retrieval can miss relevant records or return unrelated matches.
 - Matching text is not proof of why a change was made; inspect the source links.
 - Neo4j-backed features require valid credentials and an available database.
-- User testing and comparative search-time results are not documented in the project files.
+- One manual demonstration and a two-participant exploratory stranger test are documented in Build-Log/Build-Log.md. Systematic retrieval evaluation and comparative search-time results are not established.
 
 ## Main files
 
