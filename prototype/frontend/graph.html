@@ -10,7 +10,7 @@
     .graph-card {
       width: 100%;
       max-height: 680px;
-      min-height: 520px;
+      min-height: clamp(360px, 60vh, 520px);
       position: relative;
       overflow: auto;
       display: block;
@@ -73,7 +73,7 @@
     
     svg.graph-svg {
       width: 100%;
-      min-width: 960px;
+      min-width: 720px;
       height: auto;
       display: block;
     }
@@ -132,6 +132,8 @@
       text-transform: uppercase;
       pointer-events: none;
     }
+    @media (max-width: 720px) { .graph-card { max-height: 65vh; padding: 1rem; } svg.graph-svg { min-width: 600px; } .node-details { grid-template-columns: minmax(0, 1fr) auto; } }
+    @media (max-width: 420px) { svg.graph-svg { min-width: 520px; } .graph-card { min-height: 340px; } }
   </style>
 </head>
 <body>
@@ -147,7 +149,7 @@
       <div class="nav-links">
         <a href="index.html" class="nav-item">Evidence Engine</a>
         <a href="graph.html" class="nav-item active">Graph Explorer</a>
-        <a href="https://repoinsight-qjj0.onrender.com/docs" target="_blank" rel="noopener noreferrer" class="nav-item">Documentation</a>
+        <a href="docs.html" class="nav-item">Documentation</a>
       </div>
     </nav>
 
