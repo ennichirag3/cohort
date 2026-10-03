@@ -29,7 +29,8 @@ A web prototype with an Evidence Engine, Graph Explorer, and Documentation page.
 - **Confirmed in source:** bounded import, Neo4j data flow, keyword matching, and source-link presentation.
 - **Manual demonstration:** `encode/httpx` imported with 36 commits, 10 merged pull requests, and 15 issues. The chardet 6.0 query returned 10 records, including related records and noise; one linked commit was opened and verified. A 4.56-second query time was recorded in one run.
 - **Exploratory stranger test:** two computer science students completed the flow. One found the graph useful but thought it covered all repository history; the other reported relevant and irrelevant results. This small test does not establish general usability or retrieval accuracy.
-- **Still unproven:** faster search than GitHub, systematic retrieval quality, broad user satisfaction, and willingness to pay. The product-specific opportunity has not been sized.
+- **Opportunity scenario (assumption-based, not validated):** GitHub reported 180M+ developers in 2025. If 1% fit this use case and an initial 0.1% of that segment were reachable/adoptable, the scenario is 1.8M potential-fit developers and 1,800 early users. These rates are assumptions, not measured demand; no revenue estimate is claimed. [Source](https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/)
+- **Still unproven:** faster search than GitHub, systematic retrieval quality, broad user satisfaction, and willingness to pay.
 
 ## What We Would Build Next
 

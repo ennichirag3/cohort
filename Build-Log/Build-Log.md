@@ -270,11 +270,11 @@ The current mechanism locates records. It does not generate an LLM explanation o
 
 ## 5. Opportunity Estimate
 
-A reliable commercial market size cannot yet be calculated: we do not know how many developers regularly investigate unfamiliar public repositories, how often they have this problem, or whether they would adopt or pay for this tool.
+**Method: top-down, illustrative scenario (not validated demand).** GitHub reported more than 180 million developers on its platform in its 2025 Octoverse report ([source](https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/)). This is a broad ecosystem ceiling, not the number of people who need this product.
 
-The opportunity currently supported by project evidence is a small pilot. Two computer science students tried the prototype using two public repositories, `fastapi/fastapi` and `encode/httpx`. Both completed the flow. They found relevant results, while one also reported irrelevant results and one misunderstood how much repository history was included. This shows that the flow can be evaluated with target users, but it does not establish market demand or product effectiveness.
+For a first-pass planning estimate, assume **1%** of those developers regularly investigate unfamiliar public repositories and fit the target use case: 180,000,000 × 1% = **1,800,000 potential-fit developers**. Assume an initial reachable/adoptable share of **0.1%** of that group: 1,800,000 × 0.1% = **1,800 possible early users**. Both percentages are assumptions with no market survey behind them; treat the result as a scenario for planning, not a measured market size or forecast. No revenue estimate is made because willingness to pay and pricing have not been tested.
 
-The next opportunity-sizing step is to test with a larger, defined group of developers and measure how often they face this problem, whether the results help, and whether they would use the tool again. No adoption or revenue estimate is claimed.
+Early product evidence is limited to two computer science students who tried the flow using `fastapi/fastapi` and `encode/httpx`. Both completed it; feedback included relevant and irrelevant results and a misunderstanding about the history window. This pilot does not validate the market assumptions or establish product effectiveness.
 
 ## 6. Insight Ledger
 
@@ -362,7 +362,7 @@ A user can enter a public repository, import bounded history, search for distinc
 - Whether the bounded history contains enough context for representative questions.
 - How often keyword retrieval misses relevant history or returns irrelevant records.
 - Whether users understand that a text match is not proof of historical intent.
-- Whether the planned test cases and stranger test have been completed and retained.
+- The remaining technical test cases and comparison with manual GitHub search are unverified. Two exploratory stranger-test sessions are recorded in this Build Log, but they do not establish general usability.
 
 ## 2. Implemented Product Flow — Source Review
 
