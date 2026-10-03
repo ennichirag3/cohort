@@ -2,158 +2,96 @@
 
 ## Project
 
-Evidence-Backed Developer Assistant for FastAPI
+Why The Code Is Like This — an evidence-backed public-repository history explorer
 
-## Team Member
+## Team
 
-Anirudh
-Manas
-Shreya
-Chirag
-Anshika
+Anirudh, Manas, Shreya, Chirag, and Anshika
 
 ## Theme
 
-AI and Developer Tools — Understanding Why the Code Is Like This
-
----
+AI and Developer Tools
 
 ## 1. Problem Statement — Version 1
 
-New developers can read existing code but often cannot recover the intent behind design and implementation decisions. Important reasoning is distributed across commits, pull requests, issues, documentation, and other repository history, making ordinary keyword search insufficient for understanding why a codebase is structured a certain way. In the FastAPI repository, developers may understand what a function, class, or module does but still struggle to understand why it was designed or changed in a particular way. We want to build an evidence-backed assistant that connects code entities to historical decisions and lets developers ask "why" questions with traceable evidence.
+Developers joining or maintaining a public software repository can read what the current code does but may not know why a design or implementation changed. Relevant context may be distributed across commits, pull requests, issues, and repository files. Searching those sources manually requires the developer to find and connect the relevant records. We want to make recent repository history easier to inspect by collecting it into a graph and returning matching records with their source links.
 
 ### Who experiences the problem?
 
-The main users are:
+Developers onboarding to a public codebase, open-source contributors, maintainers, and technical leads who need context before changing unfamiliar code.
 
-* New developers learning the FastAPI codebase.
-* Developers contributing to an unfamiliar part of FastAPI.
-* Developers trying to understand existing design and implementation decisions.
-* Developers maintaining or modifying code that was written or changed by others.
+### When does it occur?
 
-### When does the problem occur?
-
-The problem occurs when a developer:
-
-* Encounters unfamiliar FastAPI source code.
-* Needs to modify an existing component.
-* Wants to understand why a particular implementation was chosen.
-* Needs historical context before making a change.
-* Cannot determine the reason from the current code and documentation alone.
+The problem occurs when a developer encounters an unfamiliar module or behavior, needs to modify it, and cannot infer the historical reason from the current source alone.
 
 ### What is the cost?
 
-The developer may need to manually search through:
+The developer must search GitHub history and manually compare commits, pull requests, and issues. The time and uncertainty of this work have not been measured for this project; reduced search effort remains a hypothesis to test.
 
-* Source files.
-* Git commits.
-* Pull requests.
-* Issues.
-* Documentation.
+### Why is it worth exploring?
 
-This increases the time required to understand the code and may still leave uncertainty about the original design decision.
-
-### Why is this worth solving?
-
-Understanding the reasoning behind existing code can help developers make changes that are consistent with the project's previous decisions. Connecting the current code with its historical evidence could reduce the effort required to recover this context and make explanations more trustworthy than explanations based only on the current source code.
-
----
+If related history and source links are easier to inspect together, a developer may recover useful context with fewer manual searches. A matching historical record is not by itself proof of intent, so the original source still needs human review.
 
 ## 2. Intended Build
 
-We intend to build an evidence-backed developer assistant for the FastAPI GitHub repository. A developer will provide the repository and ask a natural-language "why" question about a code entity or implementation decision.
+The prototype accepts a public GitHub repository, fetches a bounded set of recent commits, merged pull requests, and issues, and imports normalized records into Neo4j. A developer can search the graph with a why-question and inspect matching evidence and source links; a separate Graph Explorer displays stored graph relationships.
 
-The system will follow this general flow:
-
-GitHub Repository → History Ingestion → Graph Construction in Neo4j → Graph/RAG Retrieval → Why Question → Evidence-Backed Answer
-
-The system will connect relevant code entities with historical information such as commits, pull requests, issues, and documentation. It will then retrieve relevant evidence and generate a concise explanation that includes the evidence chain and source links. If sufficient evidence cannot be found, the system should indicate that the available evidence is insufficient rather than inventing an explanation.
-
----
+The current query path uses keyword matching and reports matching records. It does not use an LLM to generate a historical explanation or prove why a change was made.
 
 ## 3. Leverage Map
 
-| Task                                                               | Classification | Reason                                                                        |
-| ------------------------------------------------------------------ | -------------- | ----------------------------------------------------------------------------- |
-| Collect commits, pull requests, issues, and repository information | Automation     | The system can automatically collect structured repository data.              |
-| Connect code entities with historical entities                     | Automation     | Graph relationships can be created automatically from repository data.        |
-| Retrieve relevant historical evidence                              | Automation     | Graph and text retrieval can identify potentially relevant evidence.          |
-| Summarize retrieved evidence                                       | Augmentation   | AI can help summarize multiple historical sources.                            |
-| Generate an explanation for a "why" question                       | Augmentation   | AI can transform retrieved evidence into a readable explanation.              |
-| Verify whether the evidence actually supports the explanation      | Agency         | A human should review whether the evidence is sufficient and relevant.        |
-| Decide whether the explanation is trustworthy enough to use        | Agency         | The developer should make the final decision based on the displayed evidence. |
+| Task | Classification | Reason |
+| --- | --- | --- |
+| Fetch a bounded window of public GitHub history | Automation | The backend calls the GitHub API and normalizes records. |
+| Preserve IDs, dates, authors, and source URLs | Automation | The ingestion code maps repository records into consistent fields. |
+| Store entities and relationships in Neo4j | Automation | The importer creates graph records for retrieval and exploration. |
+| Match a question against stored record text | Automation | The current retrieval pipeline extracts keywords and ranks matching records. |
+| Format the response and display source cards | Automation | The API and frontend present matching records and links. |
+| Decide whether a record explains the historical intent | Agency | Text matches can be related without establishing causation or intent. |
+| Decide whether the explanation is trustworthy enough to use | Agency | The developer must inspect original sources and make the engineering decision. |
 
----
+The current prototype does not perform a runtime AI summarization step. AI assistance belongs to the project workflow unless a future implementation explicitly adds and verifies it.
 
 ## 4. Human Decisions
 
-The system should not completely replace developer judgment. Important human decisions include:
-
-1. **Evidence sufficiency**
-   The developer should decide whether the retrieved commits, pull requests, issues, or documentation provide enough evidence to support the explanation.
-
-2. **Historical intent**
-   The developer should determine whether the retrieved historical information actually explains the design or implementation decision being investigated.
-
-3. **Action based on the explanation**
-   The developer should decide whether to modify, reuse, or preserve the existing implementation after reviewing the explanation and evidence.
-
----
+1. **Evidence sufficiency:** decide whether the returned commit, PR, or issue actually supports the question.
+2. **Historical intent:** distinguish a related record from a source that explains why the decision was made.
+3. **Engineering action:** decide whether to change, preserve, or investigate the implementation further.
 
 ## 5. Initial Evidence and Claim List
 
-The following claims will be treated as items to verify during the project:
+### Evidence observed in the project
 
-### Evidence
-
-* FastAPI is a public GitHub repository with a substantial development history.
-* The repository contains source code and associated project information that can be analyzed.
-* Git history can provide information about changes to code over time.
-* Pull requests and issues can provide discussion surrounding changes.
-* Documentation can provide additional context for features and design decisions.
+- prototype/backend/main.py accepts a public repository and requests up to 20 commits, 10 merged pull requests, and 15 issues for an import.
+- prototype/backend/fetch_github_data.py uses the GitHub REST API and preserves record identifiers and source URLs in normalized data.
+- prototype/backend/schema.cypher declares uniqueness constraints for Repository, Commit, PullRequest, Issue, Developer, and File IDs.
+- prototype/backend/rag_pipeline.py searches commit, pull-request, and issue text by question keywords and returns matching records.
+- prototype/frontend/index.html provides repository import and question input; prototype/frontend/graph.html presents a graph view.
+- prototype/backend/data/ contains sample/final JSON files for pallets/click.
 
 ### Inference
 
-* Connecting current code entities with historical repository entities may make it easier to recover design context.
-* A graph representation may help retrieve relationships between code, commits, pull requests, issues, and documentation.
-* Combining graph retrieval with text retrieval may provide more useful context than searching source code alone.
+Connecting repository records in Neo4j may make related history easier to inspect than searching each record type separately. This is a product rationale, not a measured outcome.
 
 ### Hypothesis
 
-* Developers will be able to understand selected FastAPI design and implementation decisions more effectively when the system presents relevant historical evidence together with the generated explanation.
+Developers will find relevant historical records faster when the prototype presents keyword-matched graph evidence with source links.
 
-### Assumption
+### Assumptions
 
-* FastAPI's public repository contains enough historical evidence to answer at least some meaningful "why" questions.
-* Code entities can be connected to relevant historical entities such as commits, pull requests, and issues.
-* Developers will find traceable evidence useful when evaluating an AI-generated explanation.
+- Recent public history contains useful context for at least some questions.
+- Keyword matching can surface records worth reviewing.
+- Developers will inspect the original sources before treating a match as an explanation.
 
-These assumptions will be tested before the final prototype scope is frozen.
+## 6. Initial Why-Question Examples
 
----
+- Which recent commits or pull requests mention the behavior I am investigating?
+- What issue or pull request is linked to this change?
+- What files were changed in matching commits?
+- Does the retrieved history contain enough evidence to explain why the change was made?
 
-## 6. Initial "Why" Questions
-
-The following questions will be considered as initial candidates for testing against the FastAPI repository:
-
-1. Why is FastAPI's dependency injection system designed this way?
-2. Why does FastAPI use Pydantic for data validation?
-3. Why is a particular FastAPI implementation or function written using `async`?
-4. Why was a particular internal implementation changed?
-5. Why was a specific validation or serialization behavior introduced?
-
-These are candidate questions rather than confirmed questions. The team will verify whether each question can be traced to sufficient evidence in the FastAPI repository's code and history.
-
----
+These are example questions. The current implementation is more likely to retrieve useful results when the question includes distinctive words present in record text.
 
 ## 7. Initial Success Criteria
 
-The prototype should demonstrate that:
-
-* A developer can ask a natural-language "why" question about FastAPI.
-* The system can identify relevant code or repository entities.
-* The system can retrieve related historical information.
-* The generated answer is connected to identifiable evidence.
-* Source links are provided for the evidence.
-* The system indicates when sufficient evidence is not available.
-* The system does not present unsupported historical intent as fact.
+The prototype should allow a developer to import a public repository, search its stored history, inspect matching records and source links, and explore graph relationships. Whether this reduces search time or improves decision understanding remains unverified and needs user testing.
