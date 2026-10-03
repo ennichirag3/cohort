@@ -2,68 +2,86 @@
 
 ## Project Focus
 
-Record the prototype’s documented capabilities, define its test coverage, and distinguish source-code behavior from test results.
+Record the prototype’s documented capabilities, the checks observed so far, and what remains untested.
 
 ## 1. Project Specification
 
-The project specification is in Build-Log/PROJECT_SPEC.md. It describes an evidence explorer for bounded public GitHub history, rather than a zero-hallucination AI answer generator.
+The project specification is in `Build-Log/PROJECT_SPEC.md`. It describes a bounded public GitHub history evidence explorer. It does not describe a zero-hallucination answer generator.
 
-## 2. Implemented Product Flow (Source Review)
+## 2. Implemented Product Flow — Source Review
 
-The current files implement these parts of the flow:
+1. The frontend accepts a public repository URL or `owner/repo`.
+2. FastAPI validates the repository input and starts the GitHub ingestion flow.
+3. The ingestion code fetches bounded commits, merged pull requests, and issues, then imports normalized records into Neo4j.
+4. The question endpoint searches Commit, PullRequest, and Issue text using extracted keywords and returns matching records with source metadata.
+5. Evidence Engine displays the result cards and source links. Graph Explorer requests and displays stored graph relationships.
 
-1. The frontend accepts a public repository URL or owner/repo.
-2. FastAPI validates the input and calls the GitHub ingestion script.
-3. The ingestion script fetches bounded commits, merged PRs, and issues, then the importer writes records to Neo4j.
-4. The question endpoint searches Commit, PullRequest, and Issue text by extracted keywords and returns matching records with source metadata.
-5. Evidence Engine renders result cards; Graph Explorer requests and displays stored graph relationships.
+The active question flow returns matching records. It does not call an LLM to generate an explanation. A keyword match does not establish historical intent.
 
-The response builder explicitly says matching records do not prove why a change was made. The current rag_pipeline.py has no LLM call. Although LLM-related packages appear in requirements.txt, their presence in the dependency list is not evidence that the runtime query path uses them.
+## 3. Manual Test Notes
 
-## 3. Test Plan and Evidence Status
+### Manual demonstration: encode/httpx
 
-The supplied project folder does not include a test suite, test output, screenshots, or a completed test-results record. The following cases should be run and recorded; they are not reported here as passed:
+- **Date:** 2026-10-03.
+- **Repository:** `encode/httpx`.
+- **Question entered:** “What changed to support chardet 6.0?”
+- **Import result:** Import succeeded. Added 36 commits, 10 merged pull requests, and 15 issues.
+- **Results observed:** The results included records about adapting to `chardet` 6.0, along with some records that did not appear clearly related.
+- **Source links:** https://github.com/encode/httpx/commit/b5addb64f0161ff6bfe94c124ef76f6a1fba5254 The original GitHub record was opened and checked.
+- **Time taken:** 4.56 seconds for [the query to return results / the import to complete — choose the one you timed].
+- **Conclusion:** This was one manual demonstration. It shows that the prototype returned some relevant history, but also unrelated results. It does not establish overall retrieval accuracy or prove that the prototype is faster than manual GitHub search.
 
-- A valid repository import with expected counts and source URLs.
-- A why-question whose distinctive words appear in an imported record.
-- A question with no matching record.
-- A question about an entity absent from the imported window.
-- Empty and very long question inputs.
-- Invalid repository URL or malformed owner/repo.
-- GitHub rate limit, missing repository, network failure, or ingestion timeout.
-- Neo4j unavailable during import, query, or graph loading.
-- Open a returned source link and check that it is the original GitHub record.
-- Have two people unfamiliar with the project complete the flow without coaching.
+Figure 1 — Successful import and query
+![alt text](<figure 1.jpeg>)
+Figure 2 — Retrieved results, including relevant and unrelated records
+![alt text](<figure 2.jpeg>)
+Figure 3 — GitHub commit opened and verified
+![alt text](<figure 3.jpeg>)
 
-The code defines some failure responses, including invalid-input errors, GitHub import errors, database errors, and a timeout. This describes implemented error handling; it does not establish that the cases have been exercised successfully.
+## 4. Stranger-Test Notes
 
-## 4. Stranger-Test Record
+No completed stranger-test record is available in the supplied project materials. No participant feedback or completion results are claimed.
 
-An earlier version of this entry reported two peer testers and specific feedback, but no interview notes, screenshots, or test artifacts are present in the supplied project folder. The reported findings therefore remain unverified. The current prototype/frontend/app.js contains clickable GitHub source links that open in a new tab; it does not contain the earlier entry’s claimed quick-select prompt pills. Do not treat that earlier claim as an implemented feature or verified test result.
+To complete this test, ask at least two people unfamiliar with the project to use the flow without coaching. Record the repository and question, whether they completed import and retrieval, where they got stuck, whether results seemed relevant, whether they opened source links, and what they understood the tool could and could not conclude.
 
-## 5. Important Product Limitations
+## 5. Test Plan — Not Yet Reported as Passed
 
-- Only public GitHub repositories are accepted by the repository import endpoint.
-- Import is bounded; it does not clone or index the full repository history.
-- Retrieval uses keyword overlap, so relevant records can be missed and irrelevant records can match.
-- The current answer reports matching records; it does not generate an LLM explanation of historical intent.
-- A person must inspect source links and judge whether a record supports a conclusion.
-- Neo4j-backed behavior requires configured credentials and a reachable database.
+- Import a valid public repository and compare returned records and source URLs with GitHub.
+- Ask a question whose distinctive words appear in an imported record.
+- Ask a question with no matching record.
+- Ask about an entity outside the imported window.
+- Try empty and unusually long questions.
+- Try an invalid repository URL or malformed `owner/repo`.
+- Exercise GitHub rate limits, a missing repository, network failure, or ingestion timeout.
+- Check behavior when Neo4j is unavailable during import, question retrieval, or graph loading.
+- Open returned source links and verify they lead to the original GitHub records.
+- Conduct and document the stranger test.
 
-## 6. Reusable Workflow
+The code includes some error responses, but this list describes planned checks; it is not a record that each case passed.
 
-**Input:** Public repository URL and a developer question.
+## 6. Important Product Limitations
 
-**Process:** Fetch a bounded set of commits, merged pull requests, and issues; normalize identifiers and source links; import records into Neo4j; search record text for question keywords.
+- The repository import endpoint accepts public GitHub repositories.
+- Import is bounded; it does not clone or index the complete repository history.
+- Retrieval uses keyword matching, so relevant records can be missed and irrelevant records can match.
+- The current question path returns matching records; it does not generate an LLM explanation of historical intent.
+- A person must inspect the source links and judge whether a record supports a conclusion.
+- Neo4j-backed features require configured credentials and an available database.
 
-**Verification:** Compare returned IDs and URLs with GitHub, open the original sources, and decide whether they actually address the question. Record missing evidence and false matches.
+## 7. Reusable Workflow
 
-**Output:** Matching records, source links, and graph relationships, plus a clear no-match response when no records match. The output is not a verified explanation unless a person confirms that the original evidence supports it.
+**Input:** A public repository and a developer question.
 
-## 7. Next Build Priorities
+**Process:** Fetch bounded commits, merged pull requests, and issues; normalize identifiers and source links; import records into Neo4j; search record text for question keywords.
 
-1. Run and retain the test matrix above.
+**Verification:** Compare returned IDs and URLs with GitHub, open original sources, and judge whether they address the question. Record missing evidence and false matches.
+
+**Output:** Matching records, source links, and graph relationships, or a no-match response. The output is not a verified explanation unless a person confirms that the original evidence supports it.
+
+## 8. Next Build Priorities
+
+1. Run and retain the test plan above.
 2. Conduct and document the stranger test.
-3. Measure the prototype against manual GitHub search.
-4. Improve retrieval only after reviewing false positives and missed records.
-5. Consider an LLM explanation only with source-grounding rules and an evaluation set.
+3. Compare the prototype with manual GitHub search using the same questions.
+4. Review false positives and missed records before changing retrieval.
+5. Consider generated explanations only after adding source-grounding rules and an evaluation set.

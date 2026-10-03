@@ -1,124 +1,76 @@
 # Build Log Entry 4 — Unwind the Idea
 
-## Project
+## Project Focus
 
-Why The Code Is Like This — an evidence-backed public-repository history explorer
+Test the original “AI explains why” framing against the prototype’s actual capabilities, identify objections, and state the assumptions that need testing.
 
-## 1. Five Whys
+## 1. Unwind: Five Whys
 
-### Why 1: Why can developers struggle with unfamiliar code?
+1. **Why did we consider building an assistant that explains code decisions?** Developers may encounter unfamiliar code and want to know why it works that way.
 
-The current source shows what the code does, but it may not show the reasoning behind a design or implementation decision.
+2. **Why is that context difficult to find?** Relevant history can be distributed across commits, pull requests, and issues.
 
-### Why 2: Why might the reason be missing from the current source?
+3. **Why combine those records in one place?** A graph can represent entities and relationships, while source links let a developer inspect the original records.
 
-The discussion and record of a change may live in commits, pull requests, issues, or other repository material.
+4. **Why import only a bounded amount of history?** The prototype uses bounded GitHub requests and does not clone or index a repository’s complete history.
 
-### Why 3: Why is manual search difficult?
-
-A developer must identify useful terms and then connect records across different GitHub views.
-
-### Why 4: Why would a connected view help?
-
-Repository records can carry links between commits, pull requests, issues, files, and authors. A graph can make those relationships available to query and explore.
-
-### Why 5: Why does this matter?
-
-A developer deciding whether to change unfamiliar code benefits from inspecting its history, but must still judge whether that history actually explains the decision.
-
-### Research Question
-
-Can a bounded repository-history graph make it easier to locate relevant source records for a code question, while keeping the limits of those records clear?
+5. **Why does the current result not count as an explanation?** Retrieval is based on keyword matches. A matching record may help locate evidence, but it does not prove intent or causation.
 
 ## 2. Reframes
 
-### Reframe 1 — From explaining code to locating historical context
+- **Reframe 1:** From “AI tells a developer why code is like this” to “a developer can find and inspect related repository history.”
+- **Reframe 2:** From “understand the whole repository” to “search a bounded set of public commits, merged pull requests, and issues for a specific question.”
 
-**Original framing:** Developers need an AI system to explain unfamiliar code.
+## 3. Critic Objections
 
-**Reframed problem:** Developers need a practical way to locate and inspect historical records related to unfamiliar code.
+| Critic | Objection | What the project should do |
+| --- | --- | --- |
+| Repository maintainer | Recent history may omit the older record that explains a design decision. | State the import boundary and test questions whose evidence may fall outside it. |
+| Developer using the tool | Keyword matching can return irrelevant records or miss records that use different words. | Measure false matches and missed records against a known question set. |
+| Evidence reviewer | A related issue or commit does not necessarily explain the original intent. | Keep source links visible and avoid presenting a match as proof. |
+| Operator | GitHub rate limits, network failures, or unavailable Neo4j may prevent import or retrieval. | Record failure behavior and test it rather than assuming the services are always available. |
 
-### Reframe 2 — From generated rationale to source-backed records
+## 4. Three Ranked Assumptions and 48-Hour Tests
 
-**Original framing:** An AI should tell the developer why a code decision was made.
+### Rank 1 — The bounded import contains useful records
 
-**Reframed problem:** The prototype should surface related commits, pull requests, and issues with their source links; the developer decides whether they explain the reason.
+**Why this ranks first:** If the relevant records are not imported, retrieval cannot find them.
 
-This reframe matches the current implementation: rag_pipeline.py performs keyword matching and formats evidence records. It does not call an LLM to generate a rationale.
+**48-hour test:** Select three public repositories and five specific questions per repository. For each question, identify a relevant record manually in GitHub, import the bounded history, and check whether that record is present.
 
-## 3. Critique from Different Perspectives
+**Measure:** Number of known relevant records present in the import.
 
-### Developer perspective
+**Evidence that supports the assumption:** The bounded import includes relevant records for a useful portion of the questions.
 
-**Question:** Why not use GitHub search, commit history, or git blame?
+### Rank 2 — Keyword matching surfaces the relevant records
 
-**Concern:** Those tools are useful substitutes. The prototype only has value if its bounded import and connected view make relevant history easier to locate and inspect.
+**Why this ranks second:** Records can be present in Neo4j but still fail to appear in results.
 
-**Implication:** Compare the prototype with manual search on the same repository questions before claiming a time-saving benefit.
+**48-hour test:** Run the same 15 questions through the prototype. Have a reviewer compare the top results with the records found manually.
 
-### Technical perspective
+**Measure:** Relevant records in the top results, irrelevant results, and questions with no relevant result.
 
-**Question:** Does a record that matches a question explain the decision?
+**Evidence that supports the assumption:** Relevant records appear consistently near the top without an unacceptable amount of unrelated noise.
 
-**Concern:** A keyword match may be related but not causal or explanatory.
+### Rank 3 — Developers benefit from source-linked results
 
-**Implication:** Preserve source URLs and IDs, describe a match as evidence to inspect, and avoid claiming that a match proves intent.
+**Why this ranks third:** Even accurate retrieval may not improve the developer’s task enough to justify using another tool.
 
-## 4. Top Three Assumptions and 48-Hour Tests
+**48-hour test:** Ask two or more people unfamiliar with the project to answer repository-history questions using the prototype, then using manual GitHub search, or in the reverse order.
 
-These are proposed tests, not completed research findings.
+**Measure:** Completion time, source relevance, errors, and whether participants can explain the evidence limits.
 
-### Assumption 1 — Developers need historical context often enough to use the tool
+**Evidence that supports the assumption:** Participants can find relevant source records more quickly without losing confidence in source relevance.
 
-**Impact if false:** The product may solve an infrequent problem.
+No results from these proposed tests are claimed in this entry.
 
-**48-hour test:** Ask 2–3 developers to describe a recent instance where they searched history to understand unfamiliar code. Record the repository, sources searched, time spent, and confidence in what they found. The project folder contains no interview notes, so no result is claimed here.
+## 5. Problem Statement V2
 
-### Assumption 2 — A bounded public-history import contains useful records
+Developers investigating an unfamiliar public repository may need to locate history relevant to a code behavior before making a change. The relevant context can be spread across commits, merged pull requests, and issues. This prototype imports a bounded set of those records into Neo4j and returns keyword-matched records with source links, so developers can inspect the evidence themselves. It does not establish historical intent from text matches.
 
-**Impact if false:** The selected window may omit the historical item needed to answer a question.
+## 6. Evidence Principles
 
-**48-hour test:** Prepare representative questions for a public repository, run them against the imported data, and record whether a relevant commit, PR, or issue is present. Compare misses with a wider/manual GitHub search.
-
-### Assumption 3 — Keyword matching can retrieve records that developers consider useful
-
-**Impact if false:** Search results may be incomplete or noisy.
-
-**48-hour test:** Have reviewers try the same questions using the prototype and manual GitHub search. Record relevant records found, irrelevant matches, source-link correctness, and time. No comparison results are retained in the supplied project files.
-
-## 5. Version 2 Problem Statement
-
-Developers onboarding to or maintaining a public repository can understand what unfamiliar code currently does but may need to search commits, pull requests, and issues to recover its history. Manually connecting those records takes effort, and a related record does not necessarily explain the original intent. The prototype imports a bounded set of public repository history into Neo4j and presents keyword-matched records with source links so developers can inspect the available context. Whether this flow reduces search time or improves decisions remains to be tested.
-
-## 6. Evidence Position
-
-- **Evidence:** Facts visible in repository records or project source code, such as IDs, dates, changed files, descriptions, and URLs.
-- **Inference:** A conclusion drawn from one or more records.
-- **Hypothesis:** A proposed user or product outcome that has not been measured.
-- **Assumption:** An unverified condition the product depends on.
-
-The product should not present an inference or hypothesis as a documented historical fact.
-
-## 7. Product Principle
-
-> Locate the evidence first; let the developer judge what it means.
-
-The current prototype returns matching records and links. Users should inspect original sources before treating them as an explanation.
-
-## 8. Current Product Flow
-
-Public GitHub repository → bounded ingestion of commits, merged PRs, and issues → normalized records imported into Neo4j → developer enters a question → keyword matching returns repository records → developer reviews record details and original source links.
-
-The Graph Explorer separately displays stored nodes and relationships. If no matching records are found, the backend returns a no-match response.
-
-## 9. Initial Scope Decision
-
-The prototype accepts a public GitHub repository URL or owner/repo value. The backend requests up to 20 commits, 10 merged pull requests, and 15 issues, with bounded commit-detail and linked-issue requests. The checked-in sample/final data files use pallets/click. This is a bounded history explorer, not a complete repository index.
-
-## 10. Activity 4 Conclusion
-
-The project is about making related repository history easier to inspect, not automatically discovering or proving historical intent. The first prototype prioritizes:
-
-**Bounded ingestion → graph relationships → keyword-matched records → source review**
-
-A future generated explanation would need separate evidence-grounding and evaluation work before it could be described as reliable.
+- A matching record is a lead to inspect, not proof of intent.
+- Source IDs and URLs should be preserved where available.
+- Missing evidence should be reported rather than guessed.
+- User benefit and retrieval quality need evaluation before they can be claimed.

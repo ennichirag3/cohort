@@ -6,36 +6,45 @@ Clarify what the prototype retrieves, what its records can establish, and what s
 
 ## 1. Research Question
 
-What repository-history records can the prototype collect and retrieve for a developer question, and what can those records establish about the reason for a code change?
+What repository-history records can the prototype collect and retrieve for a developer’s question, and what can those records establish about the reason for a code change?
 
 ## 2. Six-Part Research Brief
 
-- **Context:** The prototype is an evidence explorer for public GitHub history. It stores commits, merged pull requests, issues, and related metadata in Neo4j.
-- **Objective:** Describe the available evidence path without implying that a text match establishes historical intent.
-- **Task:** Review the ingestion, graph import, retrieval, and frontend source; verify one implementation claim against those files.
-- **Constraints:** Use the project files as evidence; distinguish implementation facts from inference and untested product assumptions; do not invent interview or AI-output records.
-- **Output:** A short description of the current evidence pipeline and a tagged claim list.
-- **Success criteria:** Every implementation claim points to a project source; unknown user outcomes and missing records remain labeled as unverified.
+- **Context:** Repository rationale can be spread across commits, merged pull requests, issues, and changed-file metadata.
+- **Objective:** Describe the current evidence path without implying that a text match proves historical intent.
+- **Task:** Review the ingestion, graph import, retrieval, and frontend implementation; verify an implementation claim against the project source.
+- **Constraints:** Use project files and observed behavior as evidence. Distinguish implementation facts from inference and untested assumptions. Do not invent interview or AI-output records.
+- **Output:** A description of the current retrieval flow and a tagged list of evidence, inferences, hypotheses, and assumptions.
+- **Success criteria:** Implementation claims point to project sources; unknown user outcomes and missing records are identified as unverified.
 
-## 3. AI Output and Verification Record
+## 3. Output
 
-No original AI response or prompt transcript for Activity 3 is preserved in the supplied project files. This log does not reconstruct a historical response or attribute new wording to a past AI session.
+The current flow accepts a public GitHub repository, imports a bounded set of history into Neo4j, and lets a user search stored commit, pull-request, and issue text using question keywords. The Evidence Engine displays matching records with source links. The Graph Explorer displays stored graph relationships.
 
-**Verified implementation claim:** The repository import endpoint requests bounded history—20 commits, 10 merged pull requests, and 15 issues—then imports the normalized JSON into Neo4j. The retrieval pipeline extracts words from a question, searches commit/PR/issue text for those words, scores matches, and returns up to 10 records.  
-**Sources:** prototype/backend/main.py (add_github_repository, ask_question); prototype/backend/rag_pipeline.py (extract_keywords, fetch_graph_evidence).
+The output is a set of matching records for a person to inspect. It is not a verified explanation of why a change happened.
 
-The returned records and links can be inspected, but a keyword match alone does not demonstrate why a change was made.  
-**Source:** prototype/backend/rag_pipeline.py (make_evidence_answer).
+No original AI response or prompt transcript for this activity is preserved in the supplied project materials. This entry does not reconstruct one.
 
-## 4. Tagged Claims
+## 4. Verified Implementation Claim
 
-- **[EVIDENCE]** The import endpoint requests up to 20 commits, 10 merged PRs, and 15 issues for each repository import. **Source:** prototype/backend/main.py.
-- **[EVIDENCE]** Retrieval searches text fields on Commit, PullRequest, and Issue nodes and orders results by keyword match score. **Source:** prototype/backend/rag_pipeline.py.
-- **[EVIDENCE]** The response builder says matching records show what was recorded and advises opening source links; it does not claim that text matching proves the reason for a change. **Source:** prototype/backend/rag_pipeline.py.
-- **[INFERENCE]** Showing matched records and links together may reduce the number of separate GitHub searches needed.
-- **[HYPOTHESIS]** Developers can find useful repository context faster with this flow than with manual history search. No timing comparison is recorded.
-- **[ASSUMPTION]** The bounded recent-history window includes the records needed for some meaningful questions. This has not been established for a representative question set.
+The repository import endpoint requests up to 20 commits, 10 merged pull requests, and 15 issues. The question retrieval code extracts keywords, searches text on Commit, PullRequest, and Issue nodes, scores matching records, and returns up to 10 results.
 
-## 5. Evidence Still Needed
+**Sources:** `prototype/backend/main.py` (repository import and question endpoints); `prototype/backend/rag_pipeline.py` (keyword extraction and graph retrieval).
 
-To test the hypothesis, retain a question set, query results, links opened, time-to-find measurements, and reviewer judgments on whether each source supports the answer. The supplied project files do not contain those results.
+The active question flow displays matching records and source links. A keyword match alone does not demonstrate why a code change was made. The current question path does not call an LLM to write an explanation.
+
+**Sources:** `prototype/backend/main.py`; `prototype/backend/rag_pipeline.py`.
+
+## 5. Tagged Claims
+
+- **[EVIDENCE]** The import endpoint requests up to 20 commits, 10 merged pull requests, and 15 issues for a repository import. **Source:** `prototype/backend/main.py`.
+- **[EVIDENCE]** Retrieval searches text on Commit, PullRequest, and Issue nodes and ranks records using keyword matches. **Source:** `prototype/backend/rag_pipeline.py`.
+- **[EVIDENCE]** The question response returns matching records and source metadata for display. **Source:** `prototype/backend/main.py`; `prototype/frontend/app.js`.
+- **[EVIDENCE]** The active question path does not generate an LLM-written rationale. **Source:** `prototype/backend/main.py`; `prototype/backend/rag_pipeline.py`.
+- **[INFERENCE]** Showing matches and source links together may reduce the number of separate GitHub searches a developer needs to perform.
+- **[HYPOTHESIS]** Developers can find relevant repository context faster with this flow than with manual GitHub search. No timed comparison has been recorded.
+- **[ASSUMPTION]** A bounded recent-history window contains useful records for some developer questions. This has not been established across a representative question set.
+
+## 6. Evidence Still Needed
+
+A useful evaluation would retain the question set, import counts, query results, source links opened, time-to-find measurements, and reviewer judgments about whether each source supports the question. The available project materials do not contain a systematic evaluation of this kind.

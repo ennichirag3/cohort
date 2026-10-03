@@ -6,17 +6,15 @@ AI and Developer Tools — Why The Code Is Like This
 
 ## Final Problem Statement
 
-Developers onboarding to or maintaining a public repository may need to search commits, pull requests, and issues to recover the history behind unfamiliar code. Manually connecting those records takes effort, and a related record does not necessarily explain the original intent. This project explores whether importing bounded repository history into a graph and returning source-linked matches can make that context easier to inspect.
+Developers working in unfamiliar public repositories may need to search commits, pull requests, and issues to recover the history behind code. Connecting those records takes effort, and a related record does not necessarily explain the original intent. This project explores whether a graph of repository history can make relevant, source-linked records easier to inspect.
 
 ## What Changed from Version 1
 
-The initial framing focused on an AI assistant that would explain why code decisions were made, with FastAPI as the target repository. The implemented prototype instead accepts public GitHub repositories and focuses on locating matching history. Its included sample/final datasets use pallets/click. The current retrieval path uses keywords and does not generate an LLM-written rationale.
+The initial concept proposed an AI assistant for explaining FastAPI design decisions. The implemented prototype accepts public GitHub repositories and focuses on locating matching history. Its included sample data is for pallets/click. The current retrieval path uses keywords; it does not generate an LLM-written rationale.
 
 ## What We Built
 
-A web prototype with an Evidence Engine, Graph Explorer, and Documentation page. A user submits a public repository, the backend fetches a bounded set of recent commits, merged pull requests, and issues and imports them into Neo4j. A question is matched against stored record text; the interface displays matching records and source links. The Graph Explorer displays stored graph relationships.
-
-The project does not prove historical intent from a text match. A developer must inspect the original sources. Claims that the prototype saves time or improves understanding still need user testing.
+A web prototype with an Evidence Engine, Graph Explorer, and Documentation page. It imports up to 20 commits, 10 merged pull requests, and 15 issues into Neo4j. A question is matched against stored record text, and the frontend presents matching records and source links. The Graph Explorer displays stored relationships. Developers must inspect the original sources; a text match does not prove historical intent.
 
 ## Tech Stack
 
@@ -24,21 +22,18 @@ The project does not prove historical intent from a text match. A developer must
 - **Backend:** Python FastAPI and Uvicorn.
 - **Repository data:** GitHub REST API.
 - **Graph database:** Neo4j with Cypher.
-- **Retrieval:** deterministic keyword extraction and match scoring.
-- **LLM:** no LLM call in the current runtime question path.
+- **Retrieval:** keyword extraction and match scoring; no LLM call in the runtime question path.
 
 ## Evidence Position
 
-- **Verified in the project source:** bounded import limits, Neo4j data flow, keyword-based matching, and source-link presentation.
-- **Not established:** retrieval accuracy, time saved, user satisfaction, and whether the returned records explain the original decisions.
-- **Still an assumption:** recent public history and keyword matching will surface useful records for representative developer questions.
+- **Confirmed in source:** bounded import, Neo4j data flow, keyword matching, and source-link presentation.
+- **Not measured:** retrieval accuracy, time saved, user satisfaction, or whether results explain the original decisions.
+- **Still an assumption:** recent public history and keyword matching will surface useful records for representative questions.
 
-No test output, comparison study, or stranger-test notes are retained in the supplied project folder, so no testing result is claimed here.
+One manual demonstration using `encode/httpx` and a question about the `chardet` 6.0 change surfaced a related commit and pull request, along with noisy results. Exact import counts, task timing, and a complete source-link audit were not retained. No systematic evaluation or stranger-test record is available.
 
 ## What We Build Next
 
-1. Run and retain the planned import, retrieval, failure-mode, and source-link checks.
-2. Conduct and document the stranger test.
-3. Compare the prototype with manual GitHub search using the same questions.
-4. Review missed and irrelevant matches before improving retrieval.
-5. Consider generated explanations only after adding source-grounding rules and an evaluation set.
+1. Run and record import, retrieval, failure-mode, and source-link checks.
+2. Conduct the stranger test and compare the prototype with manual GitHub search.
+3. Review missed and irrelevant matches before considering an evidence-grounded LLM explanation.
