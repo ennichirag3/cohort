@@ -270,11 +270,11 @@ The current mechanism locates records. It does not generate an LLM explanation o
 
 ## 5. Opportunity Estimate
 
-A product-specific market size cannot be calculated from the evidence available for this project. GitHub reported more than 180 million developers and 395 million public and open-source repositories in its 2025 Octoverse report. These figures describe the wider GitHub ecosystem; they do not show how many developers investigate unfamiliar repositories or need this product. ([GitHub Octoverse 2025](https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/))
+A reliable commercial market size cannot yet be calculated: we do not know how many developers regularly investigate unfamiliar public repositories, how often they have this problem, or whether they would adopt or pay for this tool.
 
-The target segment’s size, how often its members face this problem, the number we could initially reach, and expected adoption are unknown. Therefore, I cannot responsibly calculate a serviceable market, adoption estimate, or revenue estimate. The GitHub totals are broad context, not this product’s addressable market.
+The opportunity currently supported by project evidence is a small pilot. Two computer science students tried the prototype using two public repositories, `fastapi/fastapi` and `encode/httpx`. Both completed the flow. They found relevant results, while one also reported irrelevant results and one misunderstood how much repository history was included. This shows that the flow can be evaluated with target users, but it does not establish market demand or product effectiveness.
 
-To size the opportunity, the next step is to interview or test with developers who investigate unfamiliar public repositories, measure how often they encounter this problem, and estimate how many can be reached through a defined initial channel. Demand and willingness to pay remain unvalidated.
+The next opportunity-sizing step is to test with a larger, defined group of developers and measure how often they face this problem, whether the results help, and whether they would use the tool again. No adoption or revenue estimate is claimed.
 
 ## 6. Insight Ledger
 
