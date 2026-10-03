@@ -1,26 +1,56 @@
 # PROJECT_SPEC.md
 
-## 1. What is this?
-An evidence-backed developer assistant that queries a Neo4j knowledge graph of Git commits, PRs, and issues to explain architectural decisions with traceable citations.
+## What is this?
 
-## 2. Who uses it?
-Software engineers, maintainers, and onboarding developers seeking historical context behind codebase choices.
+Why The Code Is Like This is a web prototype for importing a bounded set of public GitHub history into Neo4j and retrieving matching records for a developer question.
 
-## 3. What must it do?
-- Accept public GitHub repo metadata and user why-questions.
-- Graph-traverse `:Commit`, `:PullRequest`, `:Issue`, `:Developer`, and `:File` nodes.
-- Return zero-hallucination answers citing exact commit hashes and PR IDs.
-- Explicitly refuse to answer when evidence in the graph is insufficient.
+## Who uses it?
 
-## 4. What does it NOT do?
-- Does not edit, write, or refactor source code files.
-- Does not index private repositories without access tokens.
+Developers, maintainers, and open-source contributors who need to inspect the history of an unfamiliar public repository.
 
-## 5. Technology Stack
-- **Frontend**: HTML5, Glassmorphic CSS3, Vanilla JS ES6+
-- **Backend**: Python FastAPI, Uvicorn
-- **Database**: Neo4j AuraDB (Cypher Query Language)
-- **AI / RAG**: OpenAI API (`gpt-4o`), LangChain, Zero-temperature (`0.0`) settings
+## What must it do?
 
-## 6. Definition of Done
-A user enters a why-question, receives a factual answer grounded in graph nodes, and can click a citation card to open the corresponding GitHub PR/commit.
+- Accept a public GitHub repository URL or owner/repo.
+- Fetch a bounded set of recent commits, merged pull requests, and issues.
+- Preserve stable IDs, authors, timestamps, changed-file metadata where available, and original source URLs.
+- Import repository entities and relationships into Neo4j.
+- Search Commit, PullRequest, and Issue text using question keywords.
+- Return matching records and source links, and show stored relationships in Graph Explorer.
+- Clearly report when no matching records are found.
+
+## What does it not do?
+
+- It does not index private repositories.
+- It does not clone or index a repository’s complete history.
+- It does not prove historical intent from text matches.
+- The current rag_pipeline.py does not generate an LLM-written explanation.
+- It does not make engineering decisions or modify repository source code.
+
+## What data does it use?
+
+Public GitHub repository metadata, commits, merged pull requests, issues, commit file paths for a bounded subset, authors, timestamps, and source URLs. An optional GITHUB_TOKEN may be used to raise GitHub API limits. Neo4j credentials are provided through environment variables and should not be committed.
+
+## Constraints
+
+The importer uses bounded requests to the GitHub REST API. The FastAPI import endpoint requests up to 20 commits, 10 merged pull requests, and 15 issues, with bounded detail requests. Runtime graph features require a reachable Neo4j database and configured credentials. GitHub rate limits and missing/partial history may affect results.
+
+## Technology Stack
+
+- **Frontend:** HTML, CSS, and vanilla JavaScript.
+- **Backend:** Python FastAPI and Uvicorn.
+- **Repository data:** GitHub REST API.
+- **Graph store:** Neo4j with Cypher queries.
+- **Retrieval:** deterministic keyword extraction, text matching, and match scoring in rag_pipeline.py.
+- **LLM:** none in the current runtime question path.
+
+## Definition of Done
+
+A user can enter a public repository, import the bounded history, search for distinctive terms in a question, inspect matching records and original source links, and explore stored relationships. The interface reports no matches when no evidence records match. Any claim about faster research or recovered intent still requires user testing.
+
+## What is still unknown?
+
+- Whether users find the results faster or more useful than manual GitHub search.
+- Whether the bounded window contains enough context for representative questions.
+- How often keyword retrieval misses relevant history or returns irrelevant records.
+- Whether users understand that a text match is not proof of historical intent.
+- Whether the existing test and stranger-test claims can be supported by retained notes or screenshots.
