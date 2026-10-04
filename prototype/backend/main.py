@@ -279,31 +279,22 @@ def get_graph_topology(q: str | None = None):
     if not rag_pipeline.driver:
         return {"status": "Neo4j disconnected", "nodes": [], "edges": []}
 
-    search_term = q.strip().lower() if q and q.strip() else None
+    search_term = q.strip().lower().rstrip("/") if q and q.strip() else None
 
     cypher_query = """
     MATCH (n)-[rel]->(m)
+    WITH n, rel, m,
+         toLower(toString(coalesce(n.id, ""))) AS source_key,
+         toLower(toString(coalesce(m.id, ""))) AS target_key
     WHERE $search_term IS NULL
-       OR any(value IN [
-            toLower(coalesce(n.id, "")),
-            toLower(coalesce(n.title, "")),
-            toLower(coalesce(n.message, "")),
-            toLower(coalesce(n.name, "")),
-            toLower(coalesce(n.path, "")),
-            toLower(coalesce(n.body, "")),
-            toLower(coalesce(n.summary, "")),
-            toLower(coalesce(n.description, ""))
-       ] WHERE value CONTAINS $search_term)
-       OR any(value IN [
-            toLower(coalesce(m.id, "")),
-            toLower(coalesce(m.title, "")),
-            toLower(coalesce(m.message, "")),
-            toLower(coalesce(m.name, "")),
-            toLower(coalesce(m.path, "")),
-            toLower(coalesce(m.body, "")),
-            toLower(coalesce(m.summary, "")),
-            toLower(coalesce(m.description, ""))
-       ] WHERE value CONTAINS $search_term)
+       OR source_key = $search_term
+       OR target_key = $search_term
+       OR source_key STARTS WITH $search_term + "@"
+       OR source_key STARTS WITH $search_term + "#"
+       OR source_key STARTS WITH $search_term + ":"
+       OR target_key STARTS WITH $search_term + "@"
+       OR target_key STARTS WITH $search_term + "#"
+       OR target_key STARTS WITH $search_term + ":"
     RETURN
         elementId(n) AS source_id,
         labels(n)[0] AS source_type,
@@ -324,6 +315,18 @@ def get_graph_topology(q: str | None = None):
         coalesce(m.url, m.source_url, m.html_url, "") AS target_url,
         coalesce(m.path, "") AS target_path,
         type(rel) AS relation
+    ORDER BY
+        CASE type(rel)
+            WHEN "HAS_PULL_REQUEST" THEN 0
+            WHEN "HAS_ISSUE" THEN 1
+            WHEN "HAS_COMMIT" THEN 2
+            WHEN "INCLUDES_COMMIT" THEN 3
+            WHEN "REFERENCES_ISSUE" THEN 4
+            WHEN "CHANGED" THEN 5
+            WHEN "AUTHORED_BY" THEN 6
+            ELSE 7
+        END,
+        source_type, source_key, target_type, target_key
     LIMIT 100
     """
 

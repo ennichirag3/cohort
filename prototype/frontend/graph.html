@@ -112,8 +112,35 @@
     }
 
     .edge-line {
-      stroke: rgba(148, 163, 184, 0.28);
-      stroke-width: 1.25;
+      fill: none;
+      stroke-width: 1.8;
+      opacity: 0.72;
+      transition: opacity 0.18s ease, stroke-width 0.18s ease;
+    }
+
+    .edge-line:hover {
+      opacity: 1;
+      stroke-width: 3;
+    }
+
+    .relationship-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      margin: 0 0 10px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    .relationship-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .relationship-legend i {
+      width: 18px;
+      border-top: 2px solid currentColor;
     }
 
     .edge-badge {
@@ -167,11 +194,14 @@
               <stop offset="0%" stop-color="#8b5cf6" />
               <stop offset="100%" stop-color="#3b82f6" />
             </linearGradient>
+            <marker id="graphArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1" />
+            </marker>
           </defs>
         </svg>
       </div>
       <p id="graphSummary" class="graph-summary" aria-live="polite"></p>
-
+      <div id="relationshipLegend" class="relationship-legend" aria-label="Relationship types"></div>
       <section id="nodeDetails" class="glass-card node-details hidden" aria-live="polite">
         <span id="detailType" class="source-tag">Select a node</span>
         <button id="detailClose" class="detail-close" type="button" aria-label="Close details">Close</button>
@@ -229,6 +259,16 @@
       return truncateText(node.label || node.name || stableId, 22);
     }
 
+    const relationStyles = {
+      HAS_COMMIT: { label: 'Repository contains commit', color: '#38bdf8' },
+      HAS_PULL_REQUEST: { label: 'Repository contains pull request', color: '#34d399' },
+      HAS_ISSUE: { label: 'Repository contains issue', color: '#f472b6' },
+      INCLUDES_COMMIT: { label: 'Pull request includes commit', color: '#a78bfa' },
+      REFERENCES_ISSUE: { label: 'Pull request references issue', color: '#c084fc' },
+      CHANGED: { label: 'Commit changes file', color: '#fbbf24' },
+      AUTHORED_BY: { label: 'Commit authored by developer', color: '#fb923c' },
+    };
+
     function safeGitHubUrl(value) {
       try {
         const url = new URL(value);
@@ -248,7 +288,9 @@
       const url = safeGitHubUrl(details.url);
 
       document.getElementById('detailType').textContent = node.type || 'Graph node';
-      document.getElementById('detailTitle').textContent = details.path || node.label || node.type || 'Graph node';
+      document.getElementById('detailTitle').textContent = node.type === 'Commit'
+        ? shortNodeLabel(node)
+        : details.path || node.label || node.type || 'Graph node';
       document.getElementById('detailId').textContent = `ID: ${details.id || node.id}`;
       document.getElementById('detailAuthorDate').textContent =
         `Author: ${details.author || 'Unknown'}${details.date ? ` • ${details.date}` : ''}`;
@@ -271,7 +313,10 @@
         // Focus Graph Explorer on the repository from the last successful import.
         // Without a selection, load the default graph for existing data.
         const selectedRepository = localStorage.getItem('lastImportedRepository') || '';
-        const graphUrl = new URL('https://repoinsight-qjj0.onrender.com/api/graph')
+        const apiBaseUrl = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+          ? 'http://127.0.0.1:8000'
+          : 'https://repoinsight-qjj0.onrender.com';
+        const graphUrl = new URL(`${apiBaseUrl}/api/graph`);
         if (selectedRepository) graphUrl.searchParams.set('q', selectedRepository);
         const response = await fetch(graphUrl);
         if (!response.ok) {
@@ -296,8 +341,7 @@
           return;
         }
 
-        // Keep the sample balanced. The raw API list starts with many
-        // Repository -> Commit links, which otherwise overwhelm the view.
+        // Keep the sample balanced and stable across reloads.
         const nodeById = new Map(nodes.map(node => [node.id, node]));
         const typeLimits = {
           Repository: 2,
@@ -329,16 +373,23 @@
         }
 
         // Keep repository context visible, but choose only a few of its commits.
-        nodes.filter(node => node.type === 'Repository').slice(0, 2).forEach(node => addNode(node.id));
+        nodes.filter(node => node.type === 'Repository')
+          .sort((a, b) => String(a.details?.id || a.id).localeCompare(String(b.details?.id || b.id)))
+          .slice(0, 2)
+          .forEach(node => addNode(node.id));
 
         const relationPriority = {
-          INCLUDES_COMMIT: 0,
-          REFERENCES_ISSUE: 0,
-          CHANGED: 1,
-          AUTHORED_BY: 2,
-          HAS_COMMIT: 3,
+          HAS_PULL_REQUEST: 0,
+          HAS_ISSUE: 1,
+          INCLUDES_COMMIT: 2,
+          REFERENCES_ISSUE: 3,
+          CHANGED: 4,
+          AUTHORED_BY: 5,
+          HAS_COMMIT: 6,
         };
         const relationLimits = {
+          HAS_PULL_REQUEST: 3,
+          HAS_ISSUE: 3,
           INCLUDES_COMMIT: 3,
           REFERENCES_ISSUE: 3,
           CHANGED: 4,
@@ -346,7 +397,10 @@
           HAS_COMMIT: 2,
         };
         const prioritizedEdges = [...edges].sort((a, b) =>
-          (relationPriority[a.relation] ?? 2) - (relationPriority[b.relation] ?? 2)
+          (relationPriority[a.relation] ?? 7) - (relationPriority[b.relation] ?? 7) ||
+          String(a.source).localeCompare(String(b.source)) ||
+          String(a.target).localeCompare(String(b.target)) ||
+          String(a.relation).localeCompare(String(b.relation))
         );
 
         for (const edge of prioritizedEdges) {
@@ -373,7 +427,7 @@
         const uniqueEdges = [...new Map(visibleEdges.map(edge =>
           [`${edge.source}|${edge.relation}|${edge.target}`, edge]
         )).values()];
-        const typeOrder = ['Repository', 'Commit', 'PullRequest', 'PR', 'Issue', 'Developer', 'File'];
+        const typeOrder = ['Repository', 'PullRequest', 'PR', 'Issue', 'Commit', 'File', 'Developer'];
         const groups = new Map();
         visibleNodes.forEach(node => {
           const type = node.type || 'Other';
@@ -397,7 +451,9 @@
         types.forEach((type, columnIndex) => {
           const x = 20 + columnIndex * laneWidth + laneWidth / 2;
           columnCenters[type] = x;
-          groups.get(type).forEach((node, rowIndex) => {
+          groups.get(type)
+            .sort((a, b) => String(a.details?.id || a.id).localeCompare(String(b.details?.id || b.id)))
+            .forEach((node, rowIndex) => {
             coords[node.id] = { x, y: 96 + rowIndex * 84 };
           });
         });
@@ -408,8 +464,11 @@
               <stop offset="0%" stop-color="#8b5cf6" />
               <stop offset="100%" stop-color="#3b82f6" />
             </linearGradient>
+            <marker id="graphArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1" />
+            </marker>
           </defs>
-          <text x="20" y="28" class="edge-text">NODES GROUPED BY TYPE · CLICK A NODE FOR DETAILS</text>`;
+          <text x="20" y="28" class="edge-text">ARROWS SHOW RELATIONSHIP DIRECTION · HOVER A LINE FOR ITS MEANING</text>`;
 
         // Type lanes keep node cards separated; faint lines preserve the relationships.
         types.forEach(type => {
@@ -417,11 +476,23 @@
           svgContent += `<text x="${columnCenters[type]}" y="62" text-anchor="middle" class="node-subtitle">${escapeSvgText(type)} (${count})</text>`;
         });
 
+        const activeRelations = [...new Set(uniqueEdges.map(edge => edge.relation))].sort();
+        document.getElementById('relationshipLegend').innerHTML = activeRelations.map(relation => {
+          const style = relationStyles[relation] || { label: relation.replaceAll('_', ' ').toLowerCase(), color: '#94a3b8' };
+          return `<span style="color:${style.color}"><i aria-hidden="true"></i>${escapeSvgText(style.label)}</span>`;
+        }).join('');
+
         uniqueEdges.forEach(edge => {
           const p1 = coords[edge.source];
           const p2 = coords[edge.target];
           if (p1 && p2) {
-            svgContent += `<line class="edge-line" x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}" />`;
+            const style = relationStyles[edge.relation] || { label: edge.relation, color: '#94a3b8' };
+            const direction = p2.x >= p1.x ? 1 : -1;
+            const startX = p1.x + direction * 82;
+            const endX = p2.x - direction * 82;
+            const curve = Math.max(24, Math.abs(endX - startX) * 0.42);
+            const path = `M ${startX} ${p1.y} C ${startX + direction * curve} ${p1.y}, ${endX - direction * curve} ${p2.y}, ${endX} ${p2.y}`;
+            svgContent += `<path class="edge-line" d="${path}" stroke="${style.color}" marker-end="url(#graphArrow)"><title>${escapeSvgText(style.label)}</title></path>`;
           }
         });
 

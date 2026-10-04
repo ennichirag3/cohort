@@ -70,6 +70,7 @@ def import_data(tx, data):
     for issue in data.get("issues", []):
         tx.run(
             """
+            MATCH (r:Repository {id: $repo_id})
             MERGE (i:Issue {id: $id})
             SET i.title = $title,
                 i.body = $body,
@@ -77,7 +78,9 @@ def import_data(tx, data):
                 i.created_at = $created_at,
                 i.source_url = $source_url,
                 i.url = $source_url
+            MERGE (r)-[:HAS_ISSUE]->(i)
             """,
+            repo_id=repo["id"],
             id=issue["id"],
             title=issue.get("title", ""),
             body=issue.get("body") or issue.get("body_excerpt", ""),
@@ -98,6 +101,7 @@ def import_data(tx, data):
                 p.url = $source_url,
                 p.created_at = $created_at,
                 p.merged_at = $merged_at
+            MERGE (r)-[:HAS_PULL_REQUEST]->(p)
             """,
             repo_id=repo["id"],
             id=pull_request["id"],

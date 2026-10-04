@@ -19,6 +19,7 @@ The current question path uses keyword extraction and match scoring. It returns 
 
 ## Project layout
 
+- ../PROJECT_GUIDE.md — detailed product, architecture, graph, setup, deployment, and evidence guide.
 - prototype/frontend/ — Evidence Engine, Graph Explorer, Documentation, and shared styling.
 - prototype/backend/ — FastAPI endpoints, GitHub ingestion, Neo4j importer, and retrieval.
 - prototype/backend/data/ — the final normalized dataset for pallets/click.
@@ -53,7 +54,7 @@ Serve the files in prototype/frontend with VS Code Live Server or another static
 
 Open http://127.0.0.1:5500/index.html.
 
-The frontend's Evidence Engine and Graph Explorer currently point to the hosted backend at https://repoinsight-qjj0.onrender.com. To use a locally running backend, change the API_BASE_URL in app.js and the graph API base in graph.html to http://127.0.0.1:8000. The Documentation page selects the local API when served on port 5500.
+When opened on localhost, the Evidence Engine and Graph Explorer automatically use the local API at http://127.0.0.1:8000. On the hosted site, they use https://repoinsight-qjj0.onrender.com. The Documentation page also selects the local API when served on port 5500.
 
 ## Import limits and known constraints
 
