@@ -313,11 +313,24 @@
         // Focus Graph Explorer on the repository from the last successful import.
         // Without a selection, load the default graph for existing data.
         const selectedRepository = localStorage.getItem('lastImportedRepository') || '';
+        let querySources = [];
+        try {
+          querySources = JSON.parse(sessionStorage.getItem('evidenceQueryResult') || '{}').sources || [];
+        } catch {
+          querySources = [];
+        }
+        const selectedRepositoryKey = selectedRepository.toLowerCase();
+        const focusIds = [...new Set(querySources
+          .filter(source => !source.repository || !selectedRepositoryKey ||
+            String(source.repository).toLowerCase() === selectedRepositoryKey)
+          .map(source => String(source.identifier || '').trim())
+          .filter(Boolean))];
         const apiBaseUrl = ['localhost', '127.0.0.1'].includes(window.location.hostname)
           ? 'http://127.0.0.1:8000'
           : 'https://repoinsight-qjj0.onrender.com';
         const graphUrl = new URL(`${apiBaseUrl}/api/graph`);
         if (selectedRepository) graphUrl.searchParams.set('q', selectedRepository);
+        if (focusIds.length) graphUrl.searchParams.set('focus', focusIds.join(','));
         const response = await fetch(graphUrl);
         if (!response.ok) {
           throw new Error(`Backend returned HTTP ${response.status}`);
@@ -327,104 +340,58 @@
 
         const nodes = data.nodes || [];
         const edges = data.edges || [];
+        const focusIdSet = new Set(focusIds.map(id => id.toLowerCase()));
 
-        if (nodes.length === 0 || edges.length === 0) {
+        if (!focusIdSet.size) {
           svg.innerHTML = `
             <text x="480" y="210" text-anchor="middle" fill="#a1a1aa" font-family="Plus Jakarta Sans" font-size="14">
-              The backend is connected, but this graph has no relationships to draw.
+              Ask a question in Evidence Engine to build a focused graph.
             </text>
             <text x="480" y="240" text-anchor="middle" fill="#a1a1aa" font-family="Plus Jakarta Sans" font-size="12">
-              Import a repository from the Evidence Engine, then refresh this page.
+              The graph will show matching records and their direct connections.
             </text>`;
-          document.getElementById('graphSummary').textContent =
-            `Backend returned ${nodes.length} nodes and ${edges.length} relationships.`;
+          document.getElementById('graphSummary').textContent = selectedRepository
+            ? `Repository: ${selectedRepository}. No saved Evidence Engine results in this tab yet.`
+            : 'Import a repository and ask a question in Evidence Engine first.';
           return;
         }
 
-        // Keep the sample balanced and stable across reloads.
         const nodeById = new Map(nodes.map(node => [node.id, node]));
-        const typeLimits = {
-          Repository: 2,
-          Commit: 6,
-          PullRequest: 3,
-          PR: 3,
-          Issue: 3,
-          Developer: 2,
-          File: 4,
-        };
-        const visibleIds = new Set();
-        const visibleEdges = [];
-        const countsByType = new Map();
-        const relationCounts = new Map();
-        const visibleNodes = [];
-
-        function addNode(id) {
-          if (visibleIds.has(id)) return true;
-          const node = nodeById.get(id);
-          if (!node || visibleNodes.length >= 24) return false;
-          const type = node.type || 'Other';
-          const limit = typeLimits[type] ?? 4;
-          const count = countsByType.get(type) || 0;
-          if (count >= limit) return false;
-          visibleIds.add(id);
-          visibleNodes.push(node);
-          countsByType.set(type, count + 1);
-          return true;
+        const focusNodeIds = new Set(nodes
+          .filter(node => focusIdSet.has(String(node.details?.id || '').toLowerCase()))
+          .map(node => node.id));
+        if (!focusNodeIds.size) {
+          svg.innerHTML = `
+            <text x="480" y="210" text-anchor="middle" fill="#a1a1aa" font-family="Plus Jakarta Sans" font-size="14">
+              The latest search records are not in this repository graph.
+            </text>
+            <text x="480" y="240" text-anchor="middle" fill="#a1a1aa" font-family="Plus Jakarta Sans" font-size="12">
+              Return to Evidence Engine, import the repository, ask again, then open Graph Explorer in the same tab.
+            </text>`;
+          document.getElementById('graphSummary').textContent =
+            `No matching record IDs were returned for ${selectedRepository || 'the selected repository'}.`;
+          return;
         }
-
-        // Keep repository context visible, but choose only a few of its commits.
-        nodes.filter(node => node.type === 'Repository')
-          .sort((a, b) => String(a.details?.id || a.id).localeCompare(String(b.details?.id || b.id)))
-          .slice(0, 2)
-          .forEach(node => addNode(node.id));
-
-        const relationPriority = {
-          HAS_PULL_REQUEST: 0,
-          HAS_ISSUE: 1,
-          INCLUDES_COMMIT: 2,
-          REFERENCES_ISSUE: 3,
-          CHANGED: 4,
-          AUTHORED_BY: 5,
-          HAS_COMMIT: 6,
-        };
-        const relationLimits = {
-          HAS_PULL_REQUEST: 3,
-          HAS_ISSUE: 3,
-          INCLUDES_COMMIT: 3,
-          REFERENCES_ISSUE: 3,
-          CHANGED: 4,
-          AUTHORED_BY: 2,
-          HAS_COMMIT: 2,
-        };
-        const prioritizedEdges = [...edges].sort((a, b) =>
-          (relationPriority[a.relation] ?? 7) - (relationPriority[b.relation] ?? 7) ||
-          String(a.source).localeCompare(String(b.source)) ||
-          String(a.target).localeCompare(String(b.target)) ||
-          String(a.relation).localeCompare(String(b.relation))
+        const focusedEdges = edges.filter(edge =>
+          focusNodeIds.has(edge.source) || focusNodeIds.has(edge.target)
+        );
+        const visibleEdges = focusedEdges.slice(0, 60);
+        const visibleIds = new Set(focusNodeIds);
+        visibleEdges.forEach(edge => {
+          visibleIds.add(edge.source);
+          visibleIds.add(edge.target);
+        });
+        const visibleNodes = [...visibleIds]
+          .map(id => nodeById.get(id))
+          .filter(Boolean)
+          .slice(0, 36);
+        const renderedNodeIds = new Set(visibleNodes.map(node => node.id));
+        const renderedEdges = visibleEdges.filter(edge =>
+          renderedNodeIds.has(edge.source) && renderedNodeIds.has(edge.target)
         );
 
-        for (const edge of prioritizedEdges) {
-          const relationCount = relationCounts.get(edge.relation) || 0;
-          if (relationCount >= (relationLimits[edge.relation] ?? 3)) continue;
-
-          const newIds = [edge.source, edge.target].filter(id => !visibleIds.has(id));
-          const canAdd = newIds.every(id => {
-            const node = nodeById.get(id);
-            if (!node) return false;
-            const type = node.type || 'Other';
-            const limit = typeLimits[type] ?? 4;
-            return (countsByType.get(type) || 0) < limit;
-          });
-          if (!canAdd || visibleNodes.length + newIds.length > 24) continue;
-
-          addNode(edge.source);
-          addNode(edge.target);
-          visibleEdges.push(edge);
-          relationCounts.set(edge.relation, relationCount + 1);
-        }
-
         // Draw each relationship once even if the API returned duplicates.
-        const uniqueEdges = [...new Map(visibleEdges.map(edge =>
+        const uniqueEdges = [...new Map(renderedEdges.map(edge =>
           [`${edge.source}|${edge.relation}|${edge.target}`, edge]
         )).values()];
         const typeOrder = ['Repository', 'PullRequest', 'PR', 'Issue', 'Commit', 'File', 'Developer'];
@@ -551,8 +518,11 @@
         });
 
         const graphLabel = selectedRepository ? ` for ${selectedRepository}` : '';
+        const visibleFocusCount = visibleNodes.filter(node =>
+          focusIdSet.has(String(node.details?.id || '').toLowerCase())
+        ).length;
         document.getElementById('graphSummary').textContent =
-          `Showing a balanced sample${graphLabel}: ${visibleNodes.length} of ${nodes.length} nodes and ${uniqueEdges.length} of ${edges.length} relationships. Click a node for details.`;
+          `Showing ${visibleFocusCount} matching record(s)${graphLabel} and ${visibleNodes.length - visibleFocusCount} directly connected context node(s). Click a node for its ID and source.`;
       } catch (err) {
         console.error("Failed to load graph topology from backend:", err);
         const svg = document.getElementById('graphSvg');

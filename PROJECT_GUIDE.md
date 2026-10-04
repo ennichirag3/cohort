@@ -6,7 +6,7 @@
 
 ## 1. Project overview
 
-CodeInsight is a web prototype for exploring the history of a **public GitHub repository**. It imports a bounded set of recent commits, merged pull requests (PRs), and issues into Neo4j. A developer can search those records with a question, inspect matching source links, and browse a sample of the repository graph.
+CodeInsight is a web prototype for exploring the history of a **public GitHub repository**. It imports a bounded set of recent commits, merged pull requests (PRs), and issues into Neo4j. A developer can search those records with a question, inspect matching source links, and view those matching records with their directly connected graph context.
 
 The starting idea was an AI assistant that explains why code decisions were made, initially framed around FastAPI. The implemented project is more limited and evidence-focused: it finds records whose text matches question keywords. It does not generate an LLM explanation or establish historical intent.
 
@@ -15,7 +15,7 @@ The starting idea was an AI assistant that explains why code decisions were made
 The frontend has three pages:
 
 - **Evidence Engine** (`prototype/frontend/index.html`): import a repository, ask a question, and inspect matching commits, PRs, and issues with GitHub links.
-- **Graph Explorer** (`prototype/frontend/graph.html`): view a bounded, balanced sample of repository nodes and relationships. Click a node to inspect its metadata and source link.
+- **Graph Explorer** (`prototype/frontend/graph.html`): view records from the latest Evidence Engine search and their direct repository/PR/commit/issue connections. Click a node to inspect its metadata and source link.
 - **Documentation** (`prototype/frontend/docs.html`): read the API reference and try supported requests. The health check confirms the FastAPI process responds; it does not check Neo4j.
 
 The normal flow is:
@@ -25,7 +25,7 @@ The normal flow is:
 3. The importer stores normalized records and relationships in Neo4j.
 4. Ask a question with distinctive words likely to appear in the history.
 5. Review the returned records and open their GitHub sources to judge whether they support an answer.
-6. Open Graph Explorer to browse the imported repository’s graph sample.
+6. Open Graph Explorer in the same browser tab to see the search matches and their direct graph connections.
 
 ## 3. How the system fits together
 
@@ -86,21 +86,17 @@ Neo4j data is persistent. Repeated imports use stable IDs and `MERGE`, which reu
 
 ### Question retrieval
 
-`prototype/backend/rag_pipeline.py` lowercases a question, extracts words, removes common stop words, and searches the text of `Commit`, `PullRequest`, and `Issue` nodes. Each distinct keyword found in a record’s searchable text adds one point. Results are ordered by score and date, then limited to 10.
+`prototype/backend/rag_pipeline.py` lowercases a question, extracts words, removes common and low-information terms, and searches the text of `Commit`, `PullRequest`, and `Issue` nodes. Title and commit-message matches receive more weight than description/body matches. It returns up to 10 direct text matches. When a direct match is an issue with imported `REFERENCES_ISSUE` relationships, the API can add up to 10 linked PR/commit context records and labels them separately from direct matches. This is a narrow relationship-based expansion: it cannot find a PR or commit that was not imported or linked to the matched issue.
 
-The Evidence Engine sends the most recently imported repository along with the question. The API can also be called without a repository field, in which case it searches all imported repositories. The current frontend shows a count and matching source records; matching text is not proof of why a change was made.
+The Evidence Engine sends the most recently imported repository along with the question. The API can also be called without a repository field, in which case it searches all imported repositories. Evidence cards show stable record IDs and whether a record matched the words directly or was linked to a matching issue. A linked record is useful context, but neither a text match nor a graph relationship proves why a change was made.
 
 No LLM is called in the active question path. LLM-related packages in `requirements.txt` do not mean runtime questions use a language model.
 
 ## 4. How to understand the graph
 
-**Evidence Engine results and Graph Explorer have different scopes.** The Evidence Engine shows records matched by the current question. Graph Explorer shows a balanced sample of the imported repository history, not only the records matched by that question.
+**Graph Explorer is focused on the latest Evidence Engine search.** It displays the matching records, plus nodes directly connected to them, such as the repository, a related PR, a referenced issue, a PR commit, a changed file, or an author. It does not draw unrelated portions of repository history. Evidence cards show stable IDs so a result such as `owner/repo#123` can be matched to `Issue #123` in the graph. A commit visible in the repository graph is not automatically relevant to the current question; it is query evidence only if it appears as a direct match or is linked to a matched issue through an imported PR relationship.
 
-For the `encode/httpx` local import, the graph API returned 81 nodes: 1 repository, 36 commits, 10 PRs, 15 issues, 8 developers, and 11 files. The API returns at most 100 relationships. The visual page then chooses a smaller balanced sample; a recorded view showed 18 nodes and 16 relationships. Counts vary with the repository and sample selection.
-
-The graph page groups node types into columns, orders the displayed sample consistently, colors relationships, and uses arrows to show direction. Its legend names the relationship types. On a narrow screen, scroll horizontally to see all columns. A node title such as `Commit 435e1da` is a short display label; click it to see the full record text and source link.
-
-A graph may include a PR or issue that did not match the question. That is expected for a repository-wide topology view. A balanced sample is not the complete history or a question-specific evidence chain.
+The API returns at most 150 relationships and prioritizes the IDs from the latest search. The visualizer keeps direct connections to those matches and arranges node types in columns. Arrows show relationship direction; hover over an edge for its meaning. Click a node to see its stable ID, full text, and source link. Open Graph Explorer in the same browser tab after asking a question so it can use that search’s saved results. If no question result is available in the tab, the page asks you to run a query first.
 
 ## 5. API reference
 
@@ -111,8 +107,8 @@ The backend exposes these main endpoints:
 | `GET /` | Confirms the API responds. |
 | `GET /health` | Confirms FastAPI is running; does not verify Neo4j. |
 | `POST /api/repositories` | Fetches and imports bounded public repository history. |
-| `POST /api/ask` | Returns up to 10 keyword-matched evidence records. Accepts `question` and optional `repository`. |
-| `GET /api/graph?q=owner%2Frepo` | Returns up to 100 relationships and their endpoint nodes, scoped to one repository when `q` is provided. |
+| `POST /api/ask` | Returns up to 10 direct keyword matches and up to 10 linked PR/commit context records. Accepts `question` and optional `repository`. |
+| `GET /api/graph?q=owner%2Frepo&focus=owner%2Frepo%23123` | Returns up to 150 relationships and their endpoint nodes, scoped to one repository when `q` is provided and prioritizing the latest query’s evidence IDs in `focus`. |
 
 The API reference page has sample requests and responses. They are examples, not live query results.
 
@@ -187,7 +183,7 @@ The product hypothesis is that source-linked keyword results can help a develope
 - Only public GitHub repositories are accepted; imports are bounded, not complete clones.
 - The GitHub API can return fewer records, and unauthenticated requests can be rate-limited.
 - Keyword matching can miss useful history and return unrelated matches.
-- The graph API is capped at 100 relationships; the visual page displays a smaller sample.
+- The graph API is capped at 150 relationships; Graph Explorer shows the latest query matches and their direct connections only.
 - A graph relationship or keyword match does not prove a historical reason or causal connection.
 - Manual source review is required. The project has not established that it is faster than GitHub search or that it improves outcomes for developers generally.
 - Most failure cases in the Build Log test plan remain untested. Broader technical checks, stranger tests, and a timed comparison with manual GitHub search are the next evaluation steps.
@@ -197,7 +193,7 @@ The Build Log and Build Summary preserve the assessment process and evidence pos
 ## 10. Source file map
 
 - `prototype/frontend/index.html`, `prototype/frontend/app.js`, `prototype/frontend/styles.css` — Evidence Engine and shared interaction styling.
-- `prototype/frontend/graph.html` — Graph Explorer layout, sample selection, relationship colors, arrows, and node details.
+- `prototype/frontend/graph.html` — query-focused graph selection, relationship colors, arrows, and node details.
 - `prototype/frontend/docs.html` — interactive API reference page.
 - `prototype/backend/main.py` — FastAPI routes, request validation, import orchestration, and graph API.
 - `prototype/backend/fetch_github_data.py` — bounded GitHub REST API retrieval and normalization.

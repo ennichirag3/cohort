@@ -21,7 +21,10 @@ STOP_WORDS = {
     "can", "code", "does", "do", "for", "from", "had", "has", "have",
     "how", "i", "in", "is", "it", "of", "on", "or", "our", "the", "their",
     "this", "to", "was", "were", "what", "when", "where", "which", "who",
-    "why", "will", "with",
+    "why", "will", "with", "would", "new", "change", "changes", "changed",
+    "support", "supports", "request", "requests", "body", "handling", "handle",
+    "ignore", "ignores", "option", "options", "pass", "through", "limit",
+    "limits", "fastapi", "starlette",
 }
 
 
@@ -80,19 +83,22 @@ class EvidenceRAGPipeline:
                   )
               )
           )
-        WITH e, [
-            toLower(coalesce(e.message, "")),
-            toLower(coalesce(e.title, "")),
-            toLower(coalesce(e.body, "")),
-            toLower(coalesce(e.summary, "")),
-            toLower(coalesce(e.description, ""))
-        ] AS searchable_text
-        WITH e, searchable_text,
+        WITH e,
+            toLower(coalesce(e.title, "")) AS title_text,
+            toLower(coalesce(e.message, "")) AS message_text,
+            toLower(coalesce(e.summary, "")) AS summary_text,
+            toLower(coalesce(e.description, "")) AS description_text,
+            toLower(coalesce(e.body, "")) AS body_text
+        WITH e, title_text, message_text, summary_text, description_text, body_text,
             reduce(
                 score = 0,
                 keyword IN $keywords |
                 score + CASE
-                    WHEN any(text IN searchable_text WHERE text CONTAINS keyword)
+                    WHEN title_text CONTAINS keyword OR message_text CONTAINS keyword
+                    THEN 3
+                    WHEN summary_text CONTAINS keyword OR description_text CONTAINS keyword
+                    THEN 2
+                    WHEN body_text CONTAINS keyword
                     THEN 1
                     ELSE 0
                 END
@@ -111,7 +117,13 @@ class EvidenceRAGPipeline:
                 "Unknown Date"
             ) AS date,
             coalesce(e.url, e.source_url, e.html_url, "") AS url,
-            match_score
+            match_score,
+            CASE
+                WHEN e.id CONTAINS "@" THEN split(e.id, "@")[0]
+                WHEN e.id CONTAINS "#" THEN split(e.id, "#")[0]
+                ELSE ""
+            END AS repository,
+            "Direct keyword match" AS match_reason
         ORDER BY match_score DESC, toString(date) DESC
         LIMIT 10
         """
@@ -122,7 +134,60 @@ class EvidenceRAGPipeline:
                 keywords=keywords,
                 repository=repository,
             )
-            return [record.data() for record in result]
+            direct_records = [record.data() for record in result]
+
+            matched_issue_ids = [
+                record["identifier"]
+                for record in direct_records
+                if record.get("entity_type") == "Issue"
+            ]
+            related_records = []
+            if matched_issue_ids:
+                related_query = """
+                MATCH (i:Issue)<-[:REFERENCES_ISSUE]-(p:PullRequest)
+                WHERE i.id IN $issue_ids
+                RETURN
+                    "PullRequest" AS entity_type,
+                    p.id AS identifier,
+                    coalesce(p.title, p.body, "") AS detail,
+                    coalesce(p.author, "Unknown") AS author,
+                    coalesce(p.merged_at, p.created_at, "Unknown Date") AS date,
+                    coalesce(p.url, p.source_url, "") AS url,
+                    0 AS match_score,
+                    split(p.id, "#")[0] AS repository,
+                    "Linked to matching issue " + i.id AS match_reason
+                UNION
+                MATCH (i:Issue)<-[:REFERENCES_ISSUE]-(p:PullRequest)-[:INCLUDES_COMMIT]->(c:Commit)
+                WHERE i.id IN $issue_ids
+                RETURN
+                    "Commit" AS entity_type,
+                    c.id AS identifier,
+                    coalesce(c.message, "") AS detail,
+                    coalesce(c.author, "Unknown") AS author,
+                    coalesce(c.date, "Unknown Date") AS date,
+                    coalesce(c.url, c.source_url, "") AS url,
+                    0 AS match_score,
+                    split(c.id, "@")[0] AS repository,
+                    "Linked through PR " + p.id + " for issue " + i.id AS match_reason
+                LIMIT 10
+                """
+                related_result = session.run(
+                    related_query,
+                    issue_ids=matched_issue_ids,
+                )
+                related_records = [record.data() for record in related_result]
+
+        seen = {
+            (record.get("entity_type"), str(record.get("identifier", "")))
+            for record in direct_records
+        }
+        for record in related_records:
+            key = (record.get("entity_type"), str(record.get("identifier", "")))
+            if key not in seen:
+                direct_records.append(record)
+                seen.add(key)
+
+        return direct_records
 
     def make_evidence_answer(
         self,

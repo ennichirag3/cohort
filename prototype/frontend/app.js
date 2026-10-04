@@ -61,10 +61,20 @@ function renderQueryResult(data) {
         meta.textContent = `${source.author || "Unknown"} • ${source.date || "N/A"}`;
         header.append(tag, meta);
 
+        const identifier = document.createElement("p");
+        identifier.className = "source-identifier";
+        identifier.textContent = `ID: ${source.identifier || "Not provided"}`;
+
+        const reason = document.createElement("p");
+        reason.className = "source-match-reason";
+        reason.textContent = source.match_reason === "Direct keyword match"
+          ? "Direct text match"
+          : `Linked context · ${source.match_reason || "Related record"}`;
+
         const detail = document.createElement("p");
         detail.className = "source-detail";
         detail.textContent = source.detail || source.excerpt || source.title || "";
-        card.append(header, detail);
+        card.append(header, identifier, reason, detail);
 
         const url = safeGitHubUrl(source.url || source.source_url || "");
         if (url) {

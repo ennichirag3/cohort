@@ -14,7 +14,7 @@ The initial concept proposed an AI assistant for explaining FastAPI design decis
 
 ## What We Built
 
-A web prototype with an Evidence Engine, Graph Explorer, and Documentation page. It imports up to 20 commits, 10 merged pull requests, and 15 issues into Neo4j, then displays keyword-matched records and source links. Developers inspect the sources themselves; a text match does not prove historical intent.
+A web prototype with an Evidence Engine, Graph Explorer, and Documentation page. It imports bounded public history into Neo4j, displays up to 10 direct keyword matches, and can add PR/commit context linked to matched issues when those relationships were imported. Graph Explorer shows the current matches and their direct graph connections. Developers inspect the sources themselves; a text match or graph connection does not prove historical intent.
 
 ## Tech Stack
 

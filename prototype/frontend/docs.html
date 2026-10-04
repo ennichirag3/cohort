@@ -83,9 +83,9 @@
       <span class="logo-text">CODE<b>INSIGHT</b></span>
     </div>
     <div class="nav-links">
-      <a href="https://cohort-do0y.onrender.com/index.html" class="nav-item">Evidence Engine</a>
-      <a href="https://cohort-do0y.onrender.com/graph.html" class="nav-item">Graph Explorer</a>
-      <a href="https://cohort-do0y.onrender.com/docs.html" class="nav-item active" aria-current="page">Documentation</a>
+      <a href="index.html" class="nav-item">Evidence Engine</a>
+      <a href="graph.html" class="nav-item">Graph Explorer</a>
+      <a href="docs.html" class="nav-item active" aria-current="page">Documentation</a>
     </div>
   </nav>
   <main>
@@ -133,25 +133,26 @@
 
     <section class="card">
       <div class="endpoint"><span class="method post">POST</span><span class="path">/api/ask</span></div>
-      <p>Searches imported commit, pull request, and issue text for matching words. The Evidence Engine limits searches to the most recently imported repository; API requests can pass an optional <code>repository</code> field (owner/repo). If it is omitted, evidence is searched across all imported repositories. For best results, use a distinctive word from a commit, PR, or issue.</p>
+      <p>Searches imported commit, pull request, and issue text using extracted keywords and weighted scoring. It returns up to 10 direct text matches. If a matching issue has imported <code>REFERENCES_ISSUE</code> links, it may also return up to 10 linked PR/commit context records. The Evidence Engine passes the most recently imported repository; API requests can pass an optional <code>repository</code> field (owner/repo). If omitted, evidence is searched across all imported repositories. Linked context is only as complete as the imported data and relationships.</p>
       <p><strong>Request body</strong></p>
-      <pre>{ "question": "empty string", "repository": "pallets/click" }</pre>
+      <pre>{ "question": "What changed to support chardet 6.0?", "repository": "encode/httpx" }</pre>
       <p><strong>Response shape</strong></p>
       <pre>{
-  "answer": "I found 2 matching record(s) in the Neo4j graph. Review the sources for the supporting evidence.",
+  "answer": "I found 1 direct text match(es) and 1 linked context record(s) in the Neo4j graph. Review the sources for supporting evidence.",
   "sources": [
-    { "type": "Commit", "title": "Example commit message", "url": "https://github.com/...", "excerpt": "Example evidence" }
+    { "type": "Issue", "identifier": "encode/httpx#123", "title": "Example issue", "match_reason": "Direct keyword match", "url": "https://github.com/..." },
+    { "type": "PullRequest", "identifier": "encode/httpx#124", "title": "Example linked PR", "match_reason": "Linked to matching issue encode/httpx#123", "url": "https://github.com/..." }
   ]
 }</pre>
       <label for="askQuestion"><strong>Try a question</strong></label>
-      <textarea id="askQuestion">empty string</textarea>
+      <textarea id="askQuestion">What changed to support chardet 6.0?</textarea>
       <button type="button" onclick="tryAsk()">Send question</button>
       <pre id="askOutput" class="try-output" hidden></pre>
     </section>
 
     <section class="card">
-      <div class="endpoint"><span class="method">GET</span><span class="path">/api/graph?q={optional text}</span></div>
-      <p>Returns up to 100 Neo4j relationships as nodes and edges. Add <code>?q=psf%2Frequests</code> to filter for one repository and its related history, or use another text fragment to filter matching nodes. Graph Explorer uses the most recently imported repository after a successful import.</p>
+      <div class="endpoint"><span class="method">GET</span><span class="path">/api/graph?q={owner/repo}&amp;focus={record IDs}</span></div>
+      <p>Returns up to 150 Neo4j relationships as nodes and edges. The optional <code>q</code> parameter scopes records to a repository, for example <code>?q=encode%2Fhttpx</code>. The optional comma-separated <code>focus</code> parameter prioritizes edges touching evidence IDs, for example <code>&amp;focus=encode%2Fhttpx%23123</code>. Graph Explorer then displays the latest query matches and their direct connections. Open it in the same browser tab after running a question so it can read the saved results.</p>
       <pre>{
   "status": "connected",
   "nodes": [
@@ -161,12 +162,12 @@
 }</pre>
       <div class="try-row">
         <button type="button" onclick="tryGraph()">Load graph response</button>
-        <input id="graphFilter" aria-label="Optional graph filter" placeholder="Optional filter, e.g. psf/requests">
+        <input id="graphFilter" aria-label="Optional repository scope" placeholder="Optional repository, e.g. encode/httpx">
       </div>
       <pre id="graphOutput" class="try-output" hidden></pre>
     </section>
 
-    <p class="muted">Common errors: <code>422</code> means the request is invalid; <code>502</code> means GitHub rejected the fetch (including rate limits); <code>503</code> means Neo4j could not be reached; <code>504</code> means GitHub took too long. If GitHub rate-limits a public import, wait for its limit to reset or configure optional <code>GITHUB_TOKEN</code> in the ignored backend <code>.env</code> file, then restart FastAPI.</p>
+      <p class="muted">Common errors: <code>422</code> means the request is invalid; <code>502</code> means GitHub rejected the fetch (including rate limits); <code>503</code> means Neo4j could not be reached; <code>504</code> means GitHub took too long. If GitHub rate-limits a public import, wait for its limit to reset or configure optional <code>GITHUB_TOKEN</code> in the ignored backend <code>.env</code> file, then restart FastAPI. A healthy <code>/health</code> response confirms the API process is running; it does not confirm that Neo4j is reachable.</p>
   </main>
   </div>
   <script>
@@ -201,7 +202,18 @@
 
     async function tryGraph() {
       const filter = document.getElementById('graphFilter').value.trim();
-      const path = filter ? `/api/graph?q=${encodeURIComponent(filter)}` : '/api/graph';
+      const graphUrl = new URL(`${API_BASE_URL}/api/graph`);
+      if (filter) graphUrl.searchParams.set('q', filter);
+      try {
+        const result = JSON.parse(sessionStorage.getItem('evidenceQueryResult') || '{}');
+        const focusIds = (result.sources || [])
+          .map(source => String(source.identifier || '').trim())
+          .filter(Boolean);
+        if (focusIds.length) graphUrl.searchParams.set('focus', focusIds.join(','));
+      } catch {
+        // The graph can still be inspected without a saved Evidence Engine search.
+      }
+      const path = `${graphUrl.pathname}${graphUrl.search}`;
       await showResponse(path, 'graphOutput');
     }
 

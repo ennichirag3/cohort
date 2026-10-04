@@ -323,8 +323,8 @@ Developers, maintainers, and open-source contributors who need to inspect the hi
 - Preserve stable IDs, authors, timestamps, changed-file metadata where available, and original source URLs.
 - Import repository entities and relationships into Neo4j.
 - Search Commit, PullRequest, and Issue text using question keywords.
-- Return matching records and source links.
-- Show stored relationships in Graph Explorer.
+- Return up to 10 direct text matches with stable IDs and source links, plus up to 10 PR/commit context records when imported PR-to-issue links connect them to a matched issue.
+- Show the latest search matches and their direct graph connections in Graph Explorer.
 - Clearly report when no matching records are found.
 
 #### What Does It Not Do?
@@ -370,9 +370,9 @@ A user can enter a public repository, import bounded history, search for distinc
 2. FastAPI validates the repository input and starts the GitHub ingestion flow.
 3. The ingestion code fetches bounded commits, merged pull requests, and issues, then imports normalized records into Neo4j.
 4. The question endpoint searches Commit, PullRequest, and Issue text using extracted keywords and returns matching records with source metadata.
-5. Evidence Engine displays result cards and source links. Graph Explorer requests and displays stored graph relationships.
+5. Evidence Engine displays direct text matches and any available linked context as separate result types. Graph Explorer focuses on those search records and their direct graph connections; it does not display the full repository history.
 
-The active question flow returns matching records. It does not call an LLM to generate an explanation. A keyword match does not establish historical intent.
+The active question flow returns matching records. It does not call an LLM to generate an explanation. Linked PR/commit context depends on an imported `REFERENCES_ISSUE` relationship, so missing graph links or bounded import limits can leave useful records out. A keyword match or graph relationship does not establish historical intent.
 
 ## 3. Manual Test Notes
 
@@ -461,7 +461,7 @@ The encode/httpx run was one manual technical demonstration. Two exploratory par
 
 **Verification:** Compare returned IDs and URLs with GitHub, open original sources, and judge whether they address the question. Record missing evidence and false matches.
 
-**Output:** Matching records, source links, and graph relationships, or a no-match response. The output is not a verified explanation unless a person confirms that the original evidence supports it.
+**Output:** Direct keyword matches, any available issue-linked PR/commit context, source links, and a focused graph view, or a no-match response. The output is not a verified explanation unless a person confirms that the original evidence supports it.
 
 ## 8. Next Build Priorities
 

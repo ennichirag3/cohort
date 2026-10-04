@@ -6,7 +6,7 @@ import tempfile
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -250,6 +250,8 @@ def ask_question(body: QueryRequest):
                 "excerpt": detail or title,
                 "detail": detail or title,
                 "identifier": str(record.get("identifier", "")),
+                "repository": record.get("repository") or body.repository or "",
+                "match_reason": record.get("match_reason", "Direct keyword match"),
                 "author": record.get("author", "Unknown"),
                 "date": str(record.get("date", "N/A")),
             }
@@ -261,9 +263,15 @@ def ask_question(body: QueryRequest):
             "Try asking with specific words that appear in a commit, issue, or pull request."
         )
     else:
+        direct_count = sum(
+            source["match_reason"] == "Direct keyword match"
+            for source in sources
+        )
+        related_count = len(sources) - direct_count
         answer = (
-            f"I found {len(sources)} matching record(s) in the Neo4j graph. "
-            "Review the sources for the supporting evidence."
+            f"I found {direct_count} direct text match(es) and "
+            f"{related_count} linked context record(s) in the Neo4j graph. "
+            "Review the sources for supporting evidence."
         )
 
     return {"answer": answer, "sources": sources}
@@ -275,11 +283,15 @@ def ask_question(body: QueryRequest):
     summary="Get Knowledge Graph Topology",
     description="Retrieves real Neo4j nodes and relationships for Graph Explorer.",
 )
-def get_graph_topology(q: str | None = None):
+def get_graph_topology(
+    q: str | None = None,
+    focus: str | None = Query(default=None, max_length=2000),
+):
     if not rag_pipeline.driver:
         return {"status": "Neo4j disconnected", "nodes": [], "edges": []}
 
     search_term = q.strip().lower().rstrip("/") if q and q.strip() else None
+    focus_ids = [value.strip().lower() for value in (focus or "").split(",") if value.strip()]
 
     cypher_query = """
     MATCH (n)-[rel]->(m)
@@ -316,6 +328,7 @@ def get_graph_topology(q: str | None = None):
         coalesce(m.path, "") AS target_path,
         type(rel) AS relation
     ORDER BY
+        CASE WHEN source_key IN $focus_ids OR target_key IN $focus_ids THEN 0 ELSE 1 END,
         CASE type(rel)
             WHEN "HAS_PULL_REQUEST" THEN 0
             WHEN "HAS_ISSUE" THEN 1
@@ -327,7 +340,7 @@ def get_graph_topology(q: str | None = None):
             ELSE 7
         END,
         source_type, source_key, target_type, target_key
-    LIMIT 100
+    LIMIT 150
     """
 
     nodes = []
@@ -336,7 +349,11 @@ def get_graph_topology(q: str | None = None):
 
     try:
         with rag_pipeline.driver.session() as session:
-            records = session.run(cypher_query, search_term=search_term)
+            records = session.run(
+                cypher_query,
+                search_term=search_term,
+                focus_ids=focus_ids,
+            )
 
             for record in records:
                 source_id = str(record["source_id"])

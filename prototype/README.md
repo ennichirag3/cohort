@@ -13,18 +13,18 @@ The frontend includes Evidence Engine, Graph Explorer, and Documentation pages.
 1. Enter a public GitHub repository URL or owner/repo.
 2. Import recent history into Neo4j.
 3. Ask a question using distinctive words from the behavior or change.
-4. Review matching records and source links in Evidence Engine, or explore stored relationships in Graph Explorer.
+4. Review direct text matches and any linked context records in Evidence Engine. Open Graph Explorer in the same tab to see those matches and their direct graph connections.
 
-The current question path uses keyword extraction and match scoring. It returns matching repository records; it does not use an LLM to generate an explanation or prove historical intent. Review the original sources before drawing conclusions.
+The current question path uses keyword extraction and weighted match scoring. It returns up to 10 direct text matches and may add up to 10 PR/commit records linked to matched issues when those relationships exist in Neo4j. It does not use an LLM to generate an explanation or prove historical intent. Review the original sources before drawing conclusions.
 
 ## Project layout
 
 - ../PROJECT_GUIDE.md — detailed product, architecture, graph, setup, deployment, and evidence guide.
-- prototype/frontend/ — Evidence Engine, Graph Explorer, Documentation, and shared styling.
-- prototype/backend/ — FastAPI endpoints, GitHub ingestion, Neo4j importer, and retrieval.
-- prototype/backend/data/ — the final normalized dataset for pallets/click.
-- Build-Log/ — the compiled Build Log and its supporting screenshots.
-- Build-Summary.md — final project summary.
+- frontend/ — Evidence Engine, Graph Explorer, Documentation, and shared styling.
+- backend/ — FastAPI endpoints, GitHub ingestion, Neo4j importer, and retrieval.
+- backend/data/ — bundled normalized dataset for `pallets/click`.
+- ../Build-Log/ — the compiled Build Log and supporting screenshots.
+- ../Build-Summary.md — final project summary.
 
 ## Run the backend locally
 
@@ -58,21 +58,22 @@ When opened on localhost, the Evidence Engine and Graph Explorer automatically u
 
 ## Import limits and known constraints
 
-- Imports are limited to recent public history: up to 20 commits, 10 merged pull requests, and 15 issues, with bounded extra detail requests.
+- Imports are limited to recent public history: up to 20 recent commits, 10 merged pull requests, and 15 issues, with bounded extra detail requests. Commits attached to fetched PRs can increase the total commit count.
 - The importer does not clone the complete repository history.
 - Private repositories are not supported by the current endpoint.
 - Keyword retrieval can miss relevant records or return unrelated matches.
+- PR/commit context is added only when an imported pull request has a `REFERENCES_ISSUE` link to a directly matched issue. A PR or commit can appear in Graph Explorer without being a direct text match for the question.
 - Matching text is not proof of why a change was made; inspect the source links.
 - Neo4j-backed features require valid credentials and an available database.
 - One manual demonstration and a two-participant exploratory stranger test are documented in Build-Log/Build-Log.md. Systematic retrieval evaluation and comparative search-time results are not established.
 
 ## Main files
 
-- prototype/backend/main.py — API routes and repository-import limits.
-- prototype/backend/fetch_github_data.py — GitHub REST API ingestion.
-- prototype/backend/import_sample.py — normalized data import into Neo4j.
-- prototype/backend/rag_pipeline.py — keyword retrieval and evidence response.
-- prototype/backend/schema.cypher — Neo4j uniqueness constraints.
-- prototype/frontend/index.html — Evidence Engine.
-- prototype/frontend/graph.html — Graph Explorer.
-- prototype/frontend/docs.html — API documentation.
+- `backend/main.py` — API routes and repository-import limits.
+- `backend/fetch_github_data.py` — GitHub REST API ingestion.
+- `backend/import_sample.py` — normalized data import into Neo4j.
+- `backend/rag_pipeline.py` — keyword retrieval and evidence response.
+- `backend/schema.cypher` — Neo4j uniqueness constraints.
+- `frontend/index.html` — Evidence Engine.
+- `frontend/graph.html` — Graph Explorer.
+- `frontend/docs.html` — interactive API documentation.

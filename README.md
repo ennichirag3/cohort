@@ -9,9 +9,9 @@
 1. Accepts a public GitHub repository URL or `owner/repo`.
 2. Imports a bounded set of recent commits, merged pull requests, and issues into Neo4j.
 3. Searches the imported text for keywords from a developer’s question.
-4. Shows matching records with GitHub source links and a graph view of repository relationships.
+4. Shows direct keyword matches and, when imported issue links exist, related PR/commit context with GitHub source links. Graph Explorer shows the latest search records and their direct graph connections.
 
-The current retrieval uses keyword matching and scoring. It does not generate an LLM-written explanation or prove why a code change was made. Review the linked GitHub sources before drawing conclusions.
+Retrieval uses keyword matching and scoring. It does not generate an LLM-written explanation or prove why a code change was made. Linked context is only available when the relevant relationships were imported. Review the GitHub sources before drawing conclusions.
 
 ## Start here
 
