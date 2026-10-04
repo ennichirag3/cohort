@@ -111,10 +111,9 @@
 
     <section class="card">
       <div class="endpoint"><span class="method">GET</span><span class="path">/health</span></div>
-      <p>Checks that the FastAPI process is responding. This check does not verify the Neo4j connection.</p>
+      <p>Checks that the FastAPI process is responding. Opens the endpoint directly in a new tab. This check does not verify the Neo4j connection.</p>
       <pre>{ "status": "healthy" }</pre>
-      <button type="button" onclick="tryEndpoint('/health', 'healthOutput')">Check API health</button>
-      <pre id="healthOutput" class="try-output" hidden></pre>
+      <button type="button" onclick="openHealthEndpoint()">Check API health</button>
     </section>
 
     <section class="card">
@@ -176,6 +175,10 @@
     const API_BASE_URL = isBackendPage ? location.origin : (isLocalHost ? 'http://127.0.0.1:8000' : 'https://repoinsight-qjj0.onrender.com');
 
     document.getElementById('schemaLink').href = `${API_BASE_URL}/openapi.json`;
+
+    function openHealthEndpoint() {
+      window.open(`${API_BASE_URL}/health`, '_blank', 'noopener,noreferrer');
+    }
 
     async function tryEndpoint(path, outputId) {
       await showResponse(path, outputId);
